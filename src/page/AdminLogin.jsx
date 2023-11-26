@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { logo } from "../assets"
 
-const Admin_Login = () => {
+const AdminLogin = () => {
     const [showPassword, setShowPassword] = useState(false);
     
     return (
@@ -84,4 +84,4 @@ const Admin_Login = () => {
     )
 }
 
-export default Admin_Login;
+export default AdminLogin;
