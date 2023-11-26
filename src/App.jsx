@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { AdminDashboard, AdminKelas, AdminLogin, Register } from "./page"
+import { AdminDashboard, AdminKelas, AdminLogin, AdminModul, Register } from "./page"
 import Home from "./page/Home"
 
 function App() {
@@ -11,8 +11,7 @@ function App() {
         <Route path="/login/admin" element={<AdminLogin/>}/>
         <Route path="/admin/dashboard" element={<AdminDashboard />}/>
         <Route path="/admin/kelas" element={<AdminKelas />}/>
-
-
+        <Route path="/admin/modul" element={<AdminModul />}/>
       </Routes>
     </BrowserRouter>
   )

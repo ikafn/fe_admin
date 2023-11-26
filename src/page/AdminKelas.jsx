@@ -11,7 +11,6 @@ const AdminKelas = () => {
     const [showModalUbah, setShowModalUbah] = useState(false);
     const [showModalHapus, setShowModalHapus] = useState(false);
 
-
     return (
         <>
         <HeaderAdmin />
