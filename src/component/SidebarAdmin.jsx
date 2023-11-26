@@ -5,7 +5,6 @@ const SidebarAdmin = () => {
       <>
         <aside className ="fixed -mt-24 bg-[#6148FF] text-white w-72 min-h-screen">
             <div className="flex flex-col items-center">
-                {/* <img src="../src/assets/images/logo.png" className="w-32" alt="logo" /> */}
                 <img src={logo} className="w-32" alt="logo" />
                 <a href="/admin/dashboard" className="block w-full px-8 py-4 font-bold cursor-pointer focus:bg-[#489CFF] hover:bg-[#489CFF] hover:text-white ">
                     Dashboard
