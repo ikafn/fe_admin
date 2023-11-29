@@ -16,9 +16,9 @@ const AdminModul = () => {
         
         <HeaderAdmin />
         <SidebarAdmin />
-        <div className="ml-[23rem] mr-16">
+        <div className="container mx-auto pl-20 pr-10 flex flex-col">
             {/*  ---Card Count Class and User---  */}
-            <div className="  grid md:grid-flow-col">   
+            <div className="flex mt-20 justify-between">   
                 <Card
                     totalUser= "450"
                     countClassUser= "Active Users"
@@ -38,7 +38,7 @@ const AdminModul = () => {
             {/*  ---Card Count Class and User---  */}
 
             {/*  ---Tabel Kelas---  */}
-            <div className="flex justify-between mt-6 ">
+            <div className="flex justify-between mt-2 ">
                 <div className="flex items-center">
                     <p className="font-bold">
                         Kelola Modul
@@ -67,8 +67,8 @@ const AdminModul = () => {
                 </div>
             </div>
 
-            <div className="inline-block min-w-screen overflow-hidden">
-                <table className="table-fixed items-center bg-transparent border-collapse ">
+            <div className="overflow-x-auto min-w-screen">
+                <table className="table w-full items-center bg-transparent border-collapse ">
                     <thead >
                         <tr>
                             <th className="px-6 bg-[#EBF3FC] text-black py-3 text-xs  whitespace-nowrap font-semibold text-left">
