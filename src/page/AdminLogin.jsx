@@ -8,7 +8,7 @@ const AdminLogin = () => {
         <>
         <div className="grid grid-cols-3">
             {/*  Sidebar  */}
-            <div className="">
+            <div>
                 <aside className ="bg-[#6148FF] text-white  min-h-screen flex justify-center">
                     <div className="flex items-center w-40">
                         <img src={logo} alt="logo" />
@@ -69,7 +69,8 @@ const AdminLogin = () => {
                                 <div className="mt-6 ">
                                     <button 
                                         type="button" 
-                                        className="w-full h-12 px-3 py-4 text-white bg-[#6148FF] hover:bg-[#181196] rounded-xl">
+                                        className="flex justify-center items-center w-full h-12 px-3 py-4 text-white bg-[#6148FF] hover:bg-[#181196] rounded-xl"
+                                        onClick={()=> window.location.href='/admin/dashboard'} >
                                         Masuk   
                                     </button>
                                 </div>

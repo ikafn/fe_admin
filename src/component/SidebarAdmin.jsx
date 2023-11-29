@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { logo } from "../assets";
 
 const SidebarAdmin = () => {
+    const [showModalKeluar, setShowModalKeluar] = useState(false);
+    
     return (
       <>
         <aside class="fixed bg-[#6148FF] sidebar min-h-screen w-[4rem] overflow-hidden border-r hover:w-56 hover:bg-[#6148FF] hover:shadow-xl">
@@ -29,41 +32,60 @@ const SidebarAdmin = () => {
                                 </svg>
                                 <span class="font-medium">Kelola Modul</span>
                             </a>
-                            <a href="#" class="relative flex items-center space-x-4 mt-4 py-3 px-6 text-white focus:bg-[#489CFF] hover:bg-[#489CFF]">
+                            <a href="#" role="button" onClick={() => setShowModalKeluar(true)} class="relative flex items-center space-x-4 mt-4 py-3 px-6 text-white focus:bg-[#489CFF] hover:bg-[#489CFF]">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
                                 </svg>
                                 <span class="font-medium">Keluar</span>
                             </a>
                         </div>
-                        
-                        
-                        
                     </div>
                 </div>
             </div>
         </aside>
 
 
-        {/* <aside className ="fixed -mt-24 bg-[#6148FF] text-white w-72 min-h-screen">
-            <div className="flex flex-col items-center">
-                <img src={logo} className="w-32" alt="logo" />
-                <a href="/admin/dashboard" className="block w-full px-8 py-4 font-bold cursor-pointer focus:bg-[#489CFF] hover:bg-[#489CFF] hover:text-white ">
-                    Dashboard
-                </a>
-                <a href="/admin/kelas" className="block w-full px-8 py-4 font-bold cursor-pointer focus:bg-[#489CFF] hover:bg-[#489CFF] hover:text-white">
-                    Kelola Kelas
-                </a>
-                <a href="/admin/modul" className="block w-full px-8 py-4 font-bold cursor-pointer focus:bg-[#489CFF] hover:bg-[#489CFF] hover:text-white">
-                    Kelola Modul
-                </a>
-                <a href="#" className="block w-full px-8 py-4 font-bold cursor-pointer focus:bg-[#489CFF] hover:bg-[#489CFF] hover:text-white ">
-                    Keluar
-                </a>
+        {/*  ---Modals Logout---  */}
+        {showModalKeluar ? (
+            <>
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                {/*content*/}
+                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none py-5 px-10">
+                        {/*header*/}
+                        <p className="flex justify-center items-center text-xs text-[#6148FF] font-bold py-2">
+                            Keluar
+                        </p>
+
+                        {/*body*/}
+                        <p className="flex justify-center items-center text-xs text-black py-2">
+                            Anda yakin ingin keluar dari halaman ini?
+                        </p>
+
+                        {/*footer*/}
+                        <div className="flex items-center justify-center p-2 mb-2">
+                        <button
+                            type="button"
+                            className="bg-[#73CA5C] text-white active:bg-green-500 font-bold text-[0.625rem] py-2 px-6 rounded-2xl hover:bg-green-200 mr-1 mb-1 ease-linear transition-all duration-150"
+                            onClick={() => setShowModalKeluar(false)}>
+                            Batal
+                        </button>
+                        <button
+                            type="button"
+                            className="bg-red-600 text-white active:bg-red-500 font-bold text-[0.625rem] py-2 px-6 rounded-2xl hover:bg-red-400 mr-1 mb-1 ease-linear transition-all duration-150"
+                            onClick={()=> window.location.href='/login/admin'}>
+                            Keluar
+                        </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </aside> */}
+            <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
+            </>
+        ) : null}
+        {/*  ---Modals Logout---  */}
+
       </>
-      
     );
   };
   
