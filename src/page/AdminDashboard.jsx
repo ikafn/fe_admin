@@ -46,7 +46,7 @@ const AdminDashboard = () => {
                     </button>
                     <button 
                         type="button"
-                        className="flex items-center justify-center w-10 h-8 bg-white font-semibold my-[1.13rem] mx-1 mr-4 rounded-3xl">
+                        className="flex items-center justify-center w-10 h-8 bg-white font-semibold my-[1.13rem] mx-1 rounded-3xl">
                         <img src={icon_search} /> 
                     </button>
                 </div>
