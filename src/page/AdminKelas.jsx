@@ -19,7 +19,7 @@ const AdminKelas = () => {
 
         <div className="container mx-auto pl-20 pr-10 flex flex-col">
             {/*  ---Card Count Class and User---  */}
-            <div className="flex mt-20 justify-between">           
+            <div className="flex mt-16 justify-between">           
                 <Card
                     totalUser= "450"
                     countClassUser= "Active Users"
@@ -39,9 +39,9 @@ const AdminKelas = () => {
             {/*  ---Card Count Class and User---  */}
 
             {/*  ---Tabel Kelas---  */}
-            <div className="flex justify-between mt-2 ">
+            <div className="flex justify-between">
                 <div className="flex items-center">
-                    <p className="font-bold">
+                    <p className="text-[0.625rem] lg:text-sm font-bold">
                         Kelola Kelas
                     </p>
                 </div>
@@ -49,21 +49,21 @@ const AdminKelas = () => {
                 <div className="flex items-center">
                     <button 
                         type="button" 
-                        className="flex items-center justify-center w-[7.75rem] h-8 mr-4 bg-[#6148FF] ring-1 ring-[#6148FF] hover:bg-indigo-200 font-semibold rounded-3xl" 
+                        className="flex items-center justify-center w-16 h-4 lg:w-[7.75rem] lg:h-8 mr-2 bg-[#6148FF] ring-1 ring-[#6148FF] hover:bg-indigo-200 font-semibold rounded-3xl" 
                         onClick={() => setShowModalTambah(true)}>
                         <img src={icon_tambah} /> 
                     </button>
 
                     <button 
                         type="button"
-                        className="flex items-center justify-center w-24 h-8 bg-white ring-1 ring-[#6148FF] hover:bg-indigo-200 font-semibold my-[1.13rem] rounded-3xl "
+                        className="flex items-center justify-center w-12 h-4 lg:w-24 lg:h-8 bg-white ring-1 ring-[#6148FF] hover:bg-indigo-200 font-semibold my-[1.13rem] rounded-3xl "
                         onClick={() => setShowModalFilter(true)} >
                         <img src={icon_filter} /> 
                     </button>
 
                     <button 
                         type="button"
-                        className="flex items-center justify-center w-10 h-8 bg-white font-semibold my-[1.13rem] mx-1 rounded-3xl">
+                        className="flex items-center justify-center p-1 w-5 h-4 lg:w-10 lg:h-8 bg-white font-semibold my-[1.13rem] mx-1 rounded-3xl">
                         <img src={icon_search} /> 
                     </button>
                 </div>
@@ -72,56 +72,56 @@ const AdminKelas = () => {
 
             <div className="overflow-x-auto min-w-screen">
                 <table className="table w-full items-center bg-transparent border-collapse ">
-                    <thead >
+                    <thead className="bg-[#EBF3FC] lg:py-3 text-[0.625rem] lg:text-xs  whitespace-nowrap font-semibold text-left">
                         <tr>
-                            <th className="px-6 bg-[#EBF3FC] text-black py-3 text-xs  whitespace-nowrap font-semibold text-left">
+                            <th className="p-6 py-2">
                                 Kode Kelas
                             </th>
-                            <th className="px-6 bg-[#EBF3FC] text-black py-3 text-xs  whitespace-nowrap font-semibold text-left">
+                            <th className="p-6 py-2">
                                 Kategori
                             </th>
-                            <th className="block px-6 bg-[#EBF3FC] text-black py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                            <th className="p-6 py-2">
                                 Nama Kelas
                             </th>
-                            <th className="px-6 bg-[#EBF3FC] text-black py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                            <th className="p-6 py-2">
                                 Tipe Kelas
                             </th>
-                            <th className="px-6 bg-[#EBF3FC] text-black py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                            <th className="p-6 py-2">
                                 Level
                             </th>
-                            <th className="px-6 bg-[#EBF3FC] text-black py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                            <th className="p-6 py-2">
                                 Harga Kelas
                             </th>
-                            <th className="px-6 bg-[#EBF3FC] text-black py-3 text-xs border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+                            <th className="p-6 py-2">
                                 Aksi
                             </th>
                         </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody className="border-t-0 px-4 text-[0.5rem] lg:text-[0.625rem] font-bold whitespace-nowrap p-4 text-left">
                         <tr>
-                            <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-[0.625rem] font-bold text-[#4E5566] whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                            <td className="p-6 py-2 text-[#4E5566]">
                                 UIUX0123
-                            </th>
-                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-[0.625rem] font-bold text-[#4E5566] whitespace-nowrap p-4 ">
+                            </td>
+                            <td className="p-6 py-2 text-[#4E5566]">
                                 UI/UX Design
                             </td>
-                            <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-[0.625rem] font-bold whitespace-nowrap p-4">
+                            <td className="p-6 py-2">
                                 Belajar Web Designer dengan Figma 
                             </td> 
-                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-[0.625rem] font-bold whitespace-nowrap p-4">
+                            <td className="p-6 py-2">
                                 GRATIS
                             </td>
-                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-[0.625rem] font-bold whitespace-nowrap p-4">
+                            <td className="p-6 py-2">
                                 Begginer
                             </td>
-                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-[0.625rem] font-bold whitespace-nowrap p-4">
+                            <td className="p-6 py-2">
                                 Rp 0
                             </td>
-                            <td className="flex text-[0.625rem] font-bold whitespace-nowrap p-4">
+                            <td className="flex font-bold whitespace-nowrap p-6 py-2">
                                 <button 
                                     type="button"
-                                    className="w-[3.125rem] h-[1.25rem] mr-2 text-white bg-[#6148FF] hover:bg-indigo-200 rounded-3xl "
+                                    className="w-10 h-4 lg:w-[3.125rem] lg:h-[1.25rem] mr-2 text-white bg-[#6148FF] hover:bg-indigo-200 rounded-3xl "
                                     onClick={() => setShowModalUbah(true)} >
                                     Ubah
                                 </button>
@@ -132,75 +132,75 @@ const AdminKelas = () => {
                                 /> */}
                                 <button 
                                     type="button"
-                                    className=" w-[3.125rem] h-[1.25rem] text-white bg-[red] hover:bg-red-200 rounded-3xl "
+                                    className="w-10 h-4 lg:w-[3.125rem] lg:h-[1.25rem] text-white bg-[red] hover:bg-red-200 rounded-3xl "
                                     onClick={() => setShowModalHapus(true)} >
                                     Hapus
                                 </button>
                             </td>
                         </tr>
                         <tr>
-                            <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-[0.625rem] font-bold text-[#4E5566] whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                            <td className="p-6 py-2 text-[#4E5566]">
                                 DS0223
-                            </th>
-                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-[0.625rem] font-bold text-[#4E5566] whitespace-nowrap p-4 ">
+                            </td>
+                            <td className="p-6 py-2 text-[#4E5566]">
                                 Data Science
                             </td>
-                            <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-[0.625rem] font-bold whitespace-nowrap p-4">
+                            <td className="p-6 py-2">
                                 Data Cleaning untuk pemula 
                             </td> 
-                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-[0.625rem] font-bold whitespace-nowrap p-4">
+                            <td className="p-6 py-2">
                                 GRATIS
                             </td>
-                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-[0.625rem] font-bold whitespace-nowrap p-4">
+                            <td className="p-6 py-2">
                                 Begginer
                             </td>
-                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-[0.625rem] font-bold whitespace-nowrap p-4">
+                            <td className="p-6 py-2">
                                 Rp 0
                             </td>
-                            <td className="flex text-[0.625rem] font-bold whitespace-nowrap p-4">
+                            <td className="flex font-bold whitespace-nowrap p-6 py-2">
                                 <button 
                                     type="button"
-                                    className="w-[3.125rem] h-[1.25rem] mr-2 text-white bg-[#6148FF] hover:bg-indigo-200 rounded-3xl " 
+                                    className="w-10 h-4 lg:w-[3.125rem] lg:h-[1.25rem] mr-2 text-white bg-[#6148FF] hover:bg-indigo-200 rounded-3xl " 
                                     onClick={() => setShowModalUbah(true)} >
                                     Ubah
                                 </button>
                                 <button 
                                     type="button"
-                                    className=" w-[3.125rem] h-[1.25rem] text-white bg-[red] hover:bg-red-200 rounded-3xl "
+                                    className=" w-10 h-4 lg:w-[3.125rem] lg:h-[1.25rem] text-white bg-[red] hover:bg-red-200 rounded-3xl "
                                     onClick={() => setShowModalHapus(true)} >
                                     Hapus
                                 </button>
                             </td>
                         </tr>
                         <tr>
-                            <th className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-[0.625rem] font-bold text-[#4E5566] whitespace-nowrap p-4 text-left text-blueGray-700 ">
+                            <th className="p-6 py-2 text-[#4E5566]">
                                 DS0223
                             </th>
-                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-[0.625rem] font-bold text-[#4E5566] whitespace-nowrap p-4 ">
+                            <td className="p-6 py-2 text-[#4E5566]">
                                 Data Science
                             </td>
-                            <td className="border-t-0 px-6 align-center border-l-0 border-r-0 text-[0.625rem] font-bold whitespace-nowrap p-4">
+                            <td className="p-6 py-2">
                                 Data Cleaning untuk Professional 
                             </td> 
-                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-[0.625rem] font-bold whitespace-nowrap p-4">
+                            <td className="p-6 py-2">
                                 PREMIUM
                             </td>
-                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-[0.625rem] font-bold whitespace-nowrap p-4">
+                            <td className="p-6 py-2">
                                 Advanced
                             </td>
-                            <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-[0.625rem] font-bold whitespace-nowrap p-4">
+                            <td className="p-6 py-2">
                                 Rp 199,000
                             </td>
-                            <td className="flex text-[0.625rem] font-bold whitespace-nowrap p-4">
+                            <td className="flex font-bold whitespace-nowrap p-6 py-2">
                                 <button 
                                     type="button"
-                                    className="w-[3.125rem] h-[1.25rem] mr-2 text-white bg-[#6148FF] hover:bg-indigo-200 rounded-3xl "
+                                    className="w-10 h-4 lg:w-[3.125rem] lg:h-[1.25rem] mr-2 text-white bg-[#6148FF] hover:bg-indigo-200 rounded-3xl "
                                     onClick={() => setShowModalUbah(true)}>
                                     Ubah
                                 </button>
                                 <button 
                                     type="button"
-                                    className=" w-[3.125rem] h-[1.25rem] text-white bg-[red] hover:bg-red-200 rounded-3xl "
+                                    className=" w-10 h-4 lg:w-[3.125rem] lg:h-[1.25rem] text-white bg-[red] hover:bg-red-200 rounded-3xl "
                                     onClick={() => setShowModalHapus(true)}>
                                     Hapus
                                 </button>
@@ -232,10 +232,10 @@ const AdminKelas = () => {
                         </div>
 
                         {/*body*/}
-                        <p className="flex justify-center items-center text-xs text-[#6148FF] font-bold py-2">
+                        <p className="flex justify-center items-center text-xs lg:text-sm text-[#6148FF] font-bold py-2">
                             Tambah Kelas
                         </p>
-                        <form className="items-center justify-between px-20 w-[36rem] text-[0.625rem] ">
+                        <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
                             <div className="flex-auto p-1">
                                 <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Kelas</label>
                                 <input 
@@ -340,7 +340,7 @@ const AdminKelas = () => {
                         <p className="flex justify-center items-center text-xs text-[#6148FF] font-bold py-2">
                             Ubah Kelas
                         </p>
-                        <form className="items-center justify-between px-20 w-[36rem] text-[0.625rem] ">
+                        <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
                             <div className="flex-auto p-1">
                                 <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Kelas</label>
                                 <input 
@@ -470,7 +470,7 @@ const AdminKelas = () => {
                     {/*content*/}
                         <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                             {/*header*/}
-                            <div className="flex items-start justify-between p-2  rounded-t">
+                            <div className="flex items-start justify-between p-1 rounded-t">
                                 <button
                                     type="button"
                                     className="ml-auto text-[#6148FF] text-lg float-right leading-none font-semibold outline-none focus:outline-none"
@@ -479,14 +479,14 @@ const AdminKelas = () => {
                                     x
                                 </button>
                             </div>
-                            <p className="flex justify-center items-center text-xs text-[#6148FF] font-bold py-2">
+                            <p className="flex justify-center items-center text-xs lg:text-sm text-[#6148FF] font-bold py-2">
                                 Filter Kelas
                             </p>
 
                             {/*body*/}
-                            <form className="bg-white max-w-max rounded-2xl px-14 py-1">
+                            <form className="bg-white text-[0.625rem] lg:text-xs max-w-max rounded-2xl px-14 py-1">
                                 <div>
-                                    <p className="flex text-xs text-black font-semibold py-1">
+                                    <p className="flex text-black font-semibold py-1">
                                         Kategori
                                     </p>
                                     <div className="flex items-center mb-2">
@@ -498,7 +498,7 @@ const AdminKelas = () => {
                                         />
                                         <label
                                             htmlFor="default-checkbox"
-                                            className="ms-2 text-xs font-normal text-gray-500"
+                                            className="ms-2 font-normal text-gray-500"
                                         >
                                            UI/UX Design
                                             </label>
@@ -512,7 +512,7 @@ const AdminKelas = () => {
                                         />
                                         <label
                                             htmlFor="default-checkbox"
-                                            className="ms-2 text-xs font-normal text-gray-500"
+                                            className="ms-2 font-normal text-gray-500"
                                         >
                                             Web Development
                                         </label>
@@ -526,7 +526,7 @@ const AdminKelas = () => {
                                         />
                                         <label
                                             htmlFor="default-checkbox"
-                                            className="ms-2 text-xs font-normal text-gray-500"
+                                            className="ms-2 font-normal text-gray-500"
                                         >
                                             Android Development
                                         </label>
@@ -540,7 +540,7 @@ const AdminKelas = () => {
                                         />
                                         <label
                                             htmlFor="default-checkbox"
-                                            className="ms-2 text-xs font-normal text-gray-500"
+                                            className="ms-2 font-normal text-gray-500"
                                         >
                                             Data Science
                                         </label>
@@ -554,7 +554,7 @@ const AdminKelas = () => {
                                         />
                                         <label
                                             htmlFor="default-checkbox"
-                                            className="ms-2 text-xs font-normal text-gray-500"
+                                            className="ms-2 font-normal text-gray-500"
                                         >
                                             Business Intelligence
                                         </label>
@@ -562,7 +562,7 @@ const AdminKelas = () => {
                                 </div>
 
                                 <div>
-                                    <p className="flex text-xs text-black font-semibold py-2">
+                                    <p className="flex text-black font-semibold py-2">
                                         Tipe Kelas
                                     </p>
                                     <div className="flex items-center mb-2">
@@ -574,7 +574,7 @@ const AdminKelas = () => {
                                         />
                                         <label
                                             htmlFor="default-checkbox"
-                                            className="ms-2 text-xs font-normal text-gray-500"
+                                            className="ms-2 font-normal text-gray-500"
                                         >
                                             Gratis
                                             </label>
@@ -588,14 +588,14 @@ const AdminKelas = () => {
                                         />
                                         <label
                                             htmlFor="default-checkbox"
-                                            className="ms-2 text-xs font-normal text-gray-500"
+                                            className="ms-2 font-normal text-gray-500"
                                         >
                                             Premium
                                         </label>
                                     </div>
                                 </div>
                                 <div>
-                                    <p className="flex text-xs text-black font-semibold py-2">
+                                    <p className="flex text-black font-semibold py-2">
                                         Level
                                     </p>
                                     <div className="flex items-center mb-2">
@@ -607,7 +607,7 @@ const AdminKelas = () => {
                                         />
                                         <label
                                             htmlFor="default-checkbox"
-                                            className="ms-2 text-xs font-normal text-gray-500"
+                                            className="ms-2 font-normal text-gray-500"
                                         >
                                             Beginner
                                             </label>
@@ -621,12 +621,12 @@ const AdminKelas = () => {
                                         />
                                         <label
                                             htmlFor="default-checkbox"
-                                            className="ms-2 text-xs font-normal text-gray-500"
+                                            className="ms-2 font-normal text-gray-500"
                                         >
                                             Intermediate
                                         </label>
                                     </div>
-                                    <div className="flex items-center mb-2">
+                                    <div className="flex items-center mb-4">
                                         <input
                                             id="default-checkbox"
                                             type="checkbox"
@@ -635,7 +635,7 @@ const AdminKelas = () => {
                                         />
                                         <label
                                             htmlFor="default-checkbox"
-                                            className="ms-2 text-xs font-normal text-gray-500"
+                                            className="ms-2 font-normal text-gray-500"
                                         >
                                             Advanced
                                         </label>
@@ -644,14 +644,14 @@ const AdminKelas = () => {
                             </form>
 
                             {/*footer*/}
-                            <div className="flex items-center justify-center p-2 mb-2">
+                            {/* <div className="flex items-center justify-center p-2 mb-2">
                                 <button
                                     type="button"
-                                    className="bg-[#6148FF] text-white active:bg-indigo-500 hover:bg-indigo-200 font-bold text-[0.625rem] py-2 px-6 rounded-2xl mr-1 mb-1 ease-linear transition-all duration-150"
+                                    className="bg-[#6148FF] text-white active:bg-indigo-500 hover:bg-indigo-200 font-bold text-[0.625rem] py-2 px-6 rounded-2xl  ease-linear transition-all duration-150"
                                     onClick={() => setShowModalFilter(false)}>
                                     Filter
                                 </button>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>

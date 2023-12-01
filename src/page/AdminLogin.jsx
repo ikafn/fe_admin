@@ -6,20 +6,18 @@ const AdminLogin = () => {
     
     return (
         <>
-        <div className="grid grid-cols-3">
+        <div className="grid grid-cols-1 lg:grid-cols-3 h-screen ">
             {/*  Sidebar  */}
-            <div>
-                <aside className ="bg-[#6148FF] text-white  min-h-screen flex justify-center">
-                    <div className="flex items-center w-40">
-                        <img src={logo} alt="logo" />
+            <aside className ="hidden lg:flex bg-[#6148FF] items-center justify-center">
+                <div className="flex items-center w-44">
+                    <img src={logo} alt="logo" />
 
-                    </div>   
-                </aside>
-            </div>
+                </div>   
+            </aside>
             {/*  Sidebar  */}
 
             {/*  Form Login  */}
-            <div className="bg-white col-span-2 flex flex-col justify-center">
+            <div className="flex flex-col col-span-2 justify-center bg-white">
                 <div className="container">
                     <div className="text-center text-xl font-bold text-[#6148FF] mb-2">
                         <p>Login </p>

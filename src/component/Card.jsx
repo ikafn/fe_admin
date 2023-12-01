@@ -11,12 +11,12 @@ const bgColor = {
 const Card = ({totalUser, countClassUser, variant}) => {
     return (
         <>
-        <div className="justify-between mt-10 w-72 h-28 rounded-2xl" style={{backgroundColor: bgColor[variant]}}>
+        <div className="flex items-center justify-between rounded-2xl w-28 h-12 md:w-44 md:h-20 lg:w-72 lg:h-28 lg:mt-10" style={{backgroundColor: bgColor[variant]}}>
             <div className="flex items-center">
-                <img className="m-6 h-16 w-16 object-cover" src={icon_user} alt="profile" />
-                <div>
-                    <h3 className="text-2xl text-white">{totalUser}</h3>
-                    <span className="block text-xl font-bold text-white">{countClassUser}</span>
+                <img className="m-2 lg:m-6 w-6 h-6 md:w-10 md:h-10 lg:h-16 lg:w-16 object-cover" src={icon_user} alt="profile" />
+                <div className=" text-[0.5rem] md:text-xs lg:text-xl text-white">
+                    <p>{totalUser}</p>
+                    <p className="font-bold">{countClassUser}</p>
                 </div>
             </div>
         </div>
