@@ -1,17 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { AdminDashboard, AdminKelas, AdminLogin, AdminModul, Register } from "./page"
+import { AdminChapter, AdminDashboard, AdminKelas, AdminLogin, AdminModul, Register } from "./page"
 import Home from "./page/Home"
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home/>}/>
+        <Route path="/" element={<AdminLogin/>}/>
         <Route path="/register" element={<Register/>}/>
-        <Route path="/login/admin" element={<AdminLogin/>}/>
-        <Route path="/admin/dashboard" element={<AdminDashboard />}/>
-        <Route path="/admin/kelas" element={<AdminKelas />}/>
-        <Route path="/admin/modul" element={<AdminModul />}/>
+        {/* <Route path="/admin/login" element={<AdminLogin/>}/> */}
+        <Route path="/admin" element={<AdminDashboard />}/>
+        <Route path="/admin/courses" element={<AdminKelas />}/>
+        <Route path="/admin/chapters" element={<AdminChapter />}/>
+        <Route path="/admin/modules" element={<AdminModul />}/>
+
       </Routes>
     </BrowserRouter>
   )

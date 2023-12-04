@@ -108,7 +108,7 @@ const AdminKelas = () => {
                             </td>
                             <td className="p-6 py-2">
                                 Belajar Web Designer dengan Figma 
-                            </td> 
+                            </td>
                             <td className="p-6 py-2">
                                 GRATIS
                             </td>
@@ -147,7 +147,7 @@ const AdminKelas = () => {
                             </td>
                             <td className="p-6 py-2">
                                 Data Cleaning untuk pemula 
-                            </td> 
+                            </td>
                             <td className="p-6 py-2">
                                 GRATIS
                             </td>
@@ -232,66 +232,104 @@ const AdminKelas = () => {
                         </div>
 
                         {/*body*/}
-                        <p className="flex justify-center items-center text-xs lg:text-sm text-[#6148FF] font-bold py-2">
+                        <p className="flex justify-center items-center text-xs lg:text-sm text-[#6148FF] font-bold ">
                             Tambah Kelas
                         </p>
                         <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
-                            <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Kelas</label>
-                                <input 
-                                    type="text"
-                                    id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-8 flex items-center pl-3  border-gray-300 rounded-xl border" 
-                                    placeholder="Text" />
-                            </div>
-                            <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kategori</label>
-                                <input 
-                                    type="text"
-                                    id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-8 flex items-center pl-3  border-gray-300 rounded-xl border" 
-                                    placeholder="Text" />
-                            </div>
                             <div className="flex-auto p-1">
                                 <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kode Kelas</label>
                                 <input 
                                     type="text"
                                     id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-8 flex items-center pl-3  border-gray-300 rounded-xl border" 
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text" />
                             </div>
+                            <div className="flex p-1 gap-2">
+                                <div className="flex flex-col w-1/2">
+                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kategori Kelas</label>
+                                    <select class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border">
+                                        <option>UI/UX Design</option>
+                                        <option>Web Development</option>
+                                        <option>Android Development</option>
+                                        <option>Data Science</option>
+                                        <option>Business Intelligence</option>
+                                    </select>
+                                </div>
+                                <div className="flex flex-col w-1/2">
+                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Level</label>
+                                    <select class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border">
+                                        <option>Beginner</option>
+                                        <option>Intermediate</option>
+                                        <option>Advanced</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Tipe Kelas</label>
+                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Kelas</label>
                                 <input 
                                     type="text"
                                     id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-8 flex items-center pl-3  border-gray-300 rounded-xl border" 
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text" />
                             </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Level</label>
+                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Fasilitator</label>
                                 <input 
                                     type="text"
                                     id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-8 flex items-center pl-3  border-gray-300 rounded-xl border" 
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text" />
                             </div>
+                            <div className="flex p-1 gap-2">
+                                <div className="flex flex-col w-1/2">
+                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Tipe Kelas</label>
+                                    <select class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border">
+                                        <option>Gratis</option>
+                                        <option>Premium</option>
+                                    </select>
+                                </div>
+                                <div className="flex flex-col w-1/2">
+                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Harga</label>
+                                    <input 
+                                    type="text"
+                                    id="name" 
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-2  border-gray-300 rounded-lg border" 
+                                    placeholder="Text" />
+                                </div>
+                            </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Harga</label>
+                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Grup Telegram</label>
                                 <input 
                                     type="text"
                                     id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-8 flex items-center pl-3  border-gray-300 rounded-xl border" 
-                                    placeholder="Text" />
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
+                                    placeholder="Link" />
+                            </div>
+                            <div className="flex-auto p-1">
+                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Video</label>
+                                <input 
+                                    type="text"
+                                    id="name" 
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
+                                    placeholder="Link" />
                             </div>
                             <div className=" p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Materi</label>
+                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Deskripsi Kelas</label>
                                 <textarea 
                                     type="text"
                                     id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-10 flex p-2 border-gray-300 rounded-xl border" 
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-10 flex p-2 border-gray-300 rounded-lg border" 
                                     placeholder="Paragraph" />
                             </div>
+                            <div className=" p-1">
+                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Deskripsi On Boarding</label>
+                                <textarea 
+                                    type="text"
+                                    id="name" 
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-10 flex p-2 border-gray-300 rounded-lg border" 
+                                    placeholder="Paragraph" />
+                            </div>
+                            
                         </form>
                         
                         {/*footer*/}
@@ -300,7 +338,7 @@ const AdminKelas = () => {
                             type="button"
                             className="bg-red-600 text-white active:bg-red-500 font-bold text-[0.625rem] py-2 px-6 rounded-2xl hover:bg-red-400 mr-1 mb-1 ease-linear transition-all duration-150"
                             onClick={() => setShowModalTambah(false)}>
-                            Upload Video
+                            Batal
                         </button>
                         <button
                             type="button"
@@ -342,61 +380,99 @@ const AdminKelas = () => {
                         </p>
                         <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Kelas</label>
-                                <input 
-                                    type="text"
-                                    id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-8 flex items-center pl-3  border-gray-300 rounded-xl border" 
-                                    placeholder="Text" />
-                            </div>
-                            <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kategori</label>
-                                <input 
-                                    type="text"
-                                    id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-8 flex items-center pl-3  border-gray-300 rounded-xl border" 
-                                    placeholder="Text" />
-                            </div>
-                            <div className="flex-auto p-1">
                                 <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kode Kelas</label>
                                 <input 
                                     type="text"
                                     id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-8 flex items-center pl-3  border-gray-300 rounded-xl border" 
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text" />
                             </div>
+                            <div className="flex p-1 gap-2">
+                                <div className="flex flex-col w-1/2">
+                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kategori Kelas</label>
+                                    <select class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border">
+                                        <option>UI/UX Design</option>
+                                        <option>Web Development</option>
+                                        <option>Android Development</option>
+                                        <option>Data Science</option>
+                                        <option>Business Intelligence</option>
+                                    </select>
+                                </div>
+                                <div className="flex flex-col w-1/2">
+                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Level</label>
+                                    <select class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border">
+                                        <option>Beginner</option>
+                                        <option>Intermediate</option>
+                                        <option>Advanced</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Tipe Kelas</label>
+                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Kelas</label>
                                 <input 
                                     type="text"
                                     id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-8 flex items-center pl-3  border-gray-300 rounded-xl border" 
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text" />
                             </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Level</label>
+                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Fasilitator</label>
                                 <input 
                                     type="text"
                                     id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-8 flex items-center pl-3  border-gray-300 rounded-xl border" 
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text" />
                             </div>
+                            <div className="flex p-1 gap-2">
+                                <div className="flex flex-col w-1/2">
+                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Tipe Kelas</label>
+                                    <select class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border">
+                                        <option>Gratis</option>
+                                        <option>Premium</option>
+                                    </select>
+                                </div>
+                                <div className="flex flex-col w-1/2">
+                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Harga</label>
+                                    <input 
+                                    type="text"
+                                    id="name" 
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-2  border-gray-300 rounded-lg border" 
+                                    placeholder="Text" />
+                                </div>
+                            </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Harga</label>
+                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Grup Telegram</label>
                                 <input 
                                     type="text"
                                     id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-8 flex items-center pl-3  border-gray-300 rounded-xl border" 
-                                    placeholder="Text" />
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
+                                    placeholder="Link" />
+                            </div>
+                            <div className="flex-auto p-1">
+                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Video</label>
+                                <input 
+                                    type="text"
+                                    id="name" 
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
+                                    placeholder="Link" />
                             </div>
                             <div className=" p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Materi</label>
+                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Deskripsi Kelas</label>
                                 <textarea 
                                     type="text"
                                     id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-10 flex p-2 border-gray-300 rounded-xl border" 
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-10 flex p-2 border-gray-300 rounded-lg border" 
                                     placeholder="Paragraph" />
                             </div>
+                            <div className=" p-1">
+                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Deskripsi On Boarding</label>
+                                <textarea 
+                                    type="text"
+                                    id="name" 
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-10 flex p-2 border-gray-300 rounded-lg border" 
+                                    placeholder="Paragraph" />
+                            </div>
+                            
                         </form>
                         
                         {/*footer*/}
@@ -405,7 +481,7 @@ const AdminKelas = () => {
                             type="button"
                             className="bg-red-600 text-white active:bg-red-500 font-bold text-[0.625rem] py-2 px-6 rounded-2xl hover:bg-red-400 mr-1 mb-1 ease-linear transition-all duration-150"
                             onClick={() => setShowModalUbah(false)}>
-                            Upload Video
+                            Batal
                         </button>
                         <button
                             type="button"
