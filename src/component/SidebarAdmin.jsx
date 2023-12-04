@@ -12,7 +12,7 @@ const SidebarAdmin = () => {
                     <div className=" flex items-center w-max px-6 pl-8 lg:pl-12">
                         <img src={logo} className="w-20 lg:w-32" alt="" />
                     </div>
-                    <div className="mt-4 space-y-2 tracking-wide">
+                    <div className="mt-4 space-y-2 tracking-wide text-[0.625rem] lg:text-sm font-semibold">
                         <div className=" min-w-max ">
                             <a href="/admin" className="relative flex items-center space-x-4  p-3 lg:px-6 text-white focus:bg-[#489CFF] hover:bg-[#489CFF]">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 lg:w-6 lg:h-6">
@@ -21,10 +21,9 @@ const SidebarAdmin = () => {
                                 <span className="">Dashboard</span>
                             </a>
                             <a href="/admin/courses" className="relative flex items-center space-x-4 mt-4 p-3 lg:px-6 text-white focus:bg-[#489CFF] hover:bg-[#489CFF]">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                            </svg>
-
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 lg:w-6 lg:h-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                                </svg>
                                 <span className="">Kelola Kelas</span>
                             </a>
                             <a href="/admin/chapters" className="relative flex items-center space-x-4 mt-4 p-3 lg:px-6 text-white focus:bg-[#489CFF] hover:bg-[#489CFF]">

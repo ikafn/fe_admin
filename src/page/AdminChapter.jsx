@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, HeaderAdmin, SidebarAdmin } from "../component";
+import { Button, ButtonAksi, Card, HeaderAdmin, SidebarAdmin } from "../component";
 import { icon_filter } from "../assets";
 import { icon_search } from "../assets";
 import { icon_tambah } from "../assets";
@@ -47,23 +47,25 @@ const AdminChapter = () => {
                 </div>
 
                 <div className="flex items-center">
-                    <button 
-                        type="button"
-                        className="flex items-center justify-center  w-16 h-4 lg:w-[7.75rem] lg:h-8 mr-2 bg-[#6148FF] ring-1 ring-[#6148FF] hover:bg-indigo-200 font-semibold rounded-3xl "
-                        onClick={() => setShowModalTambah(true)}>
-                        <img src={icon_tambah} /> 
-                    </button>
+                    <Button
+                        variant='darkBlue'
+                        onClick={() => setShowModalTambah(true)}
+                        img={icon_tambah}
+                    />
+                    <Button
+                        variant='white'
+                        onClick={() => setShowModalFilter(true)}
+                        img={icon_filter}
+                    />
+                    {/* <Button
+                        variant='white'
+                        onClick={}
+                        img={icon_search}
+                    /> */}
 
                     <button 
                         type="button"
-                        className="flex items-center justify-center w-12 h-4 lg:w-24 lg:h-8 bg-white ring-1 ring-[#6148FF] hover:bg-indigo-200 font-semibold my-[1.13rem] rounded-3xl "
-                        onClick={() => setShowModalFilter(true)}>
-                        <img src={icon_filter} /> 
-                    </button>
-
-                    <button 
-                        type="button"
-                        className="flex items-center justify-center p-1 w-5 h-4 lg:w-10 lg:h-8 bg-white font-semibold my-[1.13rem] mx-1 rounded-3xl">
+                        className="flex items-center justify-center p-1 w-5 h-4 lg:w-10 lg:h-7 bg-white font-semibold my-[1.13rem] rounded-3xl">
                         <img src={icon_search} /> 
                     </button>
                 </div>
@@ -94,18 +96,16 @@ const AdminChapter = () => {
                                 Chapter 1 - Pendahuluan
                             </td>
                             <td className="flex font-bold whitespace-nowrap p-6 py-2">
-                                <button 
-                                    type="button"
-                                    className="w-10 h-4 lg:w-[3.125rem] lg:h-[1.25rem] mr-2 text-white bg-[#6148FF] hover:bg-indigo-200 rounded-3xl "
-                                    onClick={() => setShowModalUbah(true)} >
-                                    Ubah
-                                </button>
-                                <button 
-                                    type="button"
-                                    className=" w-10 h-4 lg:w-[3.125rem] lg:h-[1.25rem] text-white bg-[red] hover:bg-red-200 rounded-3xl "
-                                    onClick={() => setShowModalHapus(true)} >
-                                    Hapus
-                                </button>
+                                <ButtonAksi
+                                    text={'Ubah'}
+                                    variant='darkBlue'
+                                    onClick={() => setShowModalUbah(true)}
+                                />
+                                <ButtonAksi
+                                    text={'Hapus'}
+                                    variant='red'
+                                    onClick={() => setShowModalHapus(true)}
+                                />
                             </td>
                         </tr>
                         <tr>
@@ -116,18 +116,16 @@ const AdminChapter = () => {
                                 Chapter 2 - Memulai Desain
                             </td>
                             <td className="flex font-bold whitespace-nowrap p-6 py-2">
-                                <button 
-                                    type="button"
-                                    className="w-10 h-4 lg:w-[3.125rem] lg:h-[1.25rem] mr-2 text-white bg-[#6148FF] hover:bg-indigo-200 rounded-3xl "
-                                    onClick={() => setShowModalUbah(true)} >
-                                    Ubah
-                                </button>
-                                <button 
-                                    type="button"
-                                    className=" w-10 h-4 lg:w-[3.125rem] lg:h-[1.25rem] text-white bg-[red] hover:bg-red-200 rounded-3xl "
-                                    onClick={() => setShowModalHapus(true)} >
-                                    Hapus
-                                </button>
+                                <ButtonAksi
+                                    text={'Ubah'}
+                                    variant='darkBlue'
+                                    onClick={() => setShowModalUbah(true)}
+                                />
+                                <ButtonAksi
+                                    text={'Hapus'}
+                                    variant='red'
+                                    onClick={() => setShowModalHapus(true)}
+                                />
                             </td>
                         </tr>
                     </tbody>
@@ -155,7 +153,7 @@ const AdminChapter = () => {
                             </div>
 
                             {/*body*/}
-                            <p className="flex justify-center items-center text-xs text-[#6148FF] font-bold py-2">
+                            <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
                                 Tambah Chapter
                             </p>
                             <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
@@ -179,18 +177,16 @@ const AdminChapter = () => {
                             
                             {/*footer*/}
                             <div className="flex items-center justify-center p-2 mb-2">
-                            <button
-                                type="button"
-                                className="bg-red-600 text-white active:bg-red-500 font-bold text-[0.625rem] py-2 px-6 rounded-2xl hover:bg-red-400 mr-1 mb-1 ease-linear transition-all duration-150"
-                                onClick={() => setShowModalTambah(false)}>
-                                Upload Video
-                            </button>
-                            <button
-                                type="button"
-                                className="bg-[#6148FF] text-white active:bg-indigo-500 font-bold text-[0.625rem] py-2 px-6 rounded-2xl hover:bg-indigo-400 mr-1 mb-1 ease-linear transition-all duration-150"
-                                onClick={() => setShowModalTambah(false)}>
-                                Simpan
-                            </button>
+                            <ButtonAksi
+                                text={'Batal'}
+                                variant='red'
+                                onClick={() => setShowModalTambah(false)}
+                            />
+                            <ButtonAksi
+                                text={'Simpan'}
+                                variant='success'
+                                onClick={() => setShowModalTambah(false)}
+                            />
                             </div>
                         </div>
                     </div>
@@ -219,7 +215,7 @@ const AdminChapter = () => {
                             </div>
 
                             {/*body*/}
-                            <p className="flex justify-center items-center text-xs text-[#6148FF] font-bold py-2">
+                            <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
                                 Ubah Chapter
                             </p>
                             <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
@@ -243,18 +239,16 @@ const AdminChapter = () => {
                             
                             {/*footer*/}
                             <div className="flex items-center justify-center p-2 mb-2">
-                            <button
-                                type="button"
-                                className="bg-red-600 text-white active:bg-red-500 font-bold text-[0.625rem] py-2 px-6 rounded-2xl hover:bg-red-400 mr-1 mb-1 ease-linear transition-all duration-150"
-                                onClick={() => setShowModalUbah(false)}>
-                                Upload Video
-                            </button>
-                            <button
-                                type="button"
-                                className="bg-[#6148FF] text-white active:bg-indigo-500 font-bold text-[0.625rem] py-2 px-6 rounded-2xl hover:bg-indigo-400 mr-1 mb-1 ease-linear transition-all duration-150"
-                                onClick={() => setShowModalUbah(false)}>
-                                Simpan
-                            </button>
+                                <ButtonAksi
+                                    text={'Batal'}
+                                    variant='red'
+                                    onClick={() => setShowModalUbah(false)}
+                                />
+                                <ButtonAksi
+                                    text={'Simpan'}
+                                    variant='success'
+                                    onClick={() => setShowModalUbah(false)}
+                                />
                             </div>
                         </div>
                     </div>
@@ -284,18 +278,16 @@ const AdminChapter = () => {
 
                             {/*footer*/}
                             <div className="flex items-center justify-center p-2 mb-2">
-                            <button
-                                type="button"
-                                className="bg-[#73CA5C] text-white active:bg-green-500 font-bold text-[0.625rem] py-2 px-6 rounded-2xl hover:bg-green-200 mr-1 mb-1 ease-linear transition-all duration-150"
-                                onClick={() => setShowModalHapus(false)}>
-                                Batal
-                            </button>
-                            <button
-                                type="button"
-                                className="bg-red-600 text-white active:bg-red-500 font-bold text-[0.625rem] py-2 px-6 rounded-2xl hover:bg-red-400 mr-1 mb-1 ease-linear transition-all duration-150"
-                                onClick={() => setShowModalHapus(false)}>
-                                Hapus
-                            </button>
+                                <ButtonAksi
+                                    text={'Batal'}
+                                    variant='red'
+                                    onClick={() => setShowModalHapus(false)}
+                                />
+                                <ButtonAksi
+                                    text={'Simpan'}
+                                    variant='success'
+                                    onClick={() => setShowModalHapus(false)}
+                                />
                             </div>
                         </div>
                     </div>
@@ -323,7 +315,7 @@ const AdminChapter = () => {
                                     x
                                 </button>
                             </div>
-                            <p className="flex justify-center items-center text-xs lg:text-sm text-[#6148FF] font-bold py-2">
+                            <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
                                 Filter Chapter
                             </p>
 
@@ -488,14 +480,13 @@ const AdminChapter = () => {
                             </form>
 
                             {/*footer*/}
-                            {/* <div className="flex items-center justify-center p-2 mb-2">
-                                <button
-                                    type="button"
-                                    className="bg-[#6148FF] text-white active:bg-indigo-500 hover:bg-indigo-200 font-bold text-[0.625rem] rounded-2xl ease-linear transition-all duration-150"
-                                    onClick={() => setShowModalFilter(false)}>
-                                    Filter
-                                </button>
-                            </div> */}
+                            <div className="flex items-center justify-center p-2 mb-2">
+                                <ButtonAksi
+                                    text={'Filter'}
+                                    variant='darkBlue'
+                                    onClick={() => setShowModalFilter(false)}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

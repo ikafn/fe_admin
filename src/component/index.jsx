@@ -1,9 +1,12 @@
-import Button from "./Button";
 import SidebarAdmin from "./SidebarAdmin"; 
 import HeaderAdmin from "./HeaderAdmin";
 import Card from "./Card";
+import Button from "./Button";
+import ButtonAksi from "./ButtonAksi";
 
-export {Button,
-    SidebarAdmin,
+export {SidebarAdmin,
     HeaderAdmin,
-    Card}
+    Card,
+    Button,
+    ButtonAksi
+}

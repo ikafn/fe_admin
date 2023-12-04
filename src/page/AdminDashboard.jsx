@@ -1,5 +1,5 @@
 
-import { Card, HeaderAdmin, SidebarAdmin } from "../component";
+import { Button, ButtonAksi, Card, HeaderAdmin, SidebarAdmin } from "../component";
 import { icon_filter } from "../assets";
 import { icon_search } from "../assets";
 import { useState } from "react";
@@ -41,16 +41,15 @@ const AdminDashboard = () => {
                     </p>
                 </div>
 
-                <div className="flex ">
+                <div className="flex items-center">
+                    <Button
+                        variant='white'
+                        onClick={() => setShowModalFilter(true)}
+                        img={icon_filter}
+                    />
                     <button 
                         type="button"
-                        className="flex items-center justify-center w-12 h-4 lg:w-24 lg:h-8 bg-white ring-1 ring-[#6148FF] hover:bg-indigo-200 font-semibold my-[1.13rem] rounded-3xl "
-                        onClick={() => setShowModalFilter(true)}>
-                        <img src={icon_filter}/> 
-                    </button>
-                    <button 
-                        type="button"
-                        className="flex items-center justify-center p-1 w-5 h-4 lg:w-10 lg:h-8 bg-white font-semibold my-[1.13rem] mx-1 rounded-3xl">
+                        className="flex items-center justify-center p-1 w-5 h-4 lg:w-10 lg:h-7 bg-white font-semibold my-[1.13rem] rounded-3xl">
                         <img src={icon_search} /> 
                     </button>
                 </div>
@@ -147,7 +146,7 @@ const AdminDashboard = () => {
                                 x
                             </button>
                         </div>
-                        <p className="flex justify-center items-center text-xs lg:text-sm text-[#6148FF] font-bold py-2">
+                        <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
                             Filter Pembayaran
                         </p>
 
@@ -222,15 +221,14 @@ const AdminDashboard = () => {
                             </div>
                         </form>
 
-                        {/*footer*/}
-                        {/* <div className="flex items-center justify-center p-2 mb-2">
-                            <button
-                                type="button"
-                                className="bg-[#6148FF] text-white active:bg-indigo-500 hover:bg-indigo-200 font-bold text-[0.625rem] py-2 px-6 rounded-2xl mr-1 mb-1 ease-linear transition-all duration-150"
-                                onClick={() => setShowModalFilter(false)}>
-                                Filter
-                            </button>
-                        </div> */}
+                        {/* footer */}
+                        <div className="flex items-center justify-center p-2 mb-2">
+                            <ButtonAksi
+                                text={'Filter'}
+                                variant='darkBlue'
+                                onClick={() => setShowModalFilter(false)}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
