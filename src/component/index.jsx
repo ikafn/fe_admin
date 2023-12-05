@@ -3,10 +3,16 @@ import HeaderAdmin from "./HeaderAdmin";
 import Card from "./Card";
 import Button from "./Button";
 import ButtonAksi from "./ButtonAksi";
+import TableCourses from "./TableCourses";
+import TableChapter from "./TableChapter";
+import TableModul from "./TableModul";
 
 export {SidebarAdmin,
     HeaderAdmin,
     Card,
     Button,
-    ButtonAksi
+    ButtonAksi,
+    TableCourses,
+    TableChapter,
+    TableModul
 }
