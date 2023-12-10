@@ -1,9 +1,25 @@
-import React, { useState }  from "react";
+import React, { useEffect, useState }  from "react";
 import ButtonAksi from "./ButtonAksi";
+import axios from "axios";
 
 const TableModul = () => {
     const [showModalUbah, setShowModalUbah] = useState(false);
     const [showModalHapus, setShowModalHapus] = useState(false);
+
+    const [modules, setModules] = useState([]);
+    const getListModules = async () => {
+        try {
+            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/modules');
+            // console.log(data)
+            setModules(data.data.data);
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    
+    useEffect(() => {
+        getListModules();
+    }, [])
 
     return (
       <>
@@ -27,54 +43,32 @@ const TableModul = () => {
                 </thead>
 
                 <tbody className="border-t-0 px-4 text-[0.5rem] lg:text-[0.625rem] font-bold whitespace-nowrap p-4 text-left">
-                    <tr>
-                        <td className="p-6 py-2">
-                            5ec9d2c2-d8ca-44b2-9691-148ee1abba34
-                        </td>
-                        <td className="p-6 py-2">
-                            Programming Introduction
-                        </td>
-                        <td className="p-6 py-2">
-                            10
-                        </td>
-                        <td className="flex font-bold whitespace-nowrap p-6 py-2">
-                            <ButtonAksi
-                                text={'Ubah'}
-                                variant='darkBlue'
-                                onClick={() => setShowModalUbah(true)}
-                            />
-                            <ButtonAksi
-                                text={'Hapus'}
-                                variant='red'
-                                onClick={() => setShowModalHapus(true)}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                    <td className="p-6 py-2">
-                            5ec9d2c2-d8ca-44b2-9691-148ee1abba34
-                        </td>
-                        <td className="p-6 py-2">
-                            Menguasai Figma dengan Modern UI Dashboard Design
-                        </td>
-                        <td className="p-6 py-2">
-                            10
-                        </td>
-                        <td className="flex font-bold whitespace-nowrap p-6 py-2">
-                            <ButtonAksi
-                                text={'Ubah'}
-                                variant='darkBlue'
-                                onClick={() => setShowModalUbah(true)}
-                            />
-                            <ButtonAksi
-                                text={'Hapus'}
-                                variant='red'
-                                onClick={() => setShowModalHapus(true)}
-                            />
-                        </td>
-                    </tr>
+                    {modules.map((module) => ( 
+                        <tr key={module.id}>
+                            <td className="p-6 py-2">
+                                {module.chapter_id}
+                            </td>
+                            <td className="p-6 py-2">
+                                {module.name}
+                            </td>
+                            <td className="p-6 py-2">
+                                {module.duration}
+                            </td>
+                            <td className="flex font-bold whitespace-nowrap p-6 py-2">
+                                <ButtonAksi
+                                    text={'Ubah'}
+                                    variant='darkBlue'
+                                    onClick={() => setShowModalUbah(true)}
+                                />
+                                <ButtonAksi
+                                    text={'Hapus'}
+                                    variant='red'
+                                    onClick={() => setShowModalHapus(true)}
+                                />
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
-
             </table>
         </div>
 

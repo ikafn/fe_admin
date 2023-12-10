@@ -1,13 +1,55 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, ButtonAksi, Card, HeaderAdmin, SidebarAdmin, TableChapter } from "../component";
 import { icon_filter } from "../assets";
 import { icon_search } from "../assets";
 import { icon_tambah } from "../assets";
+import axios from "axios";
+import { Navigate } from "react-router-dom";
 
 
 const AdminChapter = () => {
     const [showModalTambah, setShowModalTambah] = useState(false);
     const [showModalFilter, setShowModalFilter] = useState(false);
+
+    const [course_id, setCourse_id] = useState('');
+    const [name, setName] = useState('');
+
+    const onSubmit = async () => {
+        try {
+          const payload = {
+            course_id,
+            name
+          }
+          const res = await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/chapters', payload)
+        //   localStorage.setItem('token', res.data.data.token)
+          setCourse_id('')
+          setName('')
+    
+        //   Navigate('/admin/chapter');
+    
+        } catch(err) {
+          console.log(err);
+        } 
+    }
+
+    const [id, setId] = useState('');
+    const getCourseId = async () => {
+        try {
+            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/courses');
+            console.log(data.data.data)
+            setId(data.data.data);
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        getCourseId();
+    }, [])
+
+    const [value, setValue] = useState('')
+    function handleSelect(event) {
+        setValue(event.target.value)
+    }
 
     return (
         <>
@@ -69,7 +111,7 @@ const AdminChapter = () => {
             </div>
 
             <TableChapter />
-            
+
             {/*  ---Tabel Chapter---  */}
         </div>
 
@@ -98,20 +140,53 @@ const AdminChapter = () => {
                             </p>
                             <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
                                 <div className="flex-auto p-1">
-                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">ID Kelas</label>
-                                    <select class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border">
-                                        <option>5ec9d2c2-d8ca-44b2-9691-148ee1abba34</option>
-                                        <option>5ec9d2c2-d8ca-44b2-9691-148ee1abba34</option>
-                                        <option>5ec9d2c2-d8ca-44b2-9691-148ee1abba34</option>
-                                    </select>
+                                    <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">ID Kelas</label>
+                                    {/* <select className="form-select text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"  
+                                //    value={course_id}
+                                //    onChange={(e) => setCourse_id(e.target.value)} 
+                                >
+                                        {course_id.map((course) => ( 
+                                            <option 
+                                                value={course_id}
+                                                onChange={(e) => setCourse_id(e.target.value)}
+                                                // value={course.value} 
+                                                key={course.id} >
+                                                    {course.id}
+                                            </option>
+                                        ))}
+                                    </select>  */}
+
+                                    <select className="form-select text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"  
+                                    onChange={handleSelect} >
+                                        {id.map((course) => ( 
+                                            <option 
+                                                // value={[course.id]}
+                                                // onChange={(e) => setCourse_id(e.target.value)}
+                                                value={course.id} 
+                                                key={course.id} >
+                                                    {course.id}
+                                            </option>
+                                        ))}
+                                    </select> 
+
+                                    {/* <input 
+                                        type="text"
+                                        id="name" 
+                                        className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
+                                        placeholder="Text" 
+                                        value={id}
+                                        onChange={(e) => setId(e.target.value)}/> */}
+                                    
                                 </div>
                                 <div className="flex-auto p-1">
-                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Chapter</label>
+                                    <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Chapter</label>
                                     <input 
                                         type="text"
                                         id="name" 
                                         className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                        placeholder="Text" />
+                                        placeholder="Text" 
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}/>
                                 </div>
                             </form>
                             
@@ -125,7 +200,7 @@ const AdminChapter = () => {
                             <ButtonAksi
                                 text={'Simpan'}
                                 variant='success'
-                                onClick={() => setShowModalTambah(false)}
+                                onClick={onSubmit}
                             />
                             </div>
                         </div>

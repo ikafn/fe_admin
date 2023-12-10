@@ -1,5 +1,5 @@
 
-import { Button, ButtonAksi, Card, HeaderAdmin, SidebarAdmin } from "../component";
+import { Button, ButtonAksi, Card, HeaderAdmin, SidebarAdmin, TableOrders } from "../component";
 import { icon_filter } from "../assets";
 import { icon_search } from "../assets";
 import { useState } from "react";
@@ -33,7 +33,7 @@ const AdminDashboard = () => {
             </div>
             {/*  ---Card Count Class and User---  */}
 
-            {/*  ---Tabel Payment---  */}
+            {/*  ---Tabel Orders---  */}
             <div className="flex justify-between">
                 <div className="flex items-center">
                     <p className="text-[0.625rem] lg:text-sm font-bold">
@@ -55,77 +55,9 @@ const AdminDashboard = () => {
                 </div>
             </div>
         
-            <div className="overflow-x-auto min-w-screen">
-                <table className="table w-full items-center bg-transparent border-collapse ">
-                    <thead className="bg-[#EBF3FC] lg:py-3 text-[0.625rem] lg:text-xs whitespace-nowrap font-semibold text-left">
-                        <tr>
-                            <th className="p-6 py-2">
-                                ID
-                            </th>
-                            <th className="p-6 py-2">
-                                Kategori
-                            </th>
-                            <th className="p-6 py-2">
-                                Kelas Premium
-                            </th>
-                            <th className="p-6 py-2">
-                                Status
-                            </th>
-                            <th className="p-6 py-2">
-                                Metode Pembayaran
-                            </th>
-                            <th className="p-6 py-2">
-                                Tanggal Bayar
-                            </th>
-                        </tr>
-                    </thead>
+            <TableOrders />
 
-                    <tbody className="border-t-0 px-4 text-[0.5rem] lg:text-[0.625rem] font-bold whitespace-nowrap p-4 text-left">
-                        <tr>
-                            <td className="p-6 py-2 text-[#4E5566]">
-                                johndoe23
-                            </td>
-                            <td className="p-6 py-2 text-[#4E5566]">
-                                UI/UX Design
-                            </td>
-                            <td className="p-6 py-2">
-                                Belajar Web Designer dengan Figma 
-                            </td> 
-                            <td className="p-6 py-2">
-                                SUDAH BAYAR
-                            </td>
-                            <td className="p-6 py-2">
-                                Credit Card
-                            </td>
-                            <td className="p-6 py-2">
-                                21 Sep, 2023 at 2:00 AM
-                            </td>
-                        </tr>
-                        <tr>
-                            <th className="p-6 py-2 text-[#4E5566]">
-                                johndoe23
-                            </th>
-                            <td className="p-6 py-2 text-[#4E5566]">
-                                UI/UX Design
-                            </td>
-                            <td className="p-6 py-2">
-                                Belajar Web Designer dengan Figma 
-                            </td> 
-                            <td className="p-6 py-2">
-                                BELUM BAYAR
-                            </td>
-                            <td className="p-6 py-2">
-                                -
-                            </td>
-                            <td className="p-6 py-2">
-                                -
-                            </td>
-                        </tr>
-                    </tbody>
-
-                </table>
-            </div>
-            {/*  ---Tabel Payment---  */}
+            {/*  ---Tabel Orders---  */}
         </div>
 
 

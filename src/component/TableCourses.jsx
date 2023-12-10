@@ -1,9 +1,34 @@
-import React, { useState }  from "react";
+import React, { useEffect, useState }  from "react";
 import ButtonAksi from "./ButtonAksi";
+import axios from "axios";
 
 const TableCourses = () => {
     const [showModalUbah, setShowModalUbah] = useState(false);
     const [showModalHapus, setShowModalHapus] = useState(false);
+
+    const [courses, setCourses] = useState([]);
+    const getListCourses = async () => {
+        try {
+            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/courses');
+            // console.log(data)
+            setCourses(data.data.data);
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        getListCourses();
+    }, [])
+
+    // useEffect(() => {
+    //   const fetchData = async () => {
+    //     const response = await fetch('https://befinalprojectbinar-production.up.railway.app/api/admin/courses');
+    //     const { data } = await response.json();
+    //     setCourses(data);
+    //   };
+    //   fetchData();
+    // });
+
 
     return (
       <>
@@ -36,102 +61,42 @@ const TableCourses = () => {
                 </thead>
 
                 <tbody className="border-t-0 px-4 text-[0.5rem] lg:text-[0.625rem] font-bold whitespace-nowrap p-4 text-left">
-                    <tr>
-                        <td className="p-6 py-2 text-[#4E5566]">
-                            UIUX0123
-                        </td>
-                        <td className="p-6 py-2 text-[#4E5566]">
-                            UI/UX Design
-                        </td>
-                        <td className="p-6 py-2">
-                            Belajar Web Designer dengan Figma 
-                        </td>
-                        <td className="p-6 py-2">
-                            GRATIS
-                        </td>
-                        <td className="p-6 py-2">
-                            Begginer
-                        </td>
-                        <td className="p-6 py-2">
-                            Rp 0
-                        </td>
-                        <td className="flex font-bold whitespace-nowrap p-6 py-2">
-                            <ButtonAksi
-                                text={'Ubah'}
-                                variant='darkBlue'
-                                onClick={() => setShowModalUbah(true)}
-                            />
-                            <ButtonAksi
-                                text={'Hapus'}
-                                variant='red'
-                                onClick={() => setShowModalHapus(true)}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="p-6 py-2 text-[#4E5566]">
-                            DS0223
-                        </td>
-                        <td className="p-6 py-2 text-[#4E5566]">
-                            Data Science
-                        </td>
-                        <td className="p-6 py-2">
-                            Data Cleaning untuk pemula 
-                        </td>
-                        <td className="p-6 py-2">
-                            GRATIS
-                        </td>
-                        <td className="p-6 py-2">
-                            Begginer
-                        </td>
-                        <td className="p-6 py-2">
-                            Rp 0
-                        </td>
-                        <td className="flex font-bold whitespace-nowrap p-6 py-2">
-                            <ButtonAksi
-                                text={'Ubah'}
-                                variant='darkBlue'
-                                onClick={() => setShowModalUbah(true)}
-                            />
-                            <ButtonAksi
-                                text={'Hapus'}
-                                variant='red'
-                                onClick={() => setShowModalHapus(true)}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th className="p-6 py-2 text-[#4E5566]">
-                            DS0223
-                        </th>
-                        <td className="p-6 py-2 text-[#4E5566]">
-                            Data Science
-                        </td>
-                        <td className="p-6 py-2">
-                            Data Cleaning untuk Professional 
-                        </td> 
-                        <td className="p-6 py-2">
-                            PREMIUM
-                        </td>
-                        <td className="p-6 py-2">
-                            Advanced
-                        </td>
-                        <td className="p-6 py-2">
-                            Rp 199,000
-                        </td>
-                        <td className="flex font-bold whitespace-nowrap p-6 py-2">
-                            <ButtonAksi
-                                text={'Ubah'}
-                                variant='darkBlue'
-                                onClick={() => setShowModalUbah(true)}
-                            />
-                            <ButtonAksi
-                                text={'Hapus'}
-                                variant='red'
-                                onClick={() => setShowModalHapus(true)}
-                            />
-                        </td>
-                    </tr>
+                    {courses.map((course) => ( 
+                        <tr key={course.id}>
+                            <td className="p-6 py-2 text-[#4E5566]">
+                                {course.code}
+                            </td>
+                            <td className="p-6 py-2 text-[#4E5566]">
+                                {course.category.category}
+                            </td>
+                            <td className="p-6 py-2">
+                                {course.name} 
+                            </td>
+                            <td className="p-6 py-2">
+                                {course.type}
+                            </td>
+                            <td className="p-6 py-2">
+                                {course.level}
+                            </td>
+                            <td className="p-6 py-2">
+                                {course.price}
+                            </td>
+                            <td className="flex font-bold whitespace-nowrap p-6 py-2">
+                                <ButtonAksi
+                                    text={'Ubah'}
+                                    variant='darkBlue'
+                                    onClick={() => setShowModalUbah(true)}
+                                />
+                                <ButtonAksi
+                                    text={'Hapus'}
+                                    variant='red'
+                                    onClick={() => setShowModalHapus(true)}
+                                />
+                            </td>
+                        </tr>
+
+                    ))}
+                
                 </tbody>
 
             </table>

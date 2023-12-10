@@ -6,6 +6,7 @@ import ButtonAksi from "./ButtonAksi";
 import TableCourses from "./TableCourses";
 import TableChapter from "./TableChapter";
 import TableModul from "./TableModul";
+import TableOrders from "./TableOrders";
 
 export {SidebarAdmin,
     HeaderAdmin,
@@ -14,5 +15,6 @@ export {SidebarAdmin,
     ButtonAksi,
     TableCourses,
     TableChapter,
-    TableModul
+    TableModul,
+    TableOrders
 }

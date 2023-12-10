@@ -1,9 +1,26 @@
-import React, { useState }  from "react";
+import React, { useEffect, useState }  from "react";
 import ButtonAksi from "./ButtonAksi";
+import axios from "axios";
 
 const TableChapter = () => {
     const [showModalUbah, setShowModalUbah] = useState(false);
     const [showModalHapus, setShowModalHapus] = useState(false);
+
+    const [chapters, setChapters] = useState([]);
+
+    const getListChapters = async () => {
+        try {
+            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/chapters');
+            // console.log(data)
+            setChapters(data.data.data);
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    
+    useEffect(() => {
+        getListChapters();
+    }, [])
 
     return (
       <>
@@ -24,48 +41,30 @@ const TableChapter = () => {
                 </thead>
 
                 <tbody className="border-t-0 px-4 text-[0.5rem] lg:text-[0.625rem] font-bold whitespace-nowrap p-4 text-left">
-                    <tr>
-                        <td className="p-6 py-2">
-                            5ec9d2c2-d8ca-44b2-9691-148ee1abba34
-                        </td>
-                        <td className="p-6 py-2">
-                            Chapter 1 - Pendahuluan
-                        </td>
-                        <td className="flex font-bold whitespace-nowrap p-6 py-2">
-                            <ButtonAksi
-                                text={'Ubah'}
-                                variant='darkBlue'
-                                onClick={() => setShowModalUbah(true)}
-                            />
-                            <ButtonAksi
-                                text={'Hapus'}
-                                variant='red'
-                                onClick={() => setShowModalHapus(true)}
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td className="p-6 py-2 ">
-                            5ec9d2c2-d8ca-44b2-9691-148ee1abba34
-                        </td>
-                        <td className="p-6 py-2 ">
-                            Chapter 2 - Memulai Desain
-                        </td>
-                        <td className="flex font-bold whitespace-nowrap p-6 py-2">
-                            <ButtonAksi
-                                text={'Ubah'}
-                                variant='darkBlue'
-                                onClick={() => setShowModalUbah(true)}
-                            />
-                            <ButtonAksi
-                                text={'Hapus'}
-                                variant='red'
-                                onClick={() => setShowModalHapus(true)}
-                            />
-                        </td>
-                    </tr>
-                </tbody>
+                    {chapters.map((chapter) => (
+                        <tr key={chapter.id}>
+                            <td className="p-6 py-2">
+                                {chapter.course_id}
+                            </td>
+                            <td className="p-6 py-2">
+                                {chapter.name}
+                            </td>
+                            <td className="flex font-bold whitespace-nowrap p-6 py-2">
+                                <ButtonAksi
+                                    text={'Ubah'}
+                                    variant='darkBlue'
+                                    onClick={() => setShowModalUbah(true)}
+                                />
+                                <ButtonAksi
+                                    text={'Hapus'}
+                                    variant='red'
+                                    onClick={() => setShowModalHapus(true)}
+                                />
+                            </td>
+                        </tr>
 
+                    ))}
+                </tbody>
             </table>
         </div>
 
@@ -92,17 +91,19 @@ const TableChapter = () => {
                         <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
                             Ubah Chapter
                         </p>
+
+                        
                         <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">ID Kelas</label>
-                                <select class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border">
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">ID Kelas</label>
+                                <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border">
                                     <option>5ec9d2c2-d8ca-44b2-9691-148ee1abba34</option>
                                     <option>5ec9d2c2-d8ca-44b2-9691-148ee1abba34</option>
                                     <option>5ec9d2c2-d8ca-44b2-9691-148ee1abba34</option>
                                 </select>
                             </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Chapter</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Chapter</label>
                                 <input 
                                     type="text"
                                     id="name" 

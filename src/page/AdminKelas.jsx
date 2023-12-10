@@ -1,13 +1,95 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button, ButtonAksi, Card, HeaderAdmin, SidebarAdmin, TableCourses } from "../component";
 import { icon_filter } from "../assets";
 import { icon_search } from "../assets";
 import { icon_tambah } from "../assets";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 const AdminKelas = () => {
     const [showModalTambah, setShowModalTambah] = useState(false);
     const [showModalFilter, setShowModalFilter] = useState(false);
+
+    // const [addCourses, setAddCourses] = useState({
+    //     code: '',
+    //     category: '',
+    //     level: '',
+    //     name: '',
+    //     facilitator: '',
+    //     type: '',
+    //     price: '',
+    //     telegram_group: '',
+    //     introduction_video: '',
+    //     description: '',
+    //     on_boarding: ''
+    // })
+
+    // const navigate = useNavigate();
+
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/courses', addCourses)
+    //     .then(res => {
+    //         console.log(res);
+    //         navigate('/admin/kelas')
+    //     })
+    //     .catch(err => console.log(err))
+    // }
+
+
+    const [code, setCode] = useState('');
+    const [category, setCategory] = useState('');
+    const [level, setLevel] = useState('');
+    const [name, setName] = useState('');
+    const [facilitator, setFacilitator] = useState('');
+    const [type, setType] = useState('');
+    const [price, setPrice] = useState('');
+    const [telegram, setTelegram] = useState('');
+    const [video, setVideo] = useState('');
+    const [description, setDescription] = useState('');
+    const [onboarding, setOnboarding] = useState('');
+
+
+
+    const onSubmit = async () => {
+        try {
+          const payload = {
+            code,
+            category,
+            level,
+            name,
+            facilitator,
+            type,
+            price,
+            telegram,
+            video,
+            description,
+            onboarding
+          }
+    
+          const res = await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/chapters', payload)
+    
+        //   localStorage.setItem('token', res.data.data.token)
+          setCode('')
+          setCategory('')
+          setLevel('')
+          setName('')
+          setFacilitator('')
+          setType('')
+          setPrice('')
+          setTelegram('')
+          setVideo('')
+          setDescription('')
+          setOnboarding('')
+
+    
+        //   navigate('/admin/chapter');
+    
+        } catch(err) {
+          console.log(err);
+        } 
+    }
 
     return (
         <>
@@ -69,6 +151,7 @@ const AdminKelas = () => {
             </div>
 
             <TableCourses />
+
             
             {/*  ---Tabel Kelas---  */}
         </div>
@@ -98,17 +181,21 @@ const AdminKelas = () => {
                         </p>
                         <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kode Kelas</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kode Kelas</label>
                                 <input 
                                     type="text"
-                                    id="name" 
+                                    id="code" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    placeholder="Text" />
+                                    placeholder="Text" 
+                                    value={code}
+                                    onChange={(e) => setCode(e.target.value)}/>
                             </div>
                             <div className="flex p-1 gap-2">
                                 <div className="flex flex-col w-1/2">
-                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kategori Kelas</label>
-                                    <select class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border">
+                                    <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kategori Kelas</label>
+                                    <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"
+                                    value={category}
+                                    onChange={(e) => setCategory(e.target.value)}>
                                         <option>UI/UX Design</option>
                                         <option>Web Development</option>
                                         <option>Android Development</option>
@@ -117,8 +204,10 @@ const AdminKelas = () => {
                                     </select>
                                 </div>
                                 <div className="flex flex-col w-1/2">
-                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Level</label>
-                                    <select class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border">
+                                    <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Level</label>
+                                    <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"
+                                    value={level}
+                                    onChange={(e) => setLevel(e.target.value)}>
                                         <option>Beginner</option>
                                         <option>Intermediate</option>
                                         <option>Advanced</option>
@@ -126,69 +215,85 @@ const AdminKelas = () => {
                                 </div>
                             </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Kelas</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Kelas</label>
                                 <input 
                                     type="text"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    placeholder="Text" />
+                                    placeholder="Text"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)} />
                             </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Fasilitator</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Fasilitator</label>
                                 <input 
                                     type="text"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    placeholder="Text" />
+                                    placeholder="Text" 
+                                    value={facilitator}
+                                    onChange={(e) => setFacilitator(e.target.value)} />
                             </div>
                             <div className="flex p-1 gap-2">
                                 <div className="flex flex-col w-1/2">
-                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Tipe Kelas</label>
-                                    <select class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border">
-                                        <option>Gratis</option>
+                                    <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Tipe Kelas</label>
+                                    <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"
+                                    value={type}
+                                    onChange={(e) => setType(e.target.value)} >
+                                        <option>Free</option>
                                         <option>Premium</option>
                                     </select>
                                 </div>
                                 <div className="flex flex-col w-1/2">
-                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Harga</label>
+                                    <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Harga</label>
                                     <input 
                                     type="text"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-2  border-gray-300 rounded-lg border" 
-                                    placeholder="Text" />
+                                    placeholder="Text" 
+                                    value={type}
+                                    onChange={(e) => setType(e.target.value)} />
                                 </div>
                             </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Grup Telegram</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Grup Telegram</label>
                                 <input 
                                     type="text"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    placeholder="Link" />
+                                    placeholder="Link" 
+                                    value={telegram}
+                                    onChange={(e) => setTelegram(e.target.value)} />
                             </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Video</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Video</label>
                                 <input 
                                     type="text"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    placeholder="Link" />
+                                    placeholder="Link" 
+                                    value={video}
+                                    onChange={(e) => setVideo(e.target.value)} />
                             </div>
                             <div className=" p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Deskripsi Kelas</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Deskripsi Kelas</label>
                                 <textarea 
                                     type="text"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-10 flex p-2 border-gray-300 rounded-lg border" 
-                                    placeholder="Paragraph" />
+                                    placeholder="Paragraph" 
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)} />
                             </div>
                             <div className=" p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Deskripsi On Boarding</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Deskripsi On Boarding</label>
                                 <textarea 
                                     type="text"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-10 flex p-2 border-gray-300 rounded-lg border" 
-                                    placeholder="Paragraph" />
+                                    placeholder="Paragraph" 
+                                    value={onboarding}
+                                    onChange={(e) => setOnboarding(e.target.value)} />
                             </div>
                             
                         </form>
@@ -203,7 +308,7 @@ const AdminKelas = () => {
                             <ButtonAksi
                                 text={'Simpan'}
                                 variant='success'
-                                onClick={() => setShowModalTambah(false)}
+                                onClick={onSubmit}
                             />
                         </div>
                     </div>
@@ -409,9 +514,8 @@ const AdminKelas = () => {
                 <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
                 </>
             ) : null}
-            {/*  ---Modals Filter---  */}
-        
-        
+        {/*  ---Modals Filter---  */}
+
         </> 
     )
 }
