@@ -5,22 +5,29 @@ import axios from "axios";
 const TableChapter = () => {
     const [showModalUbah, setShowModalUbah] = useState(false);
     const [showModalHapus, setShowModalHapus] = useState(false);
+    const [chapterData, setChapterData] = useState();
 
     const [chapters, setChapters] = useState([]);
-
     const getListChapters = async () => {
         try {
             const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/chapters');
-            // console.log(data)
             setChapters(data.data.data);
         } catch(err) {
             console.log(err)
         }
     }
-    
     useEffect(() => {
         getListChapters();
     }, [])
+
+    // const handleUpdate = async () => {
+    //     try {
+    //         const data = await axios.put('https://befinalprojectbinar-production.up.railway.app/api/admin/chapters');
+    //         setChapterData(data.data.data);
+    //     } catch(err) {
+    //         console.log(err)
+    //     }
+    // }
 
     return (
       <>
@@ -53,12 +60,12 @@ const TableChapter = () => {
                                 <ButtonAksi
                                     text={'Ubah'}
                                     variant='darkBlue'
-                                    onClick={() => setShowModalUbah(true)}
+                                    onClick={() => {setShowModalUbah(true); setChapterData(chapter)}}
                                 />
                                 <ButtonAksi
                                     text={'Hapus'}
                                     variant='red'
-                                    onClick={() => setShowModalHapus(true)}
+                                    onClick={() => {setShowModalHapus(true); setChapterData(chapter)}}
                                 />
                             </td>
                         </tr>
@@ -92,15 +99,15 @@ const TableChapter = () => {
                             Ubah Chapter
                         </p>
 
-                        
                         <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
                             <div className="flex-auto p-1">
                                 <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">ID Kelas</label>
-                                <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border">
-                                    <option>5ec9d2c2-d8ca-44b2-9691-148ee1abba34</option>
-                                    <option>5ec9d2c2-d8ca-44b2-9691-148ee1abba34</option>
-                                    <option>5ec9d2c2-d8ca-44b2-9691-148ee1abba34</option>
-                                </select>
+                                <input 
+                                    type="text"
+                                    id="name" 
+                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
+                                    placeholder="Text" 
+                                    defaultValue={chapterData.course_id}/>
                             </div>
                             <div className="flex-auto p-1">
                                 <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Chapter</label>
@@ -108,7 +115,8 @@ const TableChapter = () => {
                                     type="text"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    placeholder="Text" />
+                                    placeholder="Text" 
+                                    defaultValue={chapterData.name}/>
                             </div>
                         </form>
                         
@@ -122,7 +130,7 @@ const TableChapter = () => {
                             <ButtonAksi
                                 text={'Simpan'}
                                 variant='success'
-                                onClick={() => setShowModalUbah(false)}
+                                onClick={handleUpdate}
                             />
                         </div>
                     </div>
