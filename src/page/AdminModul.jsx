@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, ButtonAksi, Card, HeaderAdmin, SidebarAdmin, TableModul } from "../component";
 import { icon_filter } from "../assets";
 import { icon_search } from "../assets";
@@ -19,6 +19,11 @@ const AdminModul = () => {
     const [video, setVideo] = useState('');
     const [duration, setDuration] = useState('');
 
+    // const chapter_id = useRef('')
+    // const name = useRef('')
+    // const video = useRef('')
+    // const duration = useRef('')
+
     // GET ALL MODULES 
     const getListModules = async () => {
         try {
@@ -34,7 +39,7 @@ const AdminModul = () => {
     }, [])
 
     // CREATE NEW MODULES 
-    const onSubmit = async () => {
+    const handleCreate = async () => {
         try {
           const payload = {
             chapter_id,
@@ -66,10 +71,30 @@ const AdminModul = () => {
         getChapterId();
     }, [])
 
+
+    // UPDATE MODULE 
+    const handleUpdate = async () => {
+        try {
+          const payloadUpdate = {
+            chapter_id,
+            name,
+            video,
+            duration
+          }
+          await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/modules/${modulesData.id}`, payloadUpdate)
+
+        // console.log(namaRef.current.value)
+        setShowModalUbah(false);
+        getListModules()
+        } catch(err) {
+          console.log(err);
+        } 
+    }
+
     // DELETE MODULE 
     const handleDelete = async () => {
         try {
-            const res = await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/modules/${([modulesData.id])}`);
+            const res = await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/modules/${modulesData.id}`);
             setShowModalHapus(false)
             getListModules()
         } catch(err) {
@@ -173,7 +198,7 @@ const AdminModul = () => {
                                     <ButtonAksi
                                         text={'Ubah'}
                                         variant='darkBlue'
-                                        onClick={() => {setShowModalUbah(true); setModulesData(module)}}
+                                        onClick={() => {setShowModalUbah(true); setModulesData(module); {console.log(module)}}}
                                     />
                                     <ButtonAksi
                                         text={'Hapus'}
@@ -186,7 +211,6 @@ const AdminModul = () => {
                     </tbody>
                 </table>
             </div>
-            
             {/*  ---Tabel Modul---  */}
     
         </div>
@@ -236,7 +260,7 @@ const AdminModul = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text" 
-                                    value={name}
+                                    // value={name}
                                     onChange={(e) => setName(e.target.value)} />
                             </div>
                             <div className="flex-auto p-1">
@@ -246,7 +270,7 @@ const AdminModul = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text" 
-                                    value={video}
+                                    // value={video}
                                     onChange={(e) => setVideo(e.target.value)} />
                             </div>
                             <div className="flex-auto p-1">
@@ -256,7 +280,7 @@ const AdminModul = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text" 
-                                    value={duration}
+                                    // value={duration}
                                     onChange={(e) => setDuration(e.target.value)} />
                             </div>
                             
@@ -272,7 +296,7 @@ const AdminModul = () => {
                             <ButtonAksi
                                 text={'Simpan'}
                                 variant='success'
-                                onClick={onSubmit}
+                                onClick={() => handleCreate()}
                             />
                         </div>
                     </div>
@@ -424,42 +448,50 @@ const AdminModul = () => {
                         </p>
                         <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">ID Chapter</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">ID Chapter</label>
                                 <input 
                                     type="text"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    placeholder="Text" 
-                                    defaultValue={modulesData.chapter_id}/>
+                                    // ref={chapter_id.current.value}
+                                    defaultValue={modulesData.chapter_id}
+                                    onChange={(e) => setChapter_id(e.target.value)}
+                                    // disabled
+                                    />
                             </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Modul</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Modul</label>
                                 <input 
                                     type="text"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    placeholder="Text" 
-                                    defaultValue={modulesData.name}/>
+                                    // ref={name.current.value}
+                                    defaultValue={modulesData.name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    />
                             </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Video Modul</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Video Modul</label>
                                 <input 
                                     type="text"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    placeholder="Text" 
-                                    defaultValue={modulesData.video}/>
+                                    // ref={video.current.value}
+                                    defaultValue={modulesData.video}
+                                    onChange={(e) => setVideo(e.target.value)}
+                                    />
                             </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Durasi</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Durasi</label>
                                 <input 
                                     type="text"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    placeholder="Text" 
-                                    defaultValue={modulesData.duration}/>
+                                    // ref={duration}
+                                    defaultValue={modulesData.duration}
+                                    onChange={(e) => setDuration(e.target.value)}
+                                    />
                             </div>
-                            
                         </form>
                         
                         {/*footer*/}
@@ -472,7 +504,7 @@ const AdminModul = () => {
                             <ButtonAksi
                                 text={'Simpan'}
                                 variant='success'
-                                onClick={() => setShowModalUbah(false)}
+                                onClick={() => handleUpdate()}
                             />
                         </div>
                     </div>

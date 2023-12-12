@@ -27,12 +27,13 @@ const AdminKelas = () => {
 
     const [courses, setCourses] = useState([]);
     const [coursesData, setCoursesData] = useState([]);
+    const [coursesDetail, setCoursesDetail] = useState([]);
 
     // GET ALL COURSES 
     const getListCourses = async () => {
         try {
             const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/courses');
-            console.log(data.data.data)
+            // console.log(data.data.data)
             setCourses(data.data.data);
         } catch(err) {
             console.log(err)
@@ -41,6 +42,22 @@ const AdminKelas = () => {
     useEffect(() => {
         getListCourses();
     }, [])
+
+
+    // GET DETAIL COURSSE 
+    const getDetailCourses = async () => {
+        try {
+            const data = await axios.get(`https://befinalprojectbinar-production.up.railway.app/api/courses/${([coursesData.id])}`);
+            console.log(data.data.data)
+            setCoursesDetail(data.data.data);
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        getDetailCourses();
+    }, [])
+
 
     // CREATE NEW COURSES 
     const onSubmit = async () => {
@@ -83,14 +100,11 @@ const AdminKelas = () => {
     useEffect(() => {
         getCategoryId();
     }, [])
-    function handleSelect(event) {
-        setCategory(event.target.value)
-    }
 
     // DELETE COURSE 
     const handleDelete = async () => {
         try {
-            const res = await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/courses/${([coursesData.id])}`);
+            const res = await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/courses/${coursesData.id}`);
             setShowModalHapus(false)
             getListCourses()
         } catch(err) {
@@ -271,7 +285,7 @@ const AdminKelas = () => {
                             <div className="flex p-1 gap-2">
                                 <div className="flex flex-col w-1/2">
                                     <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kategori Kelas</label>
-                                    <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" onChange={(e) => setCategory_id(e.target.value)}>
+                                    <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" onClick={(e) => setCategory_id(e.target.value)}>
                                         {idCategory.map((categories, index) => ( 
                                             <option
                                                 key={index}
@@ -284,7 +298,7 @@ const AdminKelas = () => {
                                     <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Level</label>
                                     <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"
                                     value={level}
-                                    onChange={(e) => setLevel(e.target.value)}>
+                                    onClick={(e) => setLevel(e.target.value)}>
                                         <option>Beginner</option>
                                         <option>Intermediate</option>
                                         <option>Advanced</option>
@@ -316,7 +330,7 @@ const AdminKelas = () => {
                                     <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Tipe Kelas</label>
                                     <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"
                                     value={type}
-                                    onChange={(e) => setType(e.target.value)} >
+                                    onClick={(e) => setType(e.target.value)} >
                                         <option>Free</option>
                                         <option>Premium</option>
                                     </select>
@@ -617,7 +631,7 @@ const AdminKelas = () => {
                         </p>
                         <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kode Kelas</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kode Kelas</label>
                                 <input 
                                     type="text"
                                     id="name" 
@@ -627,7 +641,7 @@ const AdminKelas = () => {
                             </div>
                             <div className="flex p-1 gap-2">
                                 <div className="flex flex-col w-1/2">
-                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kategori Kelas</label>
+                                    <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kategori Kelas</label>
                                     <input 
                                     type="text"
                                     id="name" 
@@ -636,8 +650,8 @@ const AdminKelas = () => {
                                     defaultValue={coursesData.category.category}/>
                                 </div>
                                 <div className="flex flex-col w-1/2">
-                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Level</label>
-                                    <select class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" defaultValue={coursesData.level}>
+                                    <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Level</label>
+                                    <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" defaultValue={coursesData.level}>
                                         <option>Beginner</option>
                                         <option>Intermediate</option>
                                         <option>Advanced</option>
@@ -645,7 +659,7 @@ const AdminKelas = () => {
                                 </div>
                             </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Kelas</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Kelas</label>
                                 <input 
                                     type="text"
                                     id="name" 
@@ -654,7 +668,7 @@ const AdminKelas = () => {
                                     defaultValue={coursesData.name}/>
                             </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Fasilitator</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Fasilitator</label>
                                 <input 
                                     type="text"
                                     id="name" 
@@ -664,14 +678,14 @@ const AdminKelas = () => {
                             </div>
                             <div className="flex p-1 gap-2">
                                 <div className="flex flex-col w-1/2">
-                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Tipe Kelas</label>
-                                    <select class="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" defaultValue={coursesData.type}>
+                                    <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Tipe Kelas</label>
+                                    <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" defaultValue={coursesData.type}>
                                         <option>Free</option>
                                         <option>Premium</option>
                                     </select>
                                 </div>
                                 <div className="flex flex-col w-1/2">
-                                    <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Harga</label>
+                                    <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Harga</label>
                                     <input 
                                     type="text"
                                     id="name" 
@@ -681,7 +695,7 @@ const AdminKelas = () => {
                                 </div>
                             </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Grup Telegram</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Grup Telegram</label>
                                 <input 
                                     type="text"
                                     id="name" 
@@ -690,7 +704,7 @@ const AdminKelas = () => {
                                     defaultValue={coursesData.telegram_group}/>
                             </div>
                             <div className="flex-auto p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Video</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Video</label>
                                 <input 
                                     type="text"
                                     id="name" 
@@ -699,7 +713,7 @@ const AdminKelas = () => {
                                     defaultValue={coursesData.introduction_video}/>
                             </div>
                             <div className=" p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Deskripsi Kelas</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Deskripsi Kelas</label>
                                 <textarea 
                                     type="text"
                                     id="name" 
@@ -708,7 +722,7 @@ const AdminKelas = () => {
                                     defaultValue={coursesData.description}/>
                             </div>
                             <div className=" p-1">
-                                <label for="name" className="text-gray-800  font-bold leading-tight tracking-normal">Deskripsi On Boarding</label>
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Deskripsi On Boarding</label>
                                 <textarea 
                                     type="text"
                                     id="name" 

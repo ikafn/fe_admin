@@ -16,6 +16,8 @@ const AdminChapter = () => {
     const [chapterData, setChapterData] = useState();
     const [course_id, setCourse_id] = useState('');
     const [name, setName] = useState('');
+    const [course_idUpdate, setCourse_idUpdate] = useState('');
+    const [nameUpdate, setNameUpdate] = useState('');
     const [id, setId] = useState('');
 
     // GET LIST CHAPTER 
@@ -36,16 +38,16 @@ const AdminChapter = () => {
     // CREATE NEW CHAPTER 
     const handleCreate = async () => {
         try {
-          const payload = {
-            course_id,
-            name
-          }
-          const res = await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/chapters', payload)
+            const payload = {
+                course_id,
+                name
+            }
+            const res = await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/chapters', payload)
 
-        setShowModalTambah(false);
-        getListChapters()
-        } catch(err) {
-          console.log(err);
+            setShowModalTambah(false);
+            getListChapters()
+            } catch(err) {
+            console.log(err);
         } 
     }
     const getCourseId = async () => {
@@ -63,11 +65,13 @@ const AdminChapter = () => {
     // UPDATE CHAPTER 
     const handleUpdate = async () => {
         try {
-          const payload = {
+          const payloadUpdate = {
+            // course_id,
+            // nameUpdate
             course_id,
             name
           }
-          const res = await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/chapters/${([chapterData.id])}`, payload)
+          const res = await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/chapters/${chapterData.id}`, payloadUpdate)
 
         setShowModalUbah(false);
         getListChapters()
@@ -79,7 +83,7 @@ const AdminChapter = () => {
     // DELETE CHAPTER 
     const handleDelete = async () => {
         try {
-            const res = await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/chapters/${([chapterData.id])}`);
+            const res = await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/chapters/${chapterData.id}`);
             setShowModalHapus(false)
             getListChapters()
         } catch(err) {
@@ -226,7 +230,6 @@ const AdminChapter = () => {
                                     onChange={(e) => setCourse_id(e.target.value)} >
                                         {id.map((course, index) => ( 
                                             <option 
-                                                // value={[course.id]}
                                                 // onChange={(e) => setCourse_id(e.target.value)}
                                                 value={course.id} 
                                                 key={index} >
@@ -242,8 +245,8 @@ const AdminChapter = () => {
                                         type="text"
                                         id="name" 
                                         className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                        placeholder="Text" 
-                                        value={name}
+                                        placeholder="Text"
+                                        // value={name}
                                         onChange={(e) => setName(e.target.value)}/>
                                 </div>
                             </form>
@@ -417,11 +420,25 @@ const AdminChapter = () => {
                                         type="text"
                                         id="name" 
                                         className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                        placeholder="Text" 
-                                        defaultValue={chapterData.course_id}
-                                        // value={course_id}
-                                        onChange={(e) => setCourse_id(e.target.value)}
+                                        // defaultValue={chapterData.course_id}
+                                        value={chapterData.course_id}
+                                        
+                                        // value={course_idUpdate}
+                                        onMouseMove={(e) => setCourse_id(e.target.value)}
+                                        
                                         />
+                                    {/* <select className="form-select text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"  
+                                    onChange={(e) => setCourse_idUpdate(e.target.value)} defaultValue={chapterData.course_id}>
+                                        {id.map((course, index) => ( 
+                                            <option 
+                                                // value={[course.id]}
+                                                // onChange={(e) => setCourse_id(e.target.value)}
+                                                value={course.id} 
+                                                key={index} >
+                                                    {course.name}
+                                            </option>
+                                        ))}
+                                    </select>  */}
                                 </div>
                                 <div className="flex-auto p-1">
                                     <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Chapter</label>
@@ -429,9 +446,8 @@ const AdminChapter = () => {
                                         type="text"
                                         id="name" 
                                         className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                        placeholder="Text" 
                                         defaultValue={chapterData.name}
-                                        // value={name}
+                                        // value={nameUpdate}
                                         onChange={(e) => setName(e.target.value)}
                                         />
                                 </div>
@@ -468,7 +484,7 @@ const AdminChapter = () => {
                         <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none py-5 px-10">
                             {/*header*/}
                             <p className="flex justify-center items-center text-xs text-[#6148FF] font-bold py-2">
-                                Hapus Modul
+                                Hapus Chapter
                             </p>
 
                             {/*body*/}
