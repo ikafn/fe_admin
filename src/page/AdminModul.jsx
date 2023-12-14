@@ -4,6 +4,8 @@ import { icon_filter } from "../assets";
 import { icon_search } from "../assets";
 import { icon_tambah } from "../assets";
 import axios from "axios";
+import CreateModul from "../component/Modal/CreateModul";
+import { createPortal } from "react-dom";
 
 
 const AdminModul = () => {
@@ -18,11 +20,9 @@ const AdminModul = () => {
     const [name, setName] = useState('');
     const [video, setVideo] = useState('');
     const [duration, setDuration] = useState('');
+    const [counts, setCounts] = useState([]);
 
-    // const chapter_id = useRef('')
-    // const name = useRef('')
-    // const video = useRef('')
-    // const duration = useRef('')
+
 
     // GET ALL MODULES 
     const getListModules = async () => {
@@ -57,6 +57,10 @@ const AdminModul = () => {
         } 
     }
 
+
+    
+
+
     // GET CHAPTER ID 
     const [idChapter, setIdChapter] = useState('')
     const getChapterId = async () => {
@@ -71,15 +75,35 @@ const AdminModul = () => {
         getChapterId();
     }, [])
 
+    // const [modulesDetail, setModulesDetail] = useState([])
+    // // GET MODULES DETAIL 
+    // const getModulesDetail = async () => {
+    //     try {
+    //         const data = await axios.get(`https://befinalprojectbinar-production.up.railway.app/api/modules/${modulesData.id}`);
+    //         setModulesDetail(data.data.data);
+    //         console.log(data.data.data)
+    //     } catch(err) {
+    //         console.log(err)
+    //     }
+    // }
+    // useEffect(() => {
+    //     getModulesDetail();
+    // }, [])
+
+
+    const chapter_idRef = useRef('')
+    const nameRef = useRef('')
+    const videoRef = useRef('')
+    const durationRef = useRef('')
 
     // UPDATE MODULE 
     const handleUpdate = async () => {
         try {
           const payloadUpdate = {
-            chapter_id,
-            name,
-            video,
-            duration
+            chapter_id : chapter_idRef.current.value,
+            name: nameRef.current.value,
+            video: videoRef.current.value,
+            duration: durationRef.current.value
           }
           await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/modules/${modulesData.id}`, payloadUpdate)
 
@@ -94,13 +118,32 @@ const AdminModul = () => {
     // DELETE MODULE 
     const handleDelete = async () => {
         try {
-            const res = await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/modules/${modulesData.id}`);
+            await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/modules/${modulesData.id}`);
             setShowModalHapus(false)
             getListModules()
         } catch(err) {
             console.log(err)
         }
     }
+
+
+    // GET COUNTS 
+    const getCounts = async () => {
+        try {
+            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/counts', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            console.log(data.data.data)
+            setCounts(data.data.data);
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        getCounts();
+    }, [])
 
     return (
         <>
@@ -109,22 +152,22 @@ const AdminModul = () => {
         <SidebarAdmin />
         <div className="container mx-auto pl-20 pr-10 flex flex-col">
             {/*  ---Card Count Class and User---  */}
-            <div className="flex mt-16 justify-between">   
+            <div className="flex mt-16 justify-between"> 
                 <Card
-                    totalUser= "450"
+                    totalUser= {counts.total_user}
                     countClassUser= "Active Users"
                     variant="lightBlue" 
                 />
                 <Card
-                    totalUser= "25"
+                    totalUser= {counts.total_course}
                     countClassUser= "Active Class"
                     variant="success" 
                 />
                 <Card
-                    totalUser= "20"
+                    totalUser= {counts.total_premium_course}
                     countClassUser= "Premium Class"
                     variant="darkBlue" 
-                />        
+                />
             </div>
             {/*  ---Card Count Class and User---  */}
 
@@ -168,7 +211,7 @@ const AdminModul = () => {
                     <thead className="bg-[#EBF3FC] text-[0.625rem] lg:text-xs  whitespace-nowrap font-semibold text-left">
                         <tr >
                             <th className="p-6 py-2">
-                                ID Chapter
+                                Nama Chapter
                             </th>
                             <th className="p-6 py-2">
                                 Nama Modul
@@ -186,7 +229,7 @@ const AdminModul = () => {
                         {modules.map((module) => ( 
                             <tr key={module.id}>
                                 <td className="p-6 py-2">
-                                    {module.chapter_id}
+                                    {module.chapter.name}
                                 </td>
                                 <td className="p-6 py-2">
                                     {module.name}
@@ -198,7 +241,7 @@ const AdminModul = () => {
                                     <ButtonAksi
                                         text={'Ubah'}
                                         variant='darkBlue'
-                                        onClick={() => {setShowModalUbah(true); setModulesData(module); {console.log(module)}}}
+                                        onClick={() => {setShowModalUbah(true); setModulesData(module)}}
                                     />
                                     <ButtonAksi
                                         text={'Hapus'}
@@ -221,9 +264,8 @@ const AdminModul = () => {
             <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                {/*content*/}
+                
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                        {/*header*/}
                         <div className="flex items-start justify-between p-2  rounded-t">
                             <button
                                 type="button"
@@ -234,7 +276,6 @@ const AdminModul = () => {
                             </button>
                         </div>
 
-                        {/*body*/}
                         <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
                             Tambah Modul
                         </p>
@@ -242,7 +283,7 @@ const AdminModul = () => {
                             <div className="flex-auto p-1">
                                 <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">ID Chapter</label>
                                 <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"
-                                onChange={(e) => setChapter_id(e.target.value)}>
+                                onClick={(e) => setChapter_id(e.target.value)}>
                                     {idChapter.map((chapter, index) => ( 
                                         <option
                                             key={index}
@@ -276,17 +317,16 @@ const AdminModul = () => {
                             <div className="flex-auto p-1">
                                 <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Durasi</label>
                                 <input 
-                                    type="text"
+                                    type="number"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text" 
                                     // value={duration}
-                                    onChange={(e) => setDuration(e.target.value)} />
+                                    onChange={(e) => setDuration(Number(e.target.value))} />
                             </div>
                             
                         </form>
                         
-                        {/*footer*/}
                         <div className="flex items-center justify-center p-2 mb-2">
                             <ButtonAksi
                                 text={'Batal'}
@@ -305,6 +345,7 @@ const AdminModul = () => {
             <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
             </>
         ) : null}
+
         {/*  ---Modals Tambah Modul---  */}
 
         {/*  ---Modals Filter---  */}
@@ -442,7 +483,7 @@ const AdminModul = () => {
                             </button>
                         </div>
 
-                        {/*body*/}
+                        {/* body*/}
                         <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
                             Ubah Modul
                         </p>
@@ -453,10 +494,10 @@ const AdminModul = () => {
                                     type="text"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    // ref={chapter_id.current.value}
-                                    defaultValue={modulesData.chapter_id}
-                                    onChange={(e) => setChapter_id(e.target.value)}
-                                    // disabled
+                                    ref={chapter_idRef}
+                                    defaultValue={modulesData.chapter.id}
+                                    onClick={(e) => setChapter_id(e.target.value)}
+                                    disabled
                                     />
                             </div>
                             <div className="flex-auto p-1">
@@ -465,7 +506,7 @@ const AdminModul = () => {
                                     type="text"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    // ref={name.current.value}
+                                    ref={nameRef}
                                     defaultValue={modulesData.name}
                                     onChange={(e) => setName(e.target.value)}
                                     />
@@ -476,7 +517,7 @@ const AdminModul = () => {
                                     type="text"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    // ref={video.current.value}
+                                    ref={videoRef}
                                     defaultValue={modulesData.video}
                                     onChange={(e) => setVideo(e.target.value)}
                                     />
@@ -484,17 +525,16 @@ const AdminModul = () => {
                             <div className="flex-auto p-1">
                                 <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Durasi</label>
                                 <input 
-                                    type="text"
+                                    type="number"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    // ref={duration}
+                                    ref={durationRef}
                                     defaultValue={modulesData.duration}
-                                    onChange={(e) => setDuration(e.target.value)}
+                                    onChange={(e) => setDuration(Number(e.target.value))}
                                     />
                             </div>
                         </form>
                         
-                        {/*footer*/}
                         <div className="flex items-center justify-center p-2 mb-2">
                             <ButtonAksi
                                 text={'Batal'}
@@ -507,6 +547,7 @@ const AdminModul = () => {
                                 onClick={() => handleUpdate()}
                             />
                         </div>
+
                     </div>
                 </div>
             </div>

@@ -2,10 +2,30 @@
 import { Button, ButtonAksi, Card, HeaderAdmin, SidebarAdmin, TableOrders } from "../component";
 import { icon_filter } from "../assets";
 import { icon_search } from "../assets";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const AdminDashboard = () => {
     const [showModalFilter, setShowModalFilter] = useState(false);
+    const [counts, setCounts] = useState([]);
+
+    // GET COUNTS 
+    const getCounts = async () => {
+        try {
+            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/counts', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            console.log(data.data.data)
+            setCounts(data.data.data);
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        getCounts();
+    }, [])
 
     return (
         <>
@@ -14,19 +34,19 @@ const AdminDashboard = () => {
 
         <div className="container mx-auto pl-20 pr-10 flex flex-col">
             {/*  ---Card Count Class and User---  */}
-            <div className="flex mt-16 justify-between">
+            <div className="flex mt-16 justify-between"> 
                 <Card
-                    totalUser= "450"
+                    totalUser= {counts.total_user}
                     countClassUser= "Active Users"
                     variant="lightBlue" 
                 />
                 <Card
-                    totalUser= "25"
+                    totalUser= {counts.total_course}
                     countClassUser= "Active Class"
                     variant="success" 
                 />
                 <Card
-                    totalUser= "20"
+                    totalUser= {counts.total_premium_course}
                     countClassUser= "Premium Class"
                     variant="darkBlue" 
                 />

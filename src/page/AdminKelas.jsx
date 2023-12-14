@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Button, ButtonAksi, Card, HeaderAdmin, SidebarAdmin, TableCourses } from "../component";
 import { icon_filter } from "../assets";
 import { icon_search } from "../assets";
@@ -28,6 +28,7 @@ const AdminKelas = () => {
     const [courses, setCourses] = useState([]);
     const [coursesData, setCoursesData] = useState([]);
     const [coursesDetail, setCoursesDetail] = useState([]);
+    const [counts, setCounts] = useState([]);
 
     // GET ALL COURSES 
     const getListCourses = async () => {
@@ -101,6 +102,45 @@ const AdminKelas = () => {
         getCategoryId();
     }, [])
 
+
+    const codeRef = useRef('')
+    const category_idRef = useRef('')
+    const levelRef = useRef('')
+    const nameRef = useRef('')
+    const facilitatorRef = useRef('')
+    const typeRef = useRef('')
+    const priceRef = useRef('')
+    const telegram_groupRef = useRef('')
+    const introduction_videoRef = useRef('')
+    const descriptionRef = useRef('')
+    const on_boardingRef = useRef('')
+
+    // UPDATE CHAPTER 
+    const handleUpdate = async (e) => {
+        // e.preventDefault()
+        try {
+            const payloadUpdate = {
+                code: codeRef.current.value,
+                category_id: category_idRef.current.value,
+                level: levelRef.current.value,
+                name: nameRef.current.value,
+                facilitator: facilitatorRef.current.value,
+                type: typeRef.current.value,
+                price: priceRef.current.value,
+                telegram_group: telegram_groupRef.current.value,
+                introduction_video: introduction_videoRef.current.value,
+                description: descriptionRef.current.value,
+                on_boarding: on_boardingRef.current.value
+            }
+          await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/courses/${coursesData.id}`, payloadUpdate)
+
+        setShowModalUbah(false);
+        getListCourses()
+        } catch(err) {
+          console.log(err);
+        } 
+    }
+
     // DELETE COURSE 
     const handleDelete = async () => {
         try {
@@ -112,6 +152,23 @@ const AdminKelas = () => {
         }
     }
 
+    // GET COUNTS 
+    const getCounts = async () => {
+        try {
+            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/counts', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            console.log(data.data.data)
+            setCounts(data.data.data);
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        getCounts();
+    }, [])
 
     return (
         <>
@@ -120,24 +177,24 @@ const AdminKelas = () => {
 
         <div className="container mx-auto pl-20 pr-10 flex flex-col">
             {/*  ---Card Count Class and User---  */}
-            <div className="flex mt-16 justify-between">           
+            <div className="flex mt-16 justify-between"> 
                 <Card
-                    totalUser= "450"
+                    totalUser= {counts.total_user}
                     countClassUser= "Active Users"
                     variant="lightBlue" 
                 />
                 <Card
-                    totalUser= "25"
+                    totalUser= {counts.total_course}
                     countClassUser= "Active Class"
                     variant="success" 
                 />
                 <Card
-                    totalUser= "20"
+                    totalUser= {counts.total_premium_course}
                     countClassUser= "Premium Class"
                     variant="darkBlue" 
                 />
             </div>
-            {/*  ---Card Count Class and User---  */}
+            {/*  ---Card Count Class and User--- 
 
             {/*  ---Tabel Kelas---  */}
             <div className="flex justify-between">
@@ -279,13 +336,13 @@ const AdminKelas = () => {
                                     id="code" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text" 
-                                    value={code}
                                     onChange={(e) => setCode(e.target.value)}/>
                             </div>
                             <div className="flex p-1 gap-2">
                                 <div className="flex flex-col w-1/2">
                                     <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kategori Kelas</label>
-                                    <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" onClick={(e) => setCategory_id(e.target.value)}>
+                                    <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
+                                    onClick={(e) => setCategory_id(e.target.value)}>
                                         {idCategory.map((categories, index) => ( 
                                             <option
                                                 key={index}
@@ -297,7 +354,6 @@ const AdminKelas = () => {
                                 <div className="flex flex-col w-1/2">
                                     <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Level</label>
                                     <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"
-                                    value={level}
                                     onClick={(e) => setLevel(e.target.value)}>
                                         <option>Beginner</option>
                                         <option>Intermediate</option>
@@ -312,7 +368,6 @@ const AdminKelas = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text"
-                                    value={name}
                                     onChange={(e) => setName(e.target.value)} />
                             </div>
                             <div className="flex-auto p-1">
@@ -322,14 +377,12 @@ const AdminKelas = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text" 
-                                    value={facilitator}
                                     onChange={(e) => setFacilitator(e.target.value)} />
                             </div>
                             <div className="flex p-1 gap-2">
                                 <div className="flex flex-col w-1/2">
                                     <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Tipe Kelas</label>
                                     <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"
-                                    value={type}
                                     onClick={(e) => setType(e.target.value)} >
                                         <option>Free</option>
                                         <option>Premium</option>
@@ -338,11 +391,10 @@ const AdminKelas = () => {
                                 <div className="flex flex-col w-1/2">
                                     <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Harga</label>
                                     <input 
-                                    type="text"
+                                    type="integer"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-2  border-gray-300 rounded-lg border" 
-                                    placeholder="Text" 
-                                    value={price}
+                                    placeholder="0" 
                                     onChange={(e) => setPrice(e.target.value)} />
                                 </div>
                             </div>
@@ -353,7 +405,6 @@ const AdminKelas = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Link" 
-                                    value={telegram_group}
                                     onChange={(e) => setTelegram_group(e.target.value)} />
                             </div>
                             <div className="flex-auto p-1">
@@ -363,7 +414,6 @@ const AdminKelas = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Link" 
-                                    value={introduction_video}
                                     onChange={(e) => setIntroduction_video(e.target.value)} />
                             </div>
                             <div className=" p-1">
@@ -373,7 +423,6 @@ const AdminKelas = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-10 flex p-2 border-gray-300 rounded-lg border" 
                                     placeholder="Paragraph" 
-                                    value={description}
                                     onChange={(e) => setDescription(e.target.value)} />
                             </div>
                             <div className=" p-1">
@@ -383,7 +432,6 @@ const AdminKelas = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-10 flex p-2 border-gray-300 rounded-lg border" 
                                     placeholder="Paragraph" 
-                                    value={on_boarding}
                                     onChange={(e) => setOn_boarding(e.target.value)} />
                             </div>
                             
@@ -637,21 +685,27 @@ const AdminKelas = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text" 
-                                    defaultValue={coursesData.code}/>
+                                    defaultValue={coursesData.code}
+                                    ref={codeRef} />
                             </div>
                             <div className="flex p-1 gap-2">
                                 <div className="flex flex-col w-1/2">
-                                    <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Kategori Kelas</label>
+                                    <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">ID Kategori</label>
                                     <input 
                                     type="text"
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text" 
-                                    defaultValue={coursesData.category.category}/>
+                                    defaultValue={coursesData.category.id}
+                                    ref={category_idRef}
+                                    disabled
+                                    />
+                                    
                                 </div>
                                 <div className="flex flex-col w-1/2">
                                     <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Level</label>
-                                    <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" defaultValue={coursesData.level}>
+                                    <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
+                                    defaultValue={coursesData.level}  ref={levelRef}>
                                         <option>Beginner</option>
                                         <option>Intermediate</option>
                                         <option>Advanced</option>
@@ -665,7 +719,8 @@ const AdminKelas = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text" 
-                                    defaultValue={coursesData.name}/>
+                                    defaultValue={coursesData.name}
+                                    ref={nameRef}/>
                             </div>
                             <div className="flex-auto p-1">
                                 <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Fasilitator</label>
@@ -674,12 +729,14 @@ const AdminKelas = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Text"
-                                    defaultValue={coursesData.facilitator} />
+                                    defaultValue={coursesData.facilitator} 
+                                    ref={facilitatorRef}/>
                             </div>
                             <div className="flex p-1 gap-2">
                                 <div className="flex flex-col w-1/2">
                                     <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Tipe Kelas</label>
-                                    <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" defaultValue={coursesData.type}>
+                                    <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
+                                    defaultValue={coursesData.type}  ref={typeRef}>
                                         <option>Free</option>
                                         <option>Premium</option>
                                     </select>
@@ -691,7 +748,8 @@ const AdminKelas = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-2  border-gray-300 rounded-lg border" 
                                     placeholder="Text" 
-                                    defaultValue={coursesData.price}/>
+                                    defaultValue={coursesData.price}
+                                    ref={priceRef}/>
                                 </div>
                             </div>
                             <div className="flex-auto p-1">
@@ -701,7 +759,8 @@ const AdminKelas = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Link" 
-                                    defaultValue={coursesData.telegram_group}/>
+                                    defaultValue={coursesData.telegram_group}
+                                    ref={telegram_groupRef}/>
                             </div>
                             <div className="flex-auto p-1">
                                 <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Video</label>
@@ -710,7 +769,8 @@ const AdminKelas = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     placeholder="Link" 
-                                    defaultValue={coursesData.introduction_video}/>
+                                    defaultValue={coursesData.introduction_video}
+                                    ref={introduction_videoRef}/>
                             </div>
                             <div className=" p-1">
                                 <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Deskripsi Kelas</label>
@@ -719,7 +779,8 @@ const AdminKelas = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-10 flex p-2 border-gray-300 rounded-lg border" 
                                     placeholder="Paragraph" 
-                                    defaultValue={coursesData.description}/>
+                                    defaultValue={coursesData.description}
+                                    ref={descriptionRef} />
                             </div>
                             <div className=" p-1">
                                 <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Deskripsi On Boarding</label>
@@ -728,7 +789,8 @@ const AdminKelas = () => {
                                     id="name" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-10 flex p-2 border-gray-300 rounded-lg border" 
                                     placeholder="Paragraph" 
-                                    defaultValue={coursesData.on_boarding}/>
+                                    defaultValue={coursesData.on_boarding}
+                                    ref={on_boardingRef} />
                             </div>
                             
                         </form>
@@ -743,7 +805,7 @@ const AdminKelas = () => {
                             <ButtonAksi
                                 text={'Simpan'}
                                 variant='success'
-                                onClick={() => setShowModalUbah(false)}
+                                onClick={() => handleUpdate()}
                             />
                         </div>
                     </div>
