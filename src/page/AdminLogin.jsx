@@ -11,12 +11,19 @@ const AdminLogin = () => {
     const [password, setPassword] = useState('');
     const [notification, setNotification] = useState(null);
 
-
+    const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(null);
 
     const handleSubmit = async (e) => {
-        try {
-            e.preventDefault()
+        e.preventDefault()
+        
+        if (!id  || !password) {
+            setError("Please complete all fields");
+            setTimeout(() => setError(null), 5000);
+            return
+          }
 
+        try {
             const admin = await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/login', {
                 id,
                 password
@@ -24,10 +31,31 @@ const AdminLogin = () => {
 
             localStorage.setItem('token', admin.data.data.accessToken)
             navigate('/admin')
+
+
         } catch(error) {
-            console.log(error.response.data.message);
+            console.error(error.response.data.message);
+            setError(error.response.data.message)
+            setTimeout(() => setError(null), 5000);
         }
     }
+
+
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault()
+    //     try {
+    //         const admin = await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/login', {
+    //             id,
+    //             password
+    //         })
+
+    //         localStorage.setItem('token', admin.data.data.accessToken)
+    //         navigate('/admin')
+    //     } catch(error) {
+    //         console.log(error.response.data.message);
+    //     }
+    // }
+    
 
 
     return (
@@ -100,6 +128,14 @@ const AdminLogin = () => {
                                         Masuk   
                                     </button>
                                 </div>
+                            </div>
+
+                            <div className="flex items-center justify-center mx-40">
+                                {error && (
+                                <div className="text-red-500 bg-red-100 p-2 rounded-xl absolute bottom-0 mb-4">
+                                    {error}
+                                </div>
+                                )}
                             </div>
                         </form>
                     </div>

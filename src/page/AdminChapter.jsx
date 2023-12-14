@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, ButtonAksi, Card, HeaderAdmin, SidebarAdmin, TableChapter } from "../component";
+import { Button, ButtonAksi, Card, HeaderAdmin, SidebarAdmin } from "../component";
 import { icon_filter } from "../assets";
 import { icon_search } from "../assets";
 import { icon_tambah } from "../assets";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
-import CreateChapter from "../component/Modal/CreateChapter";
-import { createPortal } from "react-dom";
 
 
 const AdminChapter = () => {
