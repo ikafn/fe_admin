@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { logo } from "../assets";
+import { logo, mainlogo } from "../assets";
 import { ViewGridIcon, BookOpenIcon, DocumentIcon, DocumentDuplicateIcon, LogoutIcon } from "@heroicons/react/outline"
 import { useNavigate } from "react-router-dom";
 import ButtonAksi from "./ButtonAksi";
@@ -19,10 +19,10 @@ const SidebarAdmin = () => {
         <aside className="fixed bg-[#6148FF] sidebar min-h-screen w-10 md:w-11 lg:w-16 overflow-hidden border-r hover:w-36 lg:hover:w-56 hover:bg-[#6148FF] hover:shadow-xl">
             <div className="flex h-screen flex-col justify-between pt-2 pb-6">
                 <div>
-                    <div className=" flex items-center w-max px-6 pl-8 lg:pl-12">
-                        <img src={logo} className="w-20 lg:w-32" alt="" />
+                    <div className=" flex items-center w-full  px-6 pl-8 lg:pl-12">
+                        {/* <img src={mainlogo} className="w-12 lg:w-32" alt="" /> */}
                     </div>
-                    <div className="mt-4 space-y-2 tracking-wide text-[0.625rem] lg:text-sm font-semibold">
+                    <div className="mt-20 space-y-2 tracking-wide text-[0.625rem] lg:text-sm font-semibold">
                         <div className=" min-w-max ">
                             <a href="/admin" className="relative flex items-center space-x-4  p-3 lg:px-6 text-white focus:bg-[#489CFF] hover:bg-[#489CFF]">
                                 <ViewGridIcon className="w-4 h-4 lg:w-6 lg:h-6"/>

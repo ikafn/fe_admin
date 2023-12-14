@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { logo } from "../assets"
+import { logo, mainlogo } from "../assets"
 import { useNavigate } from "react-router-dom";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline"
 import axios from "axios";
@@ -9,10 +9,8 @@ const AdminLogin = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
-    const [notification, setNotification] = useState(null);
 
     const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -40,32 +38,13 @@ const AdminLogin = () => {
         }
     }
 
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault()
-    //     try {
-    //         const admin = await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/login', {
-    //             id,
-    //             password
-    //         })
-
-    //         localStorage.setItem('token', admin.data.data.accessToken)
-    //         navigate('/admin')
-    //     } catch(error) {
-    //         console.log(error.response.data.message);
-    //     }
-    // }
-    
-
-
     return (
         <>
         <div className="grid grid-cols-1 lg:grid-cols-3 h-screen ">
             {/*  Sidebar  */}
             <aside className ="hidden lg:flex bg-[#6148FF] items-center justify-center">
-                <div className="flex items-center w-44">
-                    <img src={logo} alt="logo" />
-
+                <div className="flex flex-col items-center w-44">
+                    <img src={mainlogo} alt="logo" />
                 </div>   
             </aside>
             {/*  Sidebar  */}
