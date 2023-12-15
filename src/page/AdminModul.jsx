@@ -1,26 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, ButtonAksi, Card, HeaderAdmin, SidebarAdmin } from "../component";
-import { icon_filter } from "../assets";
-import { icon_search } from "../assets";
-import { icon_tambah } from "../assets";
+import { ButtonAksi, Card, HeaderAdmin, SidebarAdmin } from "../component";
 import axios from "axios";
+import CreateModul from "../component/Modal/CreateModul";
 
 
 const AdminModul = () => {
-    const [showModalTambah, setShowModalTambah] = useState(false);
-    const [showModalFilter, setShowModalFilter] = useState(false);
     const [showModalUbah, setShowModalUbah] = useState(false);
     const [showModalHapus, setShowModalHapus] = useState(false);
-
     const [modules, setModules] = useState([]);
     const [modulesData, setModulesData] = useState([]);
-    const [chapter_id, setChapter_id] = useState('');
-    const [name, setName] = useState('');
-    const [video, setVideo] = useState('');
-    const [duration, setDuration] = useState('');
     const [counts, setCounts] = useState([]);
-
-
+    const chapter_idRef = useRef('')
+    const nameRef = useRef('')
+    const videoRef = useRef('')
+    const durationRef = useRef('')
 
     // GET ALL MODULES 
     const getListModules = async () => {
@@ -32,67 +25,6 @@ const AdminModul = () => {
             console.log(err)
         }
     }
-    useEffect(() => {
-        getListModules();
-    }, [])
-
-    // CREATE NEW MODULES 
-    const handleCreate = async () => {
-        try {
-          const payload = {
-            chapter_id,
-            name,
-            video,
-            duration
-          }
-          const res = await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/modules', payload)
-
-        setShowModalTambah(false);
-        getListModules();
-    
-        } catch(err) {
-          console.log(err);
-        } 
-    }
-
-
-    
-
-
-    // GET CHAPTER ID 
-    const [idChapter, setIdChapter] = useState('')
-    const getChapterId = async () => {
-        try {
-            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/chapters');
-            setIdChapter(data.data.data);
-        } catch(err) {
-            console.log(err)
-        }
-    }
-    useEffect(() => {
-        getChapterId();
-    }, [])
-
-    // const [modulesDetail, setModulesDetail] = useState([])
-    // // GET MODULES DETAIL 
-    // const getModulesDetail = async () => {
-    //     try {
-    //         const data = await axios.get(`https://befinalprojectbinar-production.up.railway.app/api/modules/${modulesData.id}`);
-    //         setModulesDetail(data.data.data);
-    //         console.log(data.data.data)
-    //     } catch(err) {
-    //         console.log(err)
-    //     }
-    // }
-    // useEffect(() => {
-    //     getModulesDetail();
-    // }, [])
-
-
-    const chapter_idRef = useRef('')
-    const nameRef = useRef('')
-    const videoRef = useRef('')
-    const durationRef = useRef('')
 
     // UPDATE MODULE 
     const handleUpdate = async () => {
@@ -105,7 +37,6 @@ const AdminModul = () => {
           }
           await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/modules/${modulesData.id}`, payloadUpdate)
 
-        // console.log(namaRef.current.value)
         setShowModalUbah(false);
         getListModules()
         } catch(err) {
@@ -124,7 +55,6 @@ const AdminModul = () => {
         }
     }
 
-
     // GET COUNTS 
     const getCounts = async () => {
         try {
@@ -140,12 +70,12 @@ const AdminModul = () => {
         }
     }
     useEffect(() => {
+        getListModules(),
         getCounts();
     }, [])
 
     return (
         <>
-        
         <HeaderAdmin />
         <SidebarAdmin />
         <div className="container mx-auto pl-20 pr-10 flex flex-col">
@@ -154,23 +84,23 @@ const AdminModul = () => {
                 <Card
                     totalUser= {counts.total_user}
                     countClassUser= "Active Users"
-                    variant="lightBlue" 
+                    variant="success" 
                 />
                 <Card
                     totalUser= {counts.total_course}
                     countClassUser= "Active Class"
-                    variant="success" 
+                    variant="darkBlue" 
                 />
                 <Card
                     totalUser= {counts.total_premium_course}
                     countClassUser= "Premium Class"
-                    variant="darkBlue" 
+                    variant="lightBlue" 
                 />
             </div>
             {/*  ---Card Count Class and User---  */}
 
             {/*  ---Tabel Modul---  */}
-            <div className="flex justify-between">
+            <div className="flex justify-between py-2">
                 <div className="flex items-center">
                     <p className="text-[0.625rem] lg:text-sm font-bold">
                         Kelola Modul
@@ -178,27 +108,18 @@ const AdminModul = () => {
                 </div>
 
                 <div className="flex items-center">
-                    <Button
-                        variant='darkBlue'
-                        onClick={() => setShowModalTambah(true)}
-                        img={icon_tambah}
-                    />
-                    <Button
+                    <CreateModul />
+
+                    {/* <Button
                         variant='white'
                         onClick={() => setShowModalFilter(true)}
                         img={icon_filter}
                     />
-                    {/* <Button
-                        variant='white'
-                        onClick={}
-                        img={icon_search}
-                    /> */}
-
                     <button 
                         type="button"
                         className="flex items-center justify-center p-1 w-5 h-4 lg:w-10 lg:h-7 bg-white font-semibold my-[1.13rem] rounded-3xl">
                         <img src={icon_search} /> 
-                    </button>
+                    </button> */}
                 </div>
             </div>
 
@@ -238,7 +159,7 @@ const AdminModul = () => {
                                 <td className="flex font-bold whitespace-nowrap p-6 py-2">
                                     <ButtonAksi
                                         text={'Ubah'}
-                                        variant='darkBlue'
+                                        variant='success'
                                         onClick={() => {setShowModalUbah(true); setModulesData(module)}}
                                     />
                                     <ButtonAksi
@@ -253,216 +174,8 @@ const AdminModul = () => {
                 </table>
             </div>
             {/*  ---Tabel Modul---  */}
-    
         </div>
 
-
-        {/*  ---Modals Tambah Modul---  */}
-        {showModalTambah ? (
-            <>
-            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                
-                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                        <div className="flex items-start justify-between p-2  rounded-t">
-                            <button
-                                type="button"
-                                className="ml-auto text-[#6148FF] text-lg  float-right leading-none font-semibold outline-none focus:outline-none"
-                                onClick={() => setShowModalTambah(false)}
-                            >
-                                x
-                            </button>
-                        </div>
-
-                        <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
-                            Tambah Modul
-                        </p>
-                        <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
-                            <div className="flex-auto p-1">
-                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">ID Chapter</label>
-                                <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"
-                                onClick={(e) => setChapter_id(e.target.value)}>
-                                    {idChapter.map((chapter, index) => ( 
-                                        <option
-                                            key={index}
-                                            value={chapter.id}
-                                            >
-                                            {chapter.name}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div className="flex-auto p-1">
-                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Modul</label>
-                                <input 
-                                    type="text"
-                                    id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    placeholder="Text" 
-                                    // value={name}
-                                    onChange={(e) => setName(e.target.value)} />
-                            </div>
-                            <div className="flex-auto p-1">
-                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Video Modul</label>
-                                <input 
-                                    type="text"
-                                    id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    placeholder="Text" 
-                                    // value={video}
-                                    onChange={(e) => setVideo(e.target.value)} />
-                            </div>
-                            <div className="flex-auto p-1">
-                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Durasi</label>
-                                <input 
-                                    type="number"
-                                    id="name" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    placeholder="Text" 
-                                    // value={duration}
-                                    onChange={(e) => setDuration(Number(e.target.value))} />
-                            </div>
-                            
-                        </form>
-                        
-                        <div className="flex items-center justify-center p-2 mb-2">
-                            <ButtonAksi
-                                text={'Batal'}
-                                variant='red'
-                                onClick={() => setShowModalTambah(false)}
-                            />
-                            <ButtonAksi
-                                text={'Simpan'}
-                                variant='success'
-                                onClick={() => handleCreate()}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
-            </>
-        ) : null}
-
-        {/*  ---Modals Tambah Modul---  */}
-
-        {/*  ---Modals Filter---  */}
-        {showModalFilter ? (
-            <>
-            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                {/*content*/}
-                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                        {/*header*/}
-                        <div className="flex items-start justify-between p-1  rounded-t">
-                            <button
-                                type="button"
-                                className="ml-auto text-[#6148FF] text-lg float-right leading-none font-semibold outline-none focus:outline-none"
-                                onClick={() => setShowModalFilter(false)}
-                            >
-                                x
-                            </button>
-                        </div>
-                        <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
-                            Filter Modul
-                        </p>
-
-                        {/*body*/}
-                        <form className="bg-white text-[0.625rem] lg:text-xs max-w-max rounded-2xl px-14 py-1">
-                            <div>
-                                <p className="flex text-black font-semibold py-1">
-                                    Kategori
-                                </p>
-                                <div className="flex items-center mb-2">
-                                    <input
-                                        id="default-checkbox"
-                                        type="checkbox"
-                                        value=""
-                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                    />
-                                    <label
-                                        htmlFor="default-checkbox"
-                                        className="ms-2 font-normal text-gray-500"
-                                    >
-                                        UI/UX Design
-                                        </label>
-                                </div>
-                                <div className="flex items-center mb-2">
-                                    <input
-                                        id="default-checkbox"
-                                        type="checkbox"
-                                        value=""
-                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                    />
-                                    <label
-                                        htmlFor="default-checkbox"
-                                        className="ms-2 font-normal text-gray-500"
-                                    >
-                                        Web Development
-                                    </label>
-                                </div>
-                                <div className="flex items-center mb-2">
-                                    <input
-                                        id="default-checkbox"
-                                        type="checkbox"
-                                        value=""
-                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                    />
-                                    <label
-                                        htmlFor="default-checkbox"
-                                        className="ms-2 font-normal text-gray-500"
-                                    >
-                                        Android Development
-                                    </label>
-                                </div>
-                                <div className="flex items-center mb-2">
-                                    <input
-                                        id="default-checkbox"
-                                        type="checkbox"
-                                        value=""
-                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                    />
-                                    <label
-                                        htmlFor="default-checkbox"
-                                        className="ms-2 font-normal text-gray-500"
-                                    >
-                                        Data Science
-                                    </label>
-                                </div>
-                                <div className="flex items-center mb-2">
-                                    <input
-                                        id="default-checkbox"
-                                        type="checkbox"
-                                        value=""
-                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                    />
-                                    <label
-                                        htmlFor="default-checkbox"
-                                        className="ms-2 font-normal text-gray-500"
-                                    >
-                                        Business Intelligence
-                                    </label>
-                                </div>
-                            </div>
-                        </form>
-
-                        {/*footer*/}
-                        <div className="flex items-center justify-center p-2 mb-2">
-                            <ButtonAksi
-                                text={'Filter'}
-                                variant='darkBlue'
-                                onClick={() => setShowModalFilter(false)}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
-            </>
-        ) : null}
-        {/*  ---Modals Filter---  */}
-          
-            
         {/*  ---Modals Ubah Modul---  */}
         {showModalUbah ? (
             <>
@@ -487,10 +200,10 @@ const AdminModul = () => {
                         </p>
                         <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
                             <div className="flex-auto p-1">
-                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">ID Chapter</label>
+                                <label htmlFor="chapter_id" className="text-gray-800  font-bold leading-tight tracking-normal">ID Chapter</label>
                                 <input 
                                     type="text"
-                                    id="name" 
+                                    id="chapter_id" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     ref={chapter_idRef}
                                     defaultValue={modulesData.chapter.id}
@@ -510,10 +223,10 @@ const AdminModul = () => {
                                     />
                             </div>
                             <div className="flex-auto p-1">
-                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Link Video Modul</label>
+                                <label htmlFor="video" className="text-gray-800  font-bold leading-tight tracking-normal">Link Video Modul</label>
                                 <input 
                                     type="text"
-                                    id="name" 
+                                    id="video" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     ref={videoRef}
                                     defaultValue={modulesData.video}
@@ -521,10 +234,10 @@ const AdminModul = () => {
                                     />
                             </div>
                             <div className="flex-auto p-1">
-                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Durasi</label>
+                                <label htmlFor="duration" className="text-gray-800  font-bold leading-tight tracking-normal">Durasi</label>
                                 <input 
                                     type="number"
-                                    id="name" 
+                                    id="duration" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     ref={durationRef}
                                     defaultValue={modulesData.duration}
@@ -592,7 +305,6 @@ const AdminModul = () => {
             </>
         ) : null}
         {/*  ---Modals Hapus Modul---  */}
-
 
         </> 
     )

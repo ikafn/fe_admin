@@ -29,8 +29,7 @@ const AdminLogin = () => {
 
             localStorage.setItem('token', admin.data.data.accessToken)
             navigate('/admin')
-
-
+            
         } catch(error) {
             console.error(error.response.data.message);
             setError(error.response.data.message)

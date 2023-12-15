@@ -3,7 +3,9 @@ import React  from "react";
 
 const bgColor = {
   darkBlue: '#6148FF',
-  white: 'white'
+  white: 'white',
+  lightBlue: '#489CFF',
+  success: '#73CA5C'
 }
 
 

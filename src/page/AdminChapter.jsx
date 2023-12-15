@@ -1,25 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, ButtonAksi, Card, HeaderAdmin, SidebarAdmin } from "../component";
-import { icon_filter } from "../assets";
-import { icon_search } from "../assets";
-import { icon_tambah } from "../assets";
+import { ButtonAksi, Card, HeaderAdmin, SidebarAdmin } from "../component";
 import axios from "axios";
+import CreateChapter from "../component/Modal/CreateChapter";
 
 
 const AdminChapter = () => {
-    const [showModalTambah, setShowModalTambah] = useState(false);
-    const [showModalFilter, setShowModalFilter] = useState(false);
     const [showModalUbah, setShowModalUbah] = useState(false);
     const [showModalHapus, setShowModalHapus] = useState(false);
-
     const [chapters, setChapters] = useState([]);
     const [chapterData, setChapterData] = useState();
-    
-    const [course_id, setCourse_id] = useState('');
-    const [name, setName] = useState('');
-    const [idCourse, setIdCourse] = useState('');
     const [counts, setCounts] = useState([]);
-
+    const course_idRef = useRef('')
+    const nameRef = useRef('')
 
     // GET LIST CHAPTER 
     
@@ -32,43 +24,10 @@ const AdminChapter = () => {
             console.log(err)
         }
     }
-    useEffect(() => {
-        getListChapters();
-    }, [])
-
-    // CREATE NEW CHAPTER 
-    const handleCreate = async () => {
-        try {
-            const payload = {
-                course_id,
-                name
-            }
-            const res = await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/chapters', payload)
-
-            setShowModalTambah(false);
-            getListChapters()
-            } catch(err) {
-            console.log(err);
-        } 
-    }
-    const getCourseId = async () => {
-        try {
-            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/courses');
-            setIdCourse(data.data.data);
-        } catch(err) {
-            console.log(err)
-        }
-    }
-    useEffect(() => {
-        getCourseId();
-    }, [])
-
-    const course_idRef = useRef('')
-    const nameRef = useRef('')
 
     // UPDATE CHAPTER 
     const handleUpdate = async (e) => {
-        // e.preventDefault()
+        e.preventDefault()
         try {
           const payloadUpdate = {
             course_id: course_idRef.current.value,
@@ -102,19 +61,19 @@ const AdminChapter = () => {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             });
-            console.log(data.data.data)
             setCounts(data.data.data);
         } catch(err) {
             console.log(err)
         }
     }
+
     useEffect(() => {
+        getListChapters(),
         getCounts();
     }, [])
 
     return (
         <>
-        
         <HeaderAdmin />
         <SidebarAdmin />
         <div className="container mx-auto pl-20 pr-10 flex flex-col">
@@ -123,17 +82,17 @@ const AdminChapter = () => {
                 <Card
                     totalUser= {counts.total_user}
                     countClassUser= "Active Users"
-                    variant="lightBlue" 
+                    variant="success" 
                 />
                 <Card
                     totalUser= {counts.total_course}
                     countClassUser= "Active Class"
-                    variant="success" 
+                    variant="darkBlue" 
                 />
                 <Card
                     totalUser= {counts.total_premium_course}
                     countClassUser= "Premium Class"
-                    variant="darkBlue" 
+                    variant="lightBlue" 
                 />        
             </div>
             {/*  ---Card Count Class and User---  */}
@@ -146,28 +105,18 @@ const AdminChapter = () => {
                     </p>
                 </div>
 
-                <div className="flex items-center">
-                    <Button
-                        variant='darkBlue'
-                        onClick={() => setShowModalTambah(true)}
-                        img={icon_tambah}
-                    />
-                    <Button
+                <div className="flex items-center p-2">
+                    <CreateChapter />
+                    {/* <Button
                         variant='white'
                         onClick={() => setShowModalFilter(true)}
                         img={icon_filter}
                     />
-                    {/* <Button
-                        variant='white'
-                        onClick={}
-                        img={icon_search}
-                    /> */}
-
                     <button 
                         type="button"
                         className="flex items-center justify-center p-1 w-5 h-4 lg:w-10 lg:h-7 bg-white font-semibold my-[1.13rem] rounded-3xl">
                         <img src={icon_search} /> 
-                    </button>
+                    </button> */}
                 </div>
             </div>
 
@@ -200,7 +149,7 @@ const AdminChapter = () => {
                                 <td className="flex font-bold whitespace-nowrap p-6 py-2">
                                     <ButtonAksi
                                         text={'Ubah'}
-                                        variant='darkBlue'
+                                        variant='success'
                                         onClick={() => {setShowModalUbah(true); setChapterData(chapter)}}
                                     />
                                     <ButtonAksi
@@ -219,319 +168,115 @@ const AdminChapter = () => {
         </div>
 
 
-        {/*  ---Modals Tambah Chapter---  */}
-            {showModalTambah ? (
-                <>
-                <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                    <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                    
-                        <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                            
-                            <div className="flex items-start justify-between p-2  rounded-t">
-                                <button
-                                    type="button"
-                                    className="ml-auto text-[#6148FF] text-lg  float-right leading-none font-semibold outline-none focus:outline-none"
-                                    onClick={() => setShowModalTambah(false)}
-                                >
-                                    x
-                                </button>
-                            </div>
 
-                            <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
-                                Tambah Chapter
-                            </p>
-                            <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
-                                <div className="flex-auto p-1">
-                                    <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Kelas</label>
-                                    <select className="form-select text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"  
-                                    onClick={(e) => setCourse_id(e.target.value)} >
-                                        {idCourse.map((course, index) => ( 
-                                            <option 
-                                                // onChange={(e) => setCourse_id(e.target.value)}
-                                                value={course.id} 
-                                                key={index} >
-                                                    {course.name}
-                                            </option>
-                                        ))}
-                                    </select> 
-                                    
-                                </div>
-                                <div className="flex-auto p-1">
-                                    <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Chapter</label>
-                                    <input 
-                                        type="text"
-                                        id="name" 
-                                        className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                        placeholder="Text"
-                                        // value={name}
-                                        onChange={(e) => setName(e.target.value)}/>
-                                </div>
-                            </form>
-                            
-                            <div className="flex items-center justify-center p-2 mb-2">
+        {/*  ---Modals Ubah Chapter---  */}
+        {showModalUbah ? (
+            <>
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                {/*content*/}
+                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                        {/*header*/}
+                        <div className="flex items-start justify-between p-2  rounded-t">
+                            <button
+                                type="button"
+                                className="ml-auto text-[#6148FF] text-lg float-right leading-none font-semibold outline-none focus:outline-none"
+                                onClick={() => setShowModalUbah(false)}
+                            >
+                                x
+                            </button>
+                        </div>
+
+                        {/*body*/}
+                        <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
+                            Ubah Chapter
+                        </p>
+
+                        <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
+                            <div className="flex-auto p-1">
+                                <label htmlFor="course_id" className="text-gray-800  font-bold leading-tight tracking-normal">ID Kelas</label>
+                                <input 
+                                    type="text"
+                                    id="course_id" 
+                                    className="form-control text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
+                                    defaultValue={chapterData.course.id}
+                                    ref={course_idRef}
+                                    onClick={(e) => setCourse_id(e.target.value)}
+                                    disabled
+                                    />
+                            </div>
+                            <div className="flex-auto p-1">
+                                <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Chapter</label>
+                                <input 
+                                    type="text"
+                                    id="name" 
+                                    className="form-control text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
+                                    defaultValue={chapterData.name}
+                                    ref={nameRef}
+                                    onChange={(e) => setName(e.target.value)}
+                                    />
+                            </div>
+                        </form>
+                        
+                        {/*footer*/}
+                        <div className="flex items-center justify-center p-2 mb-2">
                             <ButtonAksi
                                 text={'Batal'}
                                 variant='red'
-                                onClick={() => setShowModalTambah(false)}
+                                onClick={() => setShowModalUbah(false)}
                             />
                             <ButtonAksi
                                 text={'Simpan'}
                                 variant='success'
-                                onClick={() => handleCreate()}
+                                onClick={() => handleUpdate()}
                             />
-                            </div>
                         </div>
                     </div>
                 </div>
-                <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
-                </>
-                
-            ) : null}
-            {/*  ---Modals Tambah Chapter---  */}
+            </div>
+            <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
+            </>
+        ) : null}
+        {/*  ---Modals Ubah Chapter---  */}
 
-            {/*  ---Modals Filter---  */}
-            {showModalFilter ? (
-                <>
-                <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                    <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                    {/*content*/}
-                        <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                            {/*header*/}
-                            <div className="flex items-start justify-between p-1  rounded-t">
-                                <button
-                                    type="button"
-                                    className="ml-auto text-[#6148FF] text-lg float-right leading-none font-semibold outline-none focus:outline-none"
-                                    onClick={() => setShowModalFilter(false)}
-                                >
-                                    x
-                                </button>
-                            </div>
-                            <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
-                                Filter Chapter
-                            </p>
 
-                            {/*body*/}
-                            <form className="bg-white text-[0.625rem] lg:text-xs max-w-max rounded-2xl px-14 py-1">
-                                <div>
-                                    <p className="flex text-black font-semibold py-1">
-                                        Kategori
-                                    </p>
-                                    <div className="flex items-center mb-2">
-                                        <input
-                                            id="default-checkbox"
-                                            type="checkbox"
-                                            value=""
-                                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                        />
-                                        <label
-                                            htmlFor="default-checkbox"
-                                            className="ms-2 font-normal text-gray-500"
-                                        >
-                                           UI/UX Design
-                                            </label>
-                                    </div>
-                                    <div className="flex items-center mb-2">
-                                        <input
-                                            id="default-checkbox"
-                                            type="checkbox"
-                                            value=""
-                                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                        />
-                                        <label
-                                            htmlFor="default-checkbox"
-                                            className="ms-2 font-normal text-gray-500"
-                                        >
-                                            Web Development
-                                        </label>
-                                    </div>
-                                    <div className="flex items-center mb-2">
-                                        <input
-                                            id="default-checkbox"
-                                            type="checkbox"
-                                            value=""
-                                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                        />
-                                        <label
-                                            htmlFor="default-checkbox"
-                                            className="ms-2 font-normal text-gray-500"
-                                        >
-                                            Android Development
-                                        </label>
-                                    </div>
-                                    <div className="flex items-center mb-2">
-                                        <input
-                                            id="default-checkbox"
-                                            type="checkbox"
-                                            value=""
-                                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                        />
-                                        <label
-                                            htmlFor="default-checkbox"
-                                            className="ms-2 font-normal text-gray-500"
-                                        >
-                                            Data Science
-                                        </label>
-                                    </div>
-                                    <div className="flex items-center mb-2">
-                                        <input
-                                            id="default-checkbox"
-                                            type="checkbox"
-                                            value=""
-                                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                        />
-                                        <label
-                                            htmlFor="default-checkbox"
-                                            className="ms-2 font-normal text-gray-500"
-                                        >
-                                            Business Intelligence
-                                        </label>
-                                    </div>
-                                </div>
+        {/*  ---Modals Hapus Chapter---  */}
+        {showModalHapus ? (
+            <>
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                {/*content*/}
+                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none py-5 px-10">
+                        {/*header*/}
+                        <p className="flex justify-center items-center text-xs text-[#6148FF] font-bold py-2">
+                            Hapus Chapter
+                        </p>
 
-                            </form>
+                        {/*body*/}
+                        <p className="flex justify-center items-center text-xs text-black py-2">
+                            Anda yakin ingin menghapus chapter ini?
+                        </p>
 
-                            {/*footer*/}
-                            <div className="flex items-center justify-center p-2 mb-2">
-                                <ButtonAksi
-                                    text={'Filter'}
-                                    variant='darkBlue'
-                                    onClick={() => setShowModalFilter(false)}
-                                />
-                            </div>
+                        {/*footer*/}
+                        <div className="flex items-center justify-center p-2 mb-2">
+                            <ButtonAksi
+                                text={'Batal'}
+                                variant='red'
+                                onClick={() => setShowModalHapus(false)}
+                            />
+                            <ButtonAksi
+                                text={'Hapus'}
+                                variant='success'
+                                onClick={() => handleDelete()}
+                            />
                         </div>
                     </div>
                 </div>
-                <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
-                </>
-            ) : null}
-            {/*  ---Modals Filter---  */}
-
-
-            {/*  ---Modals Ubah Chapter---  */}
-            {showModalUbah ? (
-                <>
-                <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                    <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                    {/*content*/}
-                        <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                            {/*header*/}
-                            <div className="flex items-start justify-between p-2  rounded-t">
-                                <button
-                                    type="button"
-                                    className="ml-auto text-[#6148FF] text-lg float-right leading-none font-semibold outline-none focus:outline-none"
-                                    onClick={() => setShowModalUbah(false)}
-                                >
-                                    x
-                                </button>
-                            </div>
-
-                            {/*body*/}
-                            <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
-                                Ubah Chapter
-                            </p>
-
-                            <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
-                                <div className="flex-auto p-1">
-                                    <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">ID Kelas</label>
-                                    <input 
-                                        type="text"
-                                        id="name" 
-                                        className="form-control text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                        defaultValue={chapterData.course.id}
-                                        ref={course_idRef}
-                                        // value={chapterData.course.id}
-                                        
-                                        // value={course_idUpdate}
-                                        onClick={(e) => setCourse_id(e.target.value)}
-                                        disabled
-                                        />
-                                    {/* <select className="form-select text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"  
-                                    onChange={(e) => setCourse_idUpdate(e.target.value)} defaultValue={chapterData.course_id}>
-                                        {id.map((course, index) => ( 
-                                            <option 
-                                                // value={[course.id]}
-                                                // onChange={(e) => setCourse_id(e.target.value)}
-                                                value={course.id} 
-                                                key={index} >
-                                                    {course.name}
-                                            </option>
-                                        ))}
-                                    </select>  */}
-                                </div>
-                                <div className="flex-auto p-1">
-                                    <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Chapter</label>
-                                    <input 
-                                        type="text"
-                                        id="name" 
-                                        className="form-control text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                        defaultValue={chapterData.name}
-                                        ref={nameRef}
-                                        // value={chapterData.name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        // onChange={(e) => this.onChange(setName(e.target.value))}
-                                        />
-                                </div>
-                            </form>
-                            
-                            {/*footer*/}
-                            <div className="flex items-center justify-center p-2 mb-2">
-                                <ButtonAksi
-                                    text={'Batal'}
-                                    variant='red'
-                                    onClick={() => setShowModalUbah(false)}
-                                />
-                                <ButtonAksi
-                                    text={'Simpan'}
-                                    variant='success'
-                                    onClick={() => handleUpdate()}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
-                </>
-            ) : null}
-            {/*  ---Modals Ubah Chapter---  */}
-
-
-            {/*  ---Modals Hapus Chapter---  */}
-            {showModalHapus ? (
-                <>
-                <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                    <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                    {/*content*/}
-                        <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none py-5 px-10">
-                            {/*header*/}
-                            <p className="flex justify-center items-center text-xs text-[#6148FF] font-bold py-2">
-                                Hapus Chapter
-                            </p>
-
-                            {/*body*/}
-                            <p className="flex justify-center items-center text-xs text-black py-2">
-                                Anda yakin ingin menghapus chapter ini?
-                            </p>
-
-                            {/*footer*/}
-                            <div className="flex items-center justify-center p-2 mb-2">
-                                <ButtonAksi
-                                    text={'Batal'}
-                                    variant='red'
-                                    onClick={() => setShowModalHapus(false)}
-                                />
-                                <ButtonAksi
-                                    text={'Hapus'}
-                                    variant='success'
-                                    onClick={() => handleDelete()}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
-                </>
-            ) : null}
-            {/*  ---Modals Hapus Chapter---  */}
+            </div>
+            <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
+            </>
+        ) : null}
+        {/*  ---Modals Hapus Chapter---  */}
 
         </> 
     )
