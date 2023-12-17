@@ -3,7 +3,6 @@ import { ButtonAksi, Card, CreateCourse, FilterCourse, HeaderAdmin, SidebarAdmin
 import { icon_search } from "../assets";
 import axios from "axios";
 
-
 const AdminKelas = () => {
     const [showModalUbah, setShowModalUbah] = useState(false);
     const [showModalHapus, setShowModalHapus] = useState(false);
@@ -30,6 +29,7 @@ const AdminKelas = () => {
         try {
             const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/courses');
             setCourses(data.data.data);
+            console.log(data.data.data);
         } catch(err) {
             console.log(err)
         }
@@ -54,7 +54,8 @@ const AdminKelas = () => {
           await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/courses/${coursesData.id}`, payloadUpdate)
 
         setShowModalUbah(false);
-        getListCourses()
+        getListCourses();
+        getCounts();
         } catch(err) {
           console.log(err);
         } 
@@ -65,7 +66,8 @@ const AdminKelas = () => {
         try {
             await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/courses/${coursesData.id}`);
             setShowModalHapus(false)
-            getListCourses()
+            getListCourses();
+            getCounts();
         } catch(err) {
             console.log(err)
         }
@@ -101,12 +103,12 @@ const AdminKelas = () => {
                 <Card
                     totalUser= {counts.total_user}
                     countClassUser= "Active Users"
-                    variant="success" 
+                    variant="darkBlue" 
                 />
                 <Card
                     totalUser= {counts.total_course}
                     countClassUser= "Active Class"
-                    variant="darkBlue" 
+                    variant="success" 
                 />
                 <Card
                     totalUser= {counts.total_premium_course}
@@ -114,9 +116,8 @@ const AdminKelas = () => {
                     variant="lightBlue" 
                 />
             </div>
-            {/*  ---Card Count Class and User--- 
+            {/*  ---Card Count Class and User--- */}
 
-            {/*  ---Tabel Kelas---  */}
             <div className="flex justify-between p-2">
                 <div className="flex items-center">
                     <p className="text-[0.625rem] lg:text-sm font-bold">
@@ -128,14 +129,15 @@ const AdminKelas = () => {
                     <CreateCourse />
                     <FilterCourse />
 
-                    {/* <button 
+                    <button 
                         type="button"
                         className="flex items-center justify-center p-1 w-5 h-4 lg:w-10 lg:h-7 bg-white font-semibold my-[1.13rem] rounded-3xl">
                         <img src={icon_search} /> 
-                    </button> */}
+                    </button> 
                 </div>
             </div>
 
+            {/*  ---Tabel Kelas---  */}
             <div className="overflow-x-auto min-w-screen">
                 <table className="table w-full items-center bg-transparent border-collapse ">
                     <thead className="bg-[#EBF3FC] lg:py-3 text-[0.625rem] lg:text-xs  whitespace-nowrap font-semibold text-left">
@@ -176,7 +178,7 @@ const AdminKelas = () => {
                                 <td className="p-6 py-2">
                                     {course.name} 
                                 </td>
-                                <td className="p-6 py-2">
+                                <td className={`p-6 py-2 ${course.type === "Free" ? 'text-green-500' : 'text-[#3892ff]'}`}>
                                     {course.type}
                                 </td>
                                 <td className="p-6 py-2">
@@ -210,9 +212,7 @@ const AdminKelas = () => {
             <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                {/*content*/}
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                        {/*header*/}
                         <div className="flex items-start justify-between p-2  rounded-t">
                             <button
                                 type="button"
@@ -222,8 +222,6 @@ const AdminKelas = () => {
                                 x
                             </button>
                         </div>
-
-                        {/*body*/}
                         <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
                             Ubah Kelas
                         </p>
@@ -297,7 +295,7 @@ const AdminKelas = () => {
                                     type="text"
                                     id="price" 
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-2  border-gray-300 rounded-lg border" 
-                                    placeholder="Text" 
+                                    placeholder="Text"
                                     defaultValue={coursesData.price}
                                     ref={priceRef}/>
                                 </div>
@@ -341,11 +339,8 @@ const AdminKelas = () => {
                                     placeholder="Paragraph" 
                                     defaultValue={coursesData.on_boarding}
                                     ref={on_boardingRef} />
-                            </div>
-                            
+                            </div>     
                         </form>
-                        
-                        {/*footer*/}
                         <div className="flex items-center justify-center p-2 mb-2">
                             <ButtonAksi
                                 text={'Batal'}
@@ -371,19 +366,13 @@ const AdminKelas = () => {
             <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                {/*content*/}
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none py-5 px-10">
-                        {/*header*/}
                         <p className="flex justify-center items-center text-xs text-[#6148FF] font-bold py-2">
                             Hapus Kelas
                         </p>
-
-                        {/*body*/}
                         <p className="flex justify-center items-center text-xs text-black py-2">
                             Anda yakin ingin menghapus kelas ini?
                         </p>
-
-                        {/*footer*/}
                         <div className="flex items-center justify-center p-2 mb-2">
                             <ButtonAksi
                                 text={'Batal'}
@@ -403,7 +392,6 @@ const AdminKelas = () => {
             </>
         ) : null}
         {/*  ---Modals Hapus Kelas---  */}
-        
         </> 
     )
 }

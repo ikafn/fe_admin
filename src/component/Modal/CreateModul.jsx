@@ -4,7 +4,6 @@ import axios from "axios";
 import ButtonAksi from "../ButtonAksi";
 import Button from "../Button";
 
-
 const CreateModul = () => {
     const [showModalTambah, setShowModalTambah] = useState(false);
 
@@ -27,10 +26,7 @@ const CreateModul = () => {
           await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/modules', payload)
 
         setShowModalTambah(false);
-        window.location.reload();
-
-        // getListModules();
-    
+        window.location.reload();    
         } catch(err) {
           console.log(err);
         } 
@@ -81,9 +77,10 @@ const CreateModul = () => {
                         </p>
                         <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
                             <div className="flex-auto p-1">
-                                <label htmlFor="idChapter" className="text-gray-800  font-bold leading-tight tracking-normal">ID Chapter</label>
+                                <label htmlFor="idChapter" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Chapter</label>
                                 <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"
                                 onClick={(e) => setChapter_id(e.target.value)}>
+                                    <option hidden>Pilih Chapter</option>
                                     {idChapter.map((chapter, index) => ( 
                                         <option
                                             key={index}

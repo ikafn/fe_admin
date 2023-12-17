@@ -2,30 +2,29 @@ import React, { useEffect, useRef, useState } from "react";
 import { ButtonAksi, Card, CreateChapter, HeaderAdmin, SidebarAdmin } from "../component";
 import axios from "axios";
 
-
 const AdminChapter = () => {
     const [showModalUbah, setShowModalUbah] = useState(false);
     const [showModalHapus, setShowModalHapus] = useState(false);
     const [chapters, setChapters] = useState([]);
     const [chapterData, setChapterData] = useState();
     const [counts, setCounts] = useState([]);
+
     const course_idRef = useRef('')
     const nameRef = useRef('')
 
     // GET LIST CHAPTER 
-    
     const getListChapters = async () => {
         try {
             const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/chapters');
             setChapters(data.data.data);
-            console.log(data.data.data)
+            console.log(data.data.data);
         } catch(err) {
             console.log(err)
         }
     }
 
     // UPDATE CHAPTER 
-    const handleUpdate = async (e) => {
+    const handleUpdate = async () => {
         try {
           const payloadUpdate = {
             course_id: course_idRef.current.value,
@@ -80,22 +79,21 @@ const AdminChapter = () => {
                 <Card
                     totalUser= {counts.total_user}
                     countClassUser= "Active Users"
-                    variant="success" 
+                    variant="darkBlue" 
                 />
                 <Card
                     totalUser= {counts.total_course}
                     countClassUser= "Active Class"
-                    variant="darkBlue" 
+                    variant="success" 
                 />
                 <Card
                     totalUser= {counts.total_premium_course}
                     countClassUser= "Premium Class"
                     variant="lightBlue" 
-                />        
+                />      
             </div>
             {/*  ---Card Count Class and User---  */}
 
-            {/*  ---Tabel Chapter---  */}
             <div className="flex justify-between">
                 <div className="flex items-center">
                     <p className="text-[0.625rem] lg:text-sm font-bold">
@@ -165,16 +163,12 @@ const AdminChapter = () => {
             {/*  ---Tabel Chapter---  */}
         </div>
 
-
-
         {/*  ---Modals Ubah Chapter---  */}
         {showModalUbah ? (
             <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                {/*content*/}
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                        {/*header*/}
                         <div className="flex items-start justify-between p-2  rounded-t">
                             <button
                                 type="button"
@@ -184,12 +178,9 @@ const AdminChapter = () => {
                                 x
                             </button>
                         </div>
-
-                        {/*body*/}
                         <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
                             Ubah Chapter
                         </p>
-
                         <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
                             <div className="flex-auto p-1">
                                 <label htmlFor="course_id" className="text-gray-800  font-bold leading-tight tracking-normal">ID Kelas</label>
@@ -199,7 +190,6 @@ const AdminChapter = () => {
                                     className="form-control text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     defaultValue={chapterData.course.id}
                                     ref={course_idRef}
-                                    onClick={(e) => setCourse_id(e.target.value)}
                                     disabled
                                     />
                             </div>
@@ -211,12 +201,9 @@ const AdminChapter = () => {
                                     className="form-control text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     defaultValue={chapterData.name}
                                     ref={nameRef}
-                                    onChange={(e) => setName(e.target.value)}
                                     />
                             </div>
                         </form>
-                        
-                        {/*footer*/}
                         <div className="flex items-center justify-center p-2 mb-2">
                             <ButtonAksi
                                 text={'Batal'}
@@ -237,25 +224,18 @@ const AdminChapter = () => {
         ) : null}
         {/*  ---Modals Ubah Chapter---  */}
 
-
         {/*  ---Modals Hapus Chapter---  */}
         {showModalHapus ? (
             <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                {/*content*/}
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none py-5 px-10">
-                        {/*header*/}
                         <p className="flex justify-center items-center text-xs text-[#6148FF] font-bold py-2">
                             Hapus Chapter
                         </p>
-
-                        {/*body*/}
                         <p className="flex justify-center items-center text-xs text-black py-2">
                             Anda yakin ingin menghapus chapter ini?
                         </p>
-
-                        {/*footer*/}
                         <div className="flex items-center justify-center p-2 mb-2">
                             <ButtonAksi
                                 text={'Batal'}
@@ -275,7 +255,6 @@ const AdminChapter = () => {
             </>
         ) : null}
         {/*  ---Modals Hapus Chapter---  */}
-
         </> 
     )
 }

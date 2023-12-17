@@ -26,7 +26,6 @@ const AdminDashboard = () => {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             });
-            console.log(data.data.data)
             setCounts(data.data.data);
         } catch(err) {
             console.log(err)
@@ -49,12 +48,12 @@ const AdminDashboard = () => {
                 <Card
                     totalUser= {counts.total_user}
                     countClassUser= "Active Users"
-                    variant="success" 
+                    variant="darkBlue" 
                 />
                 <Card
                     totalUser= {counts.total_course}
                     countClassUser= "Active Class"
-                    variant="darkBlue" 
+                    variant="success" 
                 />
                 <Card
                     totalUser= {counts.total_premium_course}
@@ -64,7 +63,6 @@ const AdminDashboard = () => {
             </div>
             {/*  ---Card Count Class and User---  */}
 
-            {/*  ---Tabel Orders---  */}
             <div className="flex justify-between">
                 <div className="flex items-center">
                     <p className="text-[0.625rem] lg:text-sm font-bold">
@@ -80,8 +78,9 @@ const AdminDashboard = () => {
                         <img src={icon_search} /> 
                     </button> */}
                 </div>
-            </div>        
-
+            </div>      
+             
+            {/*  ---Tabel Orders---  */}
             <div className="overflow-x-auto min-w-screen">
                 <table className="table w-full items-center bg-transparent border-collapse ">
                     <thead className="bg-[#EBF3FC] lg:py-3 text-[0.625rem] lg:text-xs whitespace-nowrap font-semibold text-left">
@@ -119,7 +118,7 @@ const AdminDashboard = () => {
                                 <td className="p-6 py-2">
                                     {order.course.name}
                                 </td> 
-                                <td className="p-6 py-2">
+                                <td className={`p-6 py-2 ${order.status === "BELUM BAYAR" ? 'text-red-500' : 'text-green-500'}`}>
                                     {order.status}
                                 </td>
                                 <td className="p-6 py-2">
@@ -135,7 +134,6 @@ const AdminDashboard = () => {
             </div>
             {/*  ---Tabel Orders---  */}
         </div>
-
         </>
     )
 }

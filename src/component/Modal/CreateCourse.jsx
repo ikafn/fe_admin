@@ -21,6 +21,16 @@ const CreateCourse = () => {
 
     const [idCategory, setIdCategory] = useState('')
 
+    const handleTypeChange = (e) => {
+        const selectedType = e.target.value;
+        setType(selectedType);
+    
+        if (selectedType === 'Free') {
+          setPrice('0');
+        } else {
+          setPrice('');
+        }
+    };
 
     // CREATE NEW COURSES 
     const handleCreate = async () => {
@@ -47,7 +57,7 @@ const CreateCourse = () => {
         } 
     }
 
-    // GET CATEGORY 
+    // GET CATEGORY ID
     const getCategoryId = async () => {
         try {
             const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/categories');
@@ -61,7 +71,6 @@ const CreateCourse = () => {
         getCategoryId()
     }, [])
 
-    
     return (
     <>
         <Button
@@ -75,9 +84,7 @@ const CreateCourse = () => {
             <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                {/*content*/}
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                        {/*header*/}
                         <div className="flex items-start justify-between p-2  rounded-t">
                             <button
                                 type="button"
@@ -87,8 +94,6 @@ const CreateCourse = () => {
                                 x
                             </button>
                         </div>
-
-                        {/*body*/}
                         <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold ">
                             Tambah Kelas
                         </p>
@@ -105,8 +110,11 @@ const CreateCourse = () => {
                             <div className="flex p-1 gap-2">
                                 <div className="flex flex-col w-1/2">
                                     <label htmlFor="idCategory" className="text-gray-800  font-bold leading-tight tracking-normal">Kategori Kelas</label>
-                                    <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
-                                    onClick={(e) => setCategory_id(e.target.value)}>
+                                    <select 
+                                        className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
+                                        onChange={(e) => setCategory_id(e.target.value)} 
+                                    >
+                                        <option hidden>Pilih Kategori Kelas</option>
                                         {idCategory.map((categories, index) => ( 
                                             <option
                                                 key={index}
@@ -117,8 +125,11 @@ const CreateCourse = () => {
                                 </div>
                                 <div className="flex flex-col w-1/2">
                                     <label htmlFor="level" className="text-gray-800  font-bold leading-tight tracking-normal">Level</label>
-                                    <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"
-                                    onClick={(e) => setLevel(e.target.value)}>
+                                    <select 
+                                        className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
+                                        onChange={(e) => setLevel(e.target.value)} 
+                                    >
+                                        <option hidden>Pilih Level</option>
                                         <option>Beginner</option>
                                         <option>Intermediate</option>
                                         <option>Advanced</option>
@@ -145,21 +156,25 @@ const CreateCourse = () => {
                             </div>
                             <div className="flex p-1 gap-2">
                                 <div className="flex flex-col w-1/2">
-                                    <label htmlFor="ttpe" className="text-gray-800  font-bold leading-tight tracking-normal">Tipe Kelas</label>
-                                    <select className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"
-                                    onClick={(e) => setType(e.target.value)} >
+                                    <label htmlFor="type" className="text-gray-800 font-bold leading-tight tracking-normal">Tipe Kelas</label>
+                                    <select
+                                        className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3 border-gray-300 rounded-lg border"
+                                        onChange={handleTypeChange}
+                                    >
+                                        <option hidden>Pilih Tipe Kelas</option>
                                         <option>Free</option>
                                         <option>Premium</option>
                                     </select>
                                 </div>
                                 <div className="flex flex-col w-1/2">
-                                    <label htmlFor="price" className="text-gray-800  font-bold leading-tight tracking-normal">Harga</label>
-                                    <input 
-                                    type="integer"
-                                    id="price" 
-                                    className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-2  border-gray-300 rounded-lg border" 
-                                    placeholder="0" 
-                                    onChange={(e) => setPrice(e.target.value)} />
+                                    <label htmlFor="price" className="text-gray-800 font-bold leading-tight tracking-normal">Harga</label>
+                                    <input
+                                        type="text"
+                                        id="price"
+                                        disabled={type === 'Free'} // Disable input if type is 'Free'
+                                        className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-2 border-gray-300 rounded-lg border"
+                                        placeholder="0"
+                                        onChange={(e) => setPrice(e.target.value)} />
                                 </div>
                             </div>
                             <div className="flex-auto p-1">
@@ -198,10 +213,7 @@ const CreateCourse = () => {
                                     placeholder="Paragraph" 
                                     onChange={(e) => setOn_boarding(e.target.value)} />
                             </div>
-                            
                         </form>
-                        
-                        {/*footer*/}
                         <div className="flex items-center justify-center p-2 mb-2">
                             <ButtonAksi
                                 text={'Batal'}
@@ -222,7 +234,6 @@ const CreateCourse = () => {
         ) : null}
         {/*  ---Modals Tambah Kelas---  */}
     </>
-
   )
 };
 

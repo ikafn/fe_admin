@@ -8,6 +8,7 @@ const AdminModul = () => {
     const [modules, setModules] = useState([]);
     const [modulesData, setModulesData] = useState([]);
     const [counts, setCounts] = useState([]);
+
     const chapter_idRef = useRef('')
     const nameRef = useRef('')
     const videoRef = useRef('')
@@ -61,12 +62,12 @@ const AdminModul = () => {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             });
-            console.log(data.data.data)
             setCounts(data.data.data);
         } catch(err) {
             console.log(err)
         }
     }
+    
     useEffect(() => {
         getListModules(),
         getCounts();
@@ -82,12 +83,12 @@ const AdminModul = () => {
                 <Card
                     totalUser= {counts.total_user}
                     countClassUser= "Active Users"
-                    variant="success" 
+                    variant="darkBlue" 
                 />
                 <Card
                     totalUser= {counts.total_course}
                     countClassUser= "Active Class"
-                    variant="darkBlue" 
+                    variant="success" 
                 />
                 <Card
                     totalUser= {counts.total_premium_course}
@@ -97,7 +98,6 @@ const AdminModul = () => {
             </div>
             {/*  ---Card Count Class and User---  */}
 
-            {/*  ---Tabel Modul---  */}
             <div className="flex justify-between py-2">
                 <div className="flex items-center">
                     <p className="text-[0.625rem] lg:text-sm font-bold">
@@ -122,7 +122,6 @@ const AdminModul = () => {
             </div>
 
             {/* <TableModul /> */}
-
             <div className="overflow-x-auto min-w-screen">
                 <table className="table w-full items-center bg-transparent border-collapse ">
                     <thead className="bg-[#EBF3FC] text-[0.625rem] lg:text-xs  whitespace-nowrap font-semibold text-left">
@@ -179,9 +178,7 @@ const AdminModul = () => {
             <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                {/*content*/}
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                        {/*header*/}
                         <div className="flex items-start justify-between p-2  rounded-t">
                             <button
                                 type="button"
@@ -191,8 +188,6 @@ const AdminModul = () => {
                                 x
                             </button>
                         </div>
-
-                        {/* body*/}
                         <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
                             Ubah Modul
                         </p>
@@ -205,7 +200,6 @@ const AdminModul = () => {
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     ref={chapter_idRef}
                                     defaultValue={modulesData.chapter.id}
-                                    onClick={(e) => setChapter_id(e.target.value)}
                                     disabled
                                     />
                             </div>
@@ -217,7 +211,6 @@ const AdminModul = () => {
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     ref={nameRef}
                                     defaultValue={modulesData.name}
-                                    onChange={(e) => setName(e.target.value)}
                                     />
                             </div>
                             <div className="flex-auto p-1">
@@ -228,7 +221,6 @@ const AdminModul = () => {
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     ref={videoRef}
                                     defaultValue={modulesData.video}
-                                    onChange={(e) => setVideo(e.target.value)}
                                     />
                             </div>
                             <div className="flex-auto p-1">
@@ -239,11 +231,9 @@ const AdminModul = () => {
                                     className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border" 
                                     ref={durationRef}
                                     defaultValue={modulesData.duration}
-                                    onChange={(e) => setDuration(Number(e.target.value))}
                                     />
                             </div>
                         </form>
-                        
                         <div className="flex items-center justify-center p-2 mb-2">
                             <ButtonAksi
                                 text={'Batal'}
@@ -265,25 +255,18 @@ const AdminModul = () => {
         ) : null}
         {/*  ---Modals Ubah Modul---  */}
 
-
         {/*  ---Modals Hapus Modul---  */}
         {showModalHapus ? (
             <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                {/*content*/}
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none py-5 px-10">
-                        {/*header*/}
                         <p className="flex justify-center items-center text-xs text-[#6148FF] font-bold py-2">
                             Hapus Modul
                         </p>
-
-                        {/*body*/}
                         <p className="flex justify-center items-center text-xs text-black py-2">
                             Anda yakin ingin menghapus modul ini?
                         </p>
-
-                        {/*footer*/}
                         <div className="flex items-center justify-center p-2 mb-2">
                             <ButtonAksi
                                 text={'Batal'}
@@ -303,7 +286,6 @@ const AdminModul = () => {
             </>
         ) : null}
         {/*  ---Modals Hapus Modul---  */}
-
         </> 
     )
 }

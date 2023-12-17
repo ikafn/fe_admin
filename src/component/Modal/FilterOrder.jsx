@@ -14,15 +14,12 @@ const FilterOrder = () => {
             img={icon_filter}
         />
 
-
         {/*  ---Modals Filter---  */}
         {showModalFilter ? (
             <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                {/*content*/}
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                        {/*header*/}
                         <div className="flex items-start justify-between p-1 rounded-t">
                             <button
                                 type="button"
@@ -35,8 +32,6 @@ const FilterOrder = () => {
                         <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
                             Filter Pembayaran
                         </p>
-
-                        {/*body*/}
                         <form className="bg-white max-w-max text-[0.625rem] lg:text-xs rounded-2xl px-14 py-1">
                             <div>
                                 <p className="flex text-black font-semibold py-1">
@@ -71,7 +66,6 @@ const FilterOrder = () => {
                                     </label>
                                 </div>
                             </div>
-
                             <div>
                                 <p className="flex text-black font-semibold py-2">
                                     Metode Pembayaran
@@ -106,8 +100,6 @@ const FilterOrder = () => {
                                 </div>
                             </div>
                         </form>
-
-                        {/* footer */}
                         <div className="flex items-center justify-center p-2 mb-2">
                             <ButtonAksi
                                 text={'Filter'}
@@ -123,7 +115,6 @@ const FilterOrder = () => {
         ) : null}
         {/*  ---Modals Filter---  */}
     </>
-
   )
 };
 

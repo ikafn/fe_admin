@@ -25,6 +25,7 @@ const CreateChapter = () => {
             console.log(err);
         } 
     }
+
     // GET COURSE ID 
     const getCourseId = async () => {
         try {
@@ -53,9 +54,7 @@ const CreateChapter = () => {
             <>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                        
                         <div className="flex items-start justify-between p-2  rounded-t">
                             <button
                                 type="button"
@@ -65,15 +64,15 @@ const CreateChapter = () => {
                                 x
                             </button>
                         </div>
-
                         <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
                             Tambah Chapter
                         </p>
                         <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
                             <div className="flex-auto p-1">
                                 <label htmlFor="idCourse" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Kelas</label>
-                                <select className="form-select text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3  border-gray-300 rounded-lg border"  
-                                onClick={(e) => setCourse_id(e.target.value)} >
+                                <select className="form-select text-gray-600 focus:outline-none focus:border focus:border-indigo-700 w-full h-6 flex items-center pl-3 border-gray-300 rounded-lg border"  
+                                onChange={(e) => setCourse_id(e.target.value)} >
+                                    <option hidden>Pilih Kelas</option>
                                     {idCourse.map((course, index) => ( 
                                         <option 
                                             value={course.id} 
@@ -82,7 +81,6 @@ const CreateChapter = () => {
                                         </option>
                                     ))}
                                 </select> 
-                                
                             </div>
                             <div className="flex-auto p-1">
                                 <label htmlFor="name" className="text-gray-800  font-bold leading-tight tracking-normal">Nama Chapter</label>
@@ -94,29 +92,26 @@ const CreateChapter = () => {
                                     onChange={(e) => setName(e.target.value)}/>
                             </div>
                         </form>
-                        
                         <div className="flex items-center justify-center p-2 mb-2">
-                        <ButtonAksi
-                            text={'Batal'}
-                            variant='red'
-                            onClick={() => setShowModalTambah(false)}
-                        />
-                        <ButtonAksi
-                            text={'Simpan'}
-                            variant='success'
-                            onClick={() => handleCreate()}
-                        />
+                            <ButtonAksi
+                                text={'Batal'}
+                                variant='red'
+                                onClick={() => setShowModalTambah(false)}
+                            />
+                            <ButtonAksi
+                                text={'Simpan'}
+                                variant='success'
+                                onClick={() => handleCreate()}
+                            />
                         </div>
                     </div>
                 </div>
             </div>
             <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
             </>
-            
         ) : null}
         {/*  ---Modals Tambah Chapter---  */}
     </>
-
   )
 };
 
