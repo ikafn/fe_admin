@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
-import { ButtonAksi, Card, HeaderAdmin, SidebarAdmin } from "../component";
+import { ButtonAksi, Card, CreateCourse, FilterCourse, HeaderAdmin, SidebarAdmin } from "../component";
 import { icon_search } from "../assets";
 import axios from "axios";
-import CreateCourse from "../component/Modal/CreateCourse";
-import FilterCourse from "../component/Modal/FilterCourse";
 
 
 const AdminKelas = () => {
@@ -39,7 +37,6 @@ const AdminKelas = () => {
 
     // UPDATE CHAPTER 
     const handleUpdate = async (e) => {
-        e.preventDefault()
         try {
             const payloadUpdate = {
                 code: codeRef.current.value,

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ButtonAksi, Card, HeaderAdmin, SidebarAdmin } from "../component";
+import { ButtonAksi, Card, CreateChapter, HeaderAdmin, SidebarAdmin } from "../component";
 import axios from "axios";
-import CreateChapter from "../component/Modal/CreateChapter";
 
 
 const AdminChapter = () => {
@@ -27,7 +26,6 @@ const AdminChapter = () => {
 
     // UPDATE CHAPTER 
     const handleUpdate = async (e) => {
-        e.preventDefault()
         try {
           const payloadUpdate = {
             course_id: course_idRef.current.value,

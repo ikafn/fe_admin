@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ButtonAksi, Card, HeaderAdmin, SidebarAdmin } from "../component";
+import { ButtonAksi, Card, CreateModul, HeaderAdmin, SidebarAdmin } from "../component";
 import axios from "axios";
-import CreateModul from "../component/Modal/CreateModul";
-
 
 const AdminModul = () => {
     const [showModalUbah, setShowModalUbah] = useState(false);

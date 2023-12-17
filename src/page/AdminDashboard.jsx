@@ -1,9 +1,8 @@
 
-import { Card, HeaderAdmin, SidebarAdmin } from "../component";
+import { Card, FilterOrder, HeaderAdmin, SidebarAdmin } from "../component";
 import { icon_search } from "../assets";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import FilterOrder from "../component/Modal/FilterOrder";
 
 const AdminDashboard = () => {
     const [orders, setOrders] = useState([]);
