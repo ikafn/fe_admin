@@ -23,7 +23,11 @@ const CreateModul = () => {
             video,
             duration
           }
-          await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/modules', payload)
+          await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/modules', payload, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          })
 
         setShowModalTambah(false);
         window.location.reload();    
@@ -35,7 +39,11 @@ const CreateModul = () => {
     // GET CHAPTER ID 
     const getChapterId = async () => {
         try {
-            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/chapters');
+            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/chapters', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             setIdChapter(data.data.data);
         } catch(err) {
             console.log(err)

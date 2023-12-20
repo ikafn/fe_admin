@@ -30,7 +30,11 @@ const AdminKelas = () => {
     // GET ALL COURSES 
     const getListCourses = async () => {
         try {
-            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/courses');
+            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/courses', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             setCourses(data.data.data);
             // console.log(data.data.data);
         } catch(err) {
@@ -54,7 +58,11 @@ const AdminKelas = () => {
                 description: descriptionRef.current.value,
                 on_boarding: on_boardingRef.current.value
             }
-          await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/courses/${coursesData.id}`, payloadUpdate)
+          await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/courses/${coursesData.id}`, payloadUpdate, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          })
         getCounts();
         setShowModalUbah(false);
         getListCourses();
@@ -66,7 +74,11 @@ const AdminKelas = () => {
     // DELETE COURSE 
     const handleDelete = async () => {
         try {
-            await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/courses/${coursesData.id}`);
+            await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/courses/${coursesData.id}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             setShowModalHapus(false)
             getListCourses();
             getCounts();

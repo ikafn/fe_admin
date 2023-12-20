@@ -15,7 +15,11 @@ const AdminChapter = () => {
     // GET LIST CHAPTER 
     const getListChapters = async () => {
         try {
-            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/chapters');
+            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/chapters', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             setChapters(data.data.data);
             console.log(data.data.data);
         } catch(err) {
@@ -30,7 +34,11 @@ const AdminChapter = () => {
             course_id: course_idRef.current.value,
             name: nameRef.current.value
           }
-          await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/chapters/${chapterData.id}`, payloadUpdate)
+          await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/chapters/${chapterData.id}`, payloadUpdate, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          })
 
         setShowModalUbah(false);
         getListChapters()
@@ -42,7 +50,11 @@ const AdminChapter = () => {
     // DELETE CHAPTER 
     const handleDelete = async () => {
         try {
-            await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/chapters/${chapterData.id}`);
+            await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/chapters/${chapterData.id}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             setShowModalHapus(false)
             getListChapters()
         } catch(err) {
@@ -96,9 +108,7 @@ const AdminChapter = () => {
 
             <div className="flex justify-between">
                 <div className="flex items-center">
-                    <p className="text-[0.625rem] lg:text-sm font-bold">
-                        Kelola Chapter
-                    </p>
+                    <p className="text-[0.625rem] lg:text-sm font-bold">Kelola Chapter</p>
                 </div>
 
                 <div className="flex items-center p-2">
@@ -121,41 +131,22 @@ const AdminChapter = () => {
                 <table className="table w-full items-center bg-transparent border-collapse ">
                     <thead className="bg-[#EBF3FC] text-[0.625rem] lg:text-xs  whitespace-nowrap font-semibold text-left">
                         <tr >
-                            <th className="p-6 py-2">
-                                Nama Kelas
-                            </th>
-                            <th className="p-6 py-2">
-                                Nama Chapter
-                            </th>
-                            <th className="p-6 py-2">
-                                Aksi
-                            </th>
+                            <th className="p-6 py-2">Nama Kelas</th>
+                            <th className="p-6 py-2">Nama Chapter</th>
+                            <th className="p-6 py-2">Aksi</th>
                         </tr>
                     </thead>
 
                     <tbody className="border-t-0 px-4 text-[0.5rem] lg:text-[0.625rem] font-bold whitespace-nowrap p-4 text-left">
                         {chapters.map((chapter, index) => (
                             <tr key={index}>
-                                <td className="p-6 py-2">
-                                    {chapter.course.name}
-                                </td>
-                                <td className="p-6 py-2">
-                                    {chapter.name}
-                                </td>
+                                <td className="p-6 py-2">{chapter.course.name}</td>
+                                <td className="p-6 py-2">{chapter.name}</td>
                                 <td className="flex font-bold whitespace-nowrap p-6 py-2">
-                                    <ButtonAksi
-                                        text={'Ubah'}
-                                        variant='success'
-                                        onClick={() => {setShowModalUbah(true); setChapterData(chapter)}}
-                                    />
-                                    <ButtonAksi
-                                        text={'Hapus'}
-                                        variant='red'
-                                        onClick={() => {setShowModalHapus(true); setChapterData(chapter)}}
-                                    />
+                                    <ButtonAksi text={'Ubah'} variant='success' onClick={() => {setShowModalUbah(true); setChapterData(chapter)}} />
+                                    <ButtonAksi text={'Hapus'} variant='red' onClick={() => {setShowModalHapus(true); setChapterData(chapter)}} />
                                 </td>
                             </tr>
-
                         ))}
                     </tbody>
                 </table>
@@ -178,9 +169,7 @@ const AdminChapter = () => {
                                 x
                             </button>
                         </div>
-                        <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
-                            Ubah Chapter
-                        </p>
+                        <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">Ubah Chapter</p>
                         <form className="items-center justify-between w-[21rem] lg:w-[36rem] px-4 lg:px-12 text-[0.625rem] ">
                             <div className="flex-auto p-1">
                                 <label htmlFor="course_id" className="text-gray-800  font-bold leading-tight tracking-normal">ID Kelas</label>
@@ -205,16 +194,8 @@ const AdminChapter = () => {
                             </div>
                         </form>
                         <div className="flex items-center justify-center p-2 mb-2">
-                            <ButtonAksi
-                                text={'Batal'}
-                                variant='red'
-                                onClick={() => setShowModalUbah(false)}
-                            />
-                            <ButtonAksi
-                                text={'Simpan'}
-                                variant='success'
-                                onClick={() => handleUpdate()}
-                            />
+                            <ButtonAksi text={'Batal'} variant='red' onClick={() => setShowModalUbah(false)} />
+                            <ButtonAksi text={'Simpan'} variant='success' onClick={() => handleUpdate()} />
                         </div>
                     </div>
                 </div>
@@ -237,16 +218,8 @@ const AdminChapter = () => {
                             Anda yakin ingin menghapus chapter ini?
                         </p>
                         <div className="flex items-center justify-center p-2 mb-2">
-                            <ButtonAksi
-                                text={'Batal'}
-                                variant='red'
-                                onClick={() => setShowModalHapus(false)}
-                            />
-                            <ButtonAksi
-                                text={'Hapus'}
-                                variant='success'
-                                onClick={() => handleDelete()}
-                            />
+                            <ButtonAksi text={'Batal'} variant='red' onClick={() => setShowModalHapus(false)} />
+                            <ButtonAksi text={'Hapus'} variant='success' onClick={() => handleDelete()} />
                         </div>
                     </div>
                 </div>

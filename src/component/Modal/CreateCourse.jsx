@@ -48,7 +48,11 @@ const CreateCourse = () => {
                 description,
                 on_boarding
             }
-            await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/courses', payload)
+            await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/courses', payload, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
         
             setShowModalTambah(false);
             window.location.reload();
@@ -60,7 +64,11 @@ const CreateCourse = () => {
     // GET CATEGORY ID
     const getCategoryId = async () => {
         try {
-            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/categories');
+            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/categories', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             setIdCategory(data.data.data);
         } catch(err) {
             console.log(err)

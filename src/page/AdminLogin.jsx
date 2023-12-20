@@ -14,22 +14,18 @@ const AdminLogin = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        
         if (!id  || !password) {
             setError("Please complete all fields");
             setTimeout(() => setError(null), 5000);
             return
           }
-
         try {
             const admin = await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/login', {
                 id,
                 password
             })
-
             localStorage.setItem('token', admin.data.data.accessToken)
             navigate('/admin')
-            
         } catch(error) {
             console.error(error.response.data.message);
             setError(error.response.data.message)
@@ -97,7 +93,6 @@ const AdminLogin = () => {
                                         </button>
                                     </div>
                                 </div>
-                            
                                 <div className="mt-6 ">
                                     <button 
                                         type="submit" 
@@ -107,7 +102,6 @@ const AdminLogin = () => {
                                     </button>
                                 </div>
                             </div>
-
                             <div className="flex items-center justify-center mx-40">
                                 {error && (
                                 <div className="text-red-500 bg-red-100 p-2 rounded-xl absolute bottom-0 mb-4">

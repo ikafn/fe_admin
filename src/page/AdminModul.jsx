@@ -17,7 +17,11 @@ const AdminModul = () => {
     // GET ALL MODULES 
     const getListModules = async () => {
         try {
-            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/modules');
+            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/modules', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             setModules(data.data.data);
             console.log(data.data.data)
         } catch(err) {
@@ -34,7 +38,11 @@ const AdminModul = () => {
             video: videoRef.current.value,
             duration: durationRef.current.value
           }
-          await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/modules/${modulesData.id}`, payloadUpdate)
+          await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/modules/${modulesData.id}`, payloadUpdate, {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          })
 
         setShowModalUbah(false);
         getListModules()
@@ -46,7 +54,11 @@ const AdminModul = () => {
     // DELETE MODULE 
     const handleDelete = async () => {
         try {
-            await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/modules/${modulesData.id}`);
+            await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/modules/${modulesData.id}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             setShowModalHapus(false)
             getListModules()
         } catch(err) {
@@ -100,9 +112,7 @@ const AdminModul = () => {
 
             <div className="flex justify-between py-2">
                 <div className="flex items-center">
-                    <p className="text-[0.625rem] lg:text-sm font-bold">
-                        Kelola Modul
-                    </p>
+                    <p className="text-[0.625rem] lg:text-sm font-bold">Kelola Modul</p>
                 </div>
 
                 <div className="flex items-center">
@@ -126,44 +136,22 @@ const AdminModul = () => {
                 <table className="table w-full items-center bg-transparent border-collapse ">
                     <thead className="bg-[#EBF3FC] text-[0.625rem] lg:text-xs  whitespace-nowrap font-semibold text-left">
                         <tr >
-                            <th className="p-6 py-2">
-                                Nama Chapter
-                            </th>
-                            <th className="p-6 py-2">
-                                Nama Modul
-                            </th>
-                            <th className="p-6 py-2">
-                                Durasi
-                            </th>
-                            <th className="p-6 py-2">
-                                Aksi
-                            </th>
+                            <th className="p-6 py-2">Nama Chapter</th>
+                            <th className="p-6 py-2">Nama Modul</th>
+                            <th className="p-6 py-2">Durasi</th>
+                            <th className="p-6 py-2">Aksi</th>
                         </tr>
                     </thead>
 
                     <tbody className="border-t-0 px-4 text-[0.5rem] lg:text-[0.625rem] font-bold whitespace-nowrap p-4 text-left">
                         {modules.map((module) => ( 
                             <tr key={module.id}>
-                                <td className="p-6 py-2">
-                                    {module.chapter.name}
-                                </td>
-                                <td className="p-6 py-2">
-                                    {module.name}
-                                </td>
-                                <td className="p-6 py-2">
-                                    {module.duration}
-                                </td>
+                                <td className="p-6 py-2">{module.chapter.name}</td>
+                                <td className="p-6 py-2">{module.name}</td>
+                                <td className="p-6 py-2">{module.duration}</td>
                                 <td className="flex font-bold whitespace-nowrap p-6 py-2">
-                                    <ButtonAksi
-                                        text={'Ubah'}
-                                        variant='success'
-                                        onClick={() => {setShowModalUbah(true); setModulesData(module)}}
-                                    />
-                                    <ButtonAksi
-                                        text={'Hapus'}
-                                        variant='red'
-                                        onClick={() => {setShowModalHapus(true); setModulesData(module)}}
-                                    />
+                                    <ButtonAksi text={'Ubah'} variant='success' onClick={() => {setShowModalUbah(true); setModulesData(module)}} />
+                                    <ButtonAksi text={'Hapus'} variant='red' onClick={() => {setShowModalHapus(true); setModulesData(module)}} />
                                 </td>
                             </tr>
                         ))}
@@ -235,18 +223,9 @@ const AdminModul = () => {
                             </div>
                         </form>
                         <div className="flex items-center justify-center p-2 mb-2">
-                            <ButtonAksi
-                                text={'Batal'}
-                                variant='red'
-                                onClick={() => setShowModalUbah(false)}
-                            />
-                            <ButtonAksi
-                                text={'Simpan'}
-                                variant='success'
-                                onClick={() => handleUpdate()}
-                            />
+                            <ButtonAksi text={'Batal'} variant='red' onClick={() => setShowModalUbah(false)} />
+                            <ButtonAksi text={'Simpan'} variant='success' onClick={() => handleUpdate()} />
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -261,23 +240,11 @@ const AdminModul = () => {
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-auto my-6 mx-auto max-w-3xl">
                     <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none py-5 px-10">
-                        <p className="flex justify-center items-center text-xs text-[#6148FF] font-bold py-2">
-                            Hapus Modul
-                        </p>
-                        <p className="flex justify-center items-center text-xs text-black py-2">
-                            Anda yakin ingin menghapus modul ini?
-                        </p>
+                        <p className="flex justify-center items-center text-xs text-[#6148FF] font-bold py-2">Hapus Modul</p>
+                        <p className="flex justify-center items-center text-xs text-black py-2">Anda yakin ingin menghapus modul ini?</p>
                         <div className="flex items-center justify-center p-2 mb-2">
-                            <ButtonAksi
-                                text={'Batal'}
-                                variant='red'
-                                onClick={() => setShowModalHapus(false)}
-                            />
-                            <ButtonAksi
-                                text={'Hapus'}
-                                variant='success'
-                                onClick={() =>  handleDelete()}
-                            />
+                            <ButtonAksi text={'Batal'} variant='red' onClick={() => setShowModalHapus(false)} />
+                            <ButtonAksi text={'Hapus'} variant='success' onClick={() =>  handleDelete()} />
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,11 @@ const AdminDashboard = () => {
     // GET LIST ORDER 
     const getListOrders = async () => {
         try {
-            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/orders');
+            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/orders', {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             setOrders(data.data.data);
         } catch(err) {
             console.log(err)
@@ -65,11 +69,8 @@ const AdminDashboard = () => {
 
             <div className="flex justify-between">
                 <div className="flex items-center">
-                    <p className="text-[0.625rem] lg:text-sm font-bold">
-                        Status Pembayaran
-                    </p>
+                    <p className="text-[0.625rem] lg:text-sm font-bold">Status Pembayaran</p>
                 </div>
-
                 <div className="flex items-center p-2">
                     <FilterOrder />
                     {/* <button 
@@ -85,27 +86,14 @@ const AdminDashboard = () => {
                 <table className="table w-full items-center bg-transparent border-collapse ">
                     <thead className="bg-[#EBF3FC] lg:py-3 text-[0.625rem] lg:text-xs whitespace-nowrap font-semibold text-left">
                         <tr>
-                            <th className="p-6 py-2">
-                                ID
-                            </th>
-                            <th className="p-6 py-2">
-                                Kategori
-                            </th>
-                            <th className="p-6 py-2">
-                                Kelas Premium
-                            </th>
-                            <th className="p-6 py-2">
-                                Status
-                            </th>
-                            <th className="p-6 py-2">
-                                Metode Pembayaran
-                            </th>
-                            <th className="p-6 py-2">
-                                Tanggal Bayar
-                            </th>
+                            <th className="p-6 py-2">ID</th>
+                            <th className="p-6 py-2">Kategori</th>
+                            <th className="p-6 py-2">Kelas Premium</th>
+                            <th className="p-6 py-2">Status</th>
+                            <th className="p-6 py-2">Metode Pembayaran</th>
+                            <th className="p-6 py-2">Tanggal Bayar</th>
                         </tr>
                     </thead>
-
                     <tbody className="border-t-0 px-4 text-[0.5rem] lg:text-[0.625rem] font-bold whitespace-nowrap p-4 text-left">
                         {orders.map((order) => ( 
                             <tr key={order.id}>
