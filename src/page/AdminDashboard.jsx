@@ -1,12 +1,15 @@
 
-import { Card, FilterOrder, HeaderAdmin, SidebarAdmin } from "../component";
-import { icon_search } from "../assets";
+import { Button, ButtonAksi, CardCount, Checkbox, HeaderAdmin, SidebarAdmin } from "../component";
+import { icon_filter } from "../assets";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 const AdminDashboard = () => {
+    const [showModalFilter, setShowModalFilter] = useState(false);
+
     const [orders, setOrders] = useState([]);
-    const [counts, setCounts] = useState([]);
+
+    const [selectedStatus, setSelectedStatus] = useState([]);
 
     // GET LIST ORDER 
     const getListOrders = async () => {
@@ -21,24 +24,37 @@ const AdminDashboard = () => {
             console.log(err)
         }
     }
-
-    // GET COUNTS 
-    const getCounts = async () => {
+      
+    const handleStatusChange = (status) => {
+        setSelectedStatus((prevStatus) => (prevStatus === status ? null : status));
+    };
+      
+    // FILTER ORDER
+    const handleFilter = async () => {
         try {
-            const data = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/counts', {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
-            setCounts(data.data.data);
-        } catch(err) {
-            console.log(err)
+          const response = await axios.get('https://befinalprojectbinar-production.up.railway.app/api/admin/orders', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            params: {
+              status: selectedStatus
+            },
+          });
+          console.log('Filtered Courses:', response.data);
+          setOrders(response.data.data);
+          setShowModalFilter(false);
+        } catch (error) {
+          console.error('Error during filtering:', error);
         }
-    }
+    };
+    const handleClearFilters = () => {
+        setSelectedStatus([]);
+        getListOrders();
+        setShowModalFilter(false);
+    };
 
     useEffect(() => {
-        getListOrders(),
-        getCounts();
+        getListOrders()
     }, [])
 
     return (
@@ -48,23 +64,7 @@ const AdminDashboard = () => {
 
         <div className="container mx-auto pl-20 pr-10 flex flex-col">
             {/*  ---Card Count Class and User---  */}
-            <div className="flex mt-16 justify-between"> 
-                <Card
-                    totalUser= {counts.total_user}
-                    countClassUser= "Active Users"
-                    variant="darkBlue" 
-                />
-                <Card
-                    totalUser= {counts.total_course}
-                    countClassUser= "Active Class"
-                    variant="success" 
-                />
-                <Card
-                    totalUser= {counts.total_premium_course}
-                    countClassUser= "Premium Class"
-                    variant="lightBlue" 
-                />
-            </div>
+                <CardCount />
             {/*  ---Card Count Class and User---  */}
 
             <div className="flex justify-between">
@@ -72,12 +72,13 @@ const AdminDashboard = () => {
                     <p className="text-[0.625rem] lg:text-sm font-bold">Status Pembayaran</p>
                 </div>
                 <div className="flex items-center p-2">
-                    <FilterOrder />
-                    {/* <button 
-                        type="button"
-                        className="flex items-center justify-center p-1 w-5 h-4 lg:w-10 lg:h-7 bg-white font-semibold my-[1.13rem] rounded-3xl">
-                        <img src={icon_search} /> 
-                    </button> */}
+                    {/* <FilterOrder />  */}
+
+                    <Button
+                        variant='white'
+                        onClick={() => setShowModalFilter(true)}
+                        img={icon_filter}
+                    />
                 </div>
             </div>      
              
@@ -122,6 +123,51 @@ const AdminDashboard = () => {
             </div>
             {/*  ---Tabel Orders---  */}
         </div>
+
+        {/*  ---Modals Filter---  */}
+        {showModalFilter ? (
+            <>
+            <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                    <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                        <div className="flex items-start justify-between p-1 rounded-t">
+                            <button
+                                type="button"
+                                className="ml-auto text-[#6148FF] text-lg float-right leading-none font-semibold outline-none focus:outline-none"
+                                onClick={() => setShowModalFilter(false)}
+                            >
+                                x
+                            </button>
+                        </div>
+                        <p className="flex justify-center items-center text-[0.625rem] lg:text-xs text-[#6148FF] font-bold py-2">
+                            Filter Pembayaran
+                        </p>
+                        <form className="bg-white max-w-max text-[0.625rem] lg:text-xs rounded-2xl px-14 py-1">
+                            <div>
+                                <p className="flex text-black font-semibold py-1">Status</p>
+                                <Checkbox 
+                                    name={'SUDAH BAYAR'}
+                                    isChecked={selectedStatus === 'SUDAH BAYAR'}
+                                    onChange={() => handleStatusChange('SUDAH BAYAR')}
+                                />
+                                <Checkbox 
+                                    name={'BELUM BAYAR'}
+                                    isChecked={selectedStatus === 'BELUM BAYAR'}
+                                    onChange={() => handleStatusChange('BELUM BAYAR')}
+                                />
+                            </div>
+                        </form>
+                        <div className="flex items-center justify-center p-2 mb-2">
+                            <ButtonAksi text={'Clear'} variant='red' onClick={handleClearFilters} />
+                            <ButtonAksi text={'Filter'} variant='darkBlue' onClick={handleFilter}/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
+            </>
+        ) : null}
+        {/*  ---Modals Filter---  */}
         </>
     )
 }

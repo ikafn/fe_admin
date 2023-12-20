@@ -18,7 +18,7 @@ const AdminLogin = () => {
             setError("Please complete all fields");
             setTimeout(() => setError(null), 5000);
             return
-          }
+        }
         try {
             const admin = await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/login', {
                 id,
