@@ -22,6 +22,7 @@ const AdminKelas = () => {
     const [coursesData, setCoursesData] = useState([]);
     const [counts, setCounts] = useState([]);
 
+    const [alert, setAlert] = useState(null);
 
     // GET ALL COURSES 
     const getListCourses = async () => {
@@ -54,31 +55,43 @@ const AdminKelas = () => {
                 description: descriptionRef.current.value,
                 on_boarding: on_boardingRef.current.value
             }
-          await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/courses/${coursesData.id}`, payloadUpdate, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
-          })
-        getCounts();
-        setShowModalUbah(false);
-        getListCourses();
+            const res = await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/courses/${coursesData.id}`, payloadUpdate, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            setAlert({ type: "success", message: "Course updated successfully" });
+            setTimeout(() => setAlert(null), 1000);
+
+            console.log("Data berhasil diupdate:", res.data);
+            getCounts();
+            setShowModalUbah(false);
+            getListCourses();
         } catch(err) {
-          console.log(err);
+            setAlert({ type: "error", message: `Course added failed: ${err.response.data.message}` });
+            setTimeout(() => setAlert(null), 1000);
+            console.log(err);
         } 
     }
 
     // DELETE COURSE 
     const handleDelete = async () => {
         try {
-            await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/courses/${coursesData.id}`, {
+            const res = await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/courses/${coursesData.id}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             });
+            setAlert({ type: "success", message: "Course deleted successfully" });
+            setTimeout(() => setAlert(null), 1000);
+
+            console.log("Data berhasil dihapus:", res.data);
             setShowModalHapus(false)
             getListCourses();
             getCounts();
         } catch(err) {
+            setAlert({ type: "error", message: `Course failed to delete: ${err.response.data.message}` });
+            setTimeout(() => setAlert(null), 1000);
             console.log(err)
         }
     }
@@ -95,7 +108,29 @@ const AdminKelas = () => {
         } catch(err) {
             console.log(err)
         }
-    }
+    };
+
+    const capitalizeFirstLetter = (str) => {
+        var words = str.split(" ");
+        for (var i = 0; i < words.length; i++) {
+          words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+        }
+        return words.join(" ");
+    };
+
+    const searchData = async (searchTerm) => {
+        try {
+          const response = await axios.get(`https://befinalprojectbinar-production.up.railway.app/api/admin/courses?name=${capitalizeFirstLetter(searchTerm)}`, {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          });
+          setCourses(response.data.data);
+          console.log('Search Results:', response.data);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+    };
 
     useEffect(() => {
         getListCourses(),
@@ -104,7 +139,7 @@ const AdminKelas = () => {
 
     return (
         <>
-        <HeaderAdmin />
+        <HeaderAdmin searchData={searchData}/>
         <SidebarAdmin />
 
         <div className="container mx-auto pl-20 pr-10 flex flex-col">
@@ -353,7 +388,22 @@ const AdminKelas = () => {
             </>
         ) : null}
         {/*  ---Modals Hapus Kelas---  */}
+
+        <div className="flex items-center justify-center text-sm">
+            {alert && (
+                <div
+                    className={`fixed bottom-4 text-${
+                        alert.type === "success" ? "green" : "red"
+                    }-500 bg-${
+                        alert.type === "success" ? "green" : "red"
+                    }-100 p-2 rounded-xl`}
+                >
+                    {alert.message}
+                </div>
+            )}
+        </div>
         </> 
+        
     )
 }
 

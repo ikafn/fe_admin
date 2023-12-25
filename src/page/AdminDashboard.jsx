@@ -10,6 +10,8 @@ const AdminDashboard = () => {
     const [orders, setOrders] = useState([]);
 
     const [selectedStatus, setSelectedStatus] = useState([]);
+    const [selectedMethod, setSelectedMethod] = useState([]);
+
 
     // GET LIST ORDER 
     const getListOrders = async () => {
@@ -28,6 +30,9 @@ const AdminDashboard = () => {
     const handleStatusChange = (status) => {
         setSelectedStatus((prevStatus) => (prevStatus === status ? null : status));
     };
+    const handleMethodChange = (order_method) => {
+        setSelectedMethod((prevOrder_method) => (prevOrder_method === order_method ? null : order_method));
+    };
       
     // FILTER ORDER
     const handleFilter = async () => {
@@ -37,7 +42,8 @@ const AdminDashboard = () => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
             params: {
-              status: selectedStatus
+              status: selectedStatus,
+              method: selectedMethod
             },
           });
           console.log('Filtered Courses:', response.data);
@@ -49,6 +55,7 @@ const AdminDashboard = () => {
     };
     const handleClearFilters = () => {
         setSelectedStatus([]);
+        setSelectedMethod([]);
         getListOrders();
         setShowModalFilter(false);
     };
@@ -111,10 +118,10 @@ const AdminDashboard = () => {
                                     {order.status}
                                 </td>
                                 <td className="p-6 py-2">
-                                    {order.order_method}
+                                    {order.order_method || '-'}
                                 </td>
                                 <td className="p-6 py-2">
-                                    {order.payment_date}
+                                    {order.payment_date || '-'}
                                 </td>
                             </tr>
                         ))}
@@ -144,7 +151,7 @@ const AdminDashboard = () => {
                         </p>
                         <form className="bg-white max-w-max text-[0.625rem] lg:text-xs rounded-2xl px-14 py-1">
                             <div>
-                                <p className="flex text-black font-semibold py-1">Status</p>
+                                <p className="flex text-black text-[0.625rem] lg:text-xs font-semibold py-1">Status Pembayaran</p>
                                 <Checkbox 
                                     name={'SUDAH BAYAR'}
                                     isChecked={selectedStatus === 'SUDAH BAYAR'}
@@ -156,6 +163,19 @@ const AdminDashboard = () => {
                                     onChange={() => handleStatusChange('BELUM BAYAR')}
                                 />
                             </div>
+                            {/* <div>
+                                <p className="flex text-black text-[0.625rem] lg:text-xs font-semibold py-1">Metode Pembayaran</p>
+                                <Checkbox 
+                                    name={'Credit Card'}
+                                    isChecked={selectedMethod === 'Credit Card'}
+                                    onChange={() => handleMethodChange('Credit Card')}
+                                />
+                                <Checkbox 
+                                    name={'Bank Transfer'}
+                                    isChecked={selectedMethod === 'Bank Transfer'}
+                                    onChange={() => handleMethodChange('Bank Transfer')}
+                                />
+                            </div> */}
                         </form>
                         <div className="flex items-center justify-center p-2 mb-2">
                             <ButtonAksi text={'Clear'} variant='red' onClick={handleClearFilters} />

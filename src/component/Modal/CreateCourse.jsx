@@ -21,7 +21,7 @@ const CreateCourse = () => {
 
     const [idCategory, setIdCategory] = useState('')
 
-    const [error, setError] = useState(null);
+    const [alert, setAlert] = useState(null);
 
     const handleTypeChange = (e) => {
         const selectedType = e.target.value;
@@ -37,8 +37,8 @@ const CreateCourse = () => {
     // CREATE NEW COURSES 
     const handleCreate = async () => {
         if (!code || !category_id || !level || !name || !type ||!price ) {
-            setError("Please complete all fields");
-            setTimeout(() => setError(null), 5000);
+            setAlert({ type: "error", message: "Please complete all fields" });
+            setTimeout(() => setAlert(null), 1000);
             return
         }
         try {
@@ -55,16 +55,21 @@ const CreateCourse = () => {
                 description,
                 on_boarding
             }
-            await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/courses', payload, {
+            const res = await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/courses', payload, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             })
-        
+            setAlert({ type: "success", message: "Course added successfully" });
+
+            console.log("Data berhasil ditambah:", res.data.data);
             setShowModalTambah(false);
             window.location.reload();
+
         } catch(err) {
-          console.log(err);
+            setAlert({ type: "error", message: `Course added failed: ${err.response.data.message}` });
+            setTimeout(() => setAlert(null), 1000);
+            console.log(err);
         } 
     }
 
@@ -243,11 +248,17 @@ const CreateCourse = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex items-center justify-center mx-40">
-                    {error && (
-                    <div className="text-red-500 bg-red-100 p-2 text-xs rounded-xl absolute bottom-0 mb-4">
-                        {error}
-                    </div>
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-sm">
+                    {alert && (
+                        <div
+                            className={`text-${
+                                alert.type === "success" ? "green" : "red"
+                            }-500 bg-${
+                                alert.type === "success" ? "green" : "red"
+                            }-100 p-2 rounded-xl`}
+                        >
+                            {alert.message}
+                        </div>
                     )}
                 </div>
             </div>
@@ -255,6 +266,20 @@ const CreateCourse = () => {
             </>
         ) : null}
         {/*  ---Modals Tambah Kelas---  */}
+
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-sm">
+            {alert && (
+                <div
+                    className={`text-${
+                        alert.type === "success" ? "green" : "red"
+                    }-500 bg-${
+                        alert.type === "success" ? "green" : "red"
+                    }-100 p-2 rounded-xl`}
+                >
+                    {alert.message}
+                </div>
+            )}
+        </div>
     </>
   )
 };

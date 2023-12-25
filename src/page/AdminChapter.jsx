@@ -12,6 +12,8 @@ const AdminChapter = () => {
     const course_idRef = useRef('')
     const nameRef = useRef('')
 
+    const [alert, setAlert] = useState(null);
+
     // GET LIST CHAPTER 
     const getListChapters = async () => {
         try {
@@ -30,34 +32,45 @@ const AdminChapter = () => {
     // UPDATE CHAPTER 
     const handleUpdate = async () => {
         try {
-          const payloadUpdate = {
-            course_id: course_idRef.current.value,
-            name: nameRef.current.value
-          }
-          await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/chapters/${chapterData.id}`, payloadUpdate, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            const payloadUpdate = {
+                course_id: course_idRef.current.value,
+                name: nameRef.current.value
             }
-          })
+            const res = await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/chapters/${chapterData.id}`, payloadUpdate, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            setAlert({ type: "success", message: "Chapter updated successfully" });
+            setTimeout(() => setAlert(null), 1000);
 
-        setShowModalUbah(false);
-        getListChapters()
+            console.log("Data berhasil diupdate:", res.data);
+            setShowModalUbah(false);
+            getListChapters()
         } catch(err) {
-          console.log(err);
+            setAlert({ type: "error", message: `Chapter added failed: ${err.response.data.message}` });
+            setTimeout(() => setAlert(null), 1000);
+            console.log(err);
         } 
     }
 
     // DELETE CHAPTER 
     const handleDelete = async () => {
         try {
-            await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/chapters/${chapterData.id}`, {
+            const res = await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/chapters/${chapterData.id}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             });
+            setAlert({ type: "success", message: "Chapter deleted successfully" });
+            setTimeout(() => setAlert(null), 1000);
+
+            console.log("Data berhasil dihapus:", res.data);
             setShowModalHapus(false)
             getListChapters()
         } catch(err) {
+            setAlert({ type: "error", message: `Chapter failed to delete: ${err.response.data.message}` });
+            setTimeout(() => setAlert(null), 1000);
             console.log(err)
         }
     }
@@ -74,7 +87,29 @@ const AdminChapter = () => {
         } catch(err) {
             console.log(err)
         }
-    }
+    };
+
+    const capitalizeFirstLetter = (str) => {
+        var words = str.split(" ");
+        for (var i = 0; i < words.length; i++) {
+          words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+        }
+        return words.join(" ");
+    };
+
+    const searchData = async (searchTerm) => {
+        try {
+          const response = await axios.get(`https://befinalprojectbinar-production.up.railway.app/api/admin/courses?name=${capitalizeFirstLetter(searchTerm)}`, {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          });
+          setChapters(response.data.data);
+          console.log('Search Results:', response.data);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+    };
 
     useEffect(() => {
         getListChapters(),
@@ -83,7 +118,7 @@ const AdminChapter = () => {
 
     return (
         <>
-        <HeaderAdmin />
+        <HeaderAdmin searchData={searchData}/>
         <SidebarAdmin />
         <div className="container mx-auto pl-20 pr-10 flex flex-col">
             {/*  ---Card Count Class and User---  */}
@@ -228,6 +263,20 @@ const AdminChapter = () => {
             </>
         ) : null}
         {/*  ---Modals Hapus Chapter---  */}
+
+        <div className="flex items-center justify-center text-sm">
+            {alert && (
+                <div
+                    className={`fixed bottom-4 text-${
+                        alert.type === "success" ? "green" : "red"
+                    }-500 bg-${
+                        alert.type === "success" ? "green" : "red"
+                    }-100 p-2 rounded-xl`}
+                >
+                    {alert.message}
+                </div>
+            )}
+        </div>
         </> 
     )
 }

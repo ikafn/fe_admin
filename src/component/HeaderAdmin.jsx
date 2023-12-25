@@ -2,29 +2,18 @@ import { useState } from "react";
 import { bx_search } from "../assets"
 import axios from "axios";
 
-const HeaderAdmin = () => {
+const HeaderAdmin = ({searchData}) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleInputChange = (e) => {
+  const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
-  const handleSearch = async () => {
-    try {
-      console.log('Search Term:', searchTerm);
-
-      // Perform an API request for search based on the searchTerm
-      const response = await axios.get(`https://befinalprojectbinar-production.up.railway.app/api/courses?name=${searchTerm}`);
-      
-      // Handle the response data, for example, log it to the console
-      console.log('Search Results:', response.data);
-    } catch (error) {
-      console.error('Error during search:', error);
-    }
+  const handleSearch = () => {
+    searchData(searchTerm);
   };
 
   const handleKeyPress = (e) => {
-    // Trigger search if Enter key is pressed
     if (e.key === 'Enter') {
       handleSearch();
     }
@@ -44,7 +33,7 @@ const HeaderAdmin = () => {
               placeholder="Cari"
               className="w-full h-full text-xs lg:text-sm text-gray-900 focus:outline-none"
               value={searchTerm}
-              onChange={handleInputChange}
+              onChange={handleSearchChange}
               onKeyPress={handleKeyPress}
               />
             <button

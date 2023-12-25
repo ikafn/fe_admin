@@ -14,6 +14,8 @@ const AdminModul = () => {
     const videoRef = useRef('')
     const durationRef = useRef('')
 
+    const [alert, setAlert] = useState(null);
+
     // GET ALL MODULES 
     const getListModules = async () => {
         try {
@@ -32,36 +34,47 @@ const AdminModul = () => {
     // UPDATE MODULE 
     const handleUpdate = async () => {
         try {
-          const payloadUpdate = {
-            chapter_id : chapter_idRef.current.value,
-            name: nameRef.current.value,
-            video: videoRef.current.value,
-            duration: durationRef.current.value
-          }
-          await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/modules/${modulesData.id}`, payloadUpdate, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            const payloadUpdate = {
+                chapter_id : chapter_idRef.current.value,
+                name: nameRef.current.value,
+                video: videoRef.current.value,
+                duration: durationRef.current.value
             }
-          })
+            const res = await axios.put(`https://befinalprojectbinar-production.up.railway.app/api/admin/modules/${modulesData.id}`, payloadUpdate, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            setAlert({ type: "success", message: "Modul updated successfully" });
+            setTimeout(() => setAlert(null), 1000);
 
-        setShowModalUbah(false);
-        getListModules()
+            console.log("Data berhasil diupdate:", res.data);
+            setShowModalUbah(false);
+            getListModules()
         } catch(err) {
-          console.log(err);
+            setAlert({ type: "error", message: `Modul added failed: ${err.response.data.message}` });
+            setTimeout(() => setAlert(null), 1000);
+            console.log(err);
         } 
     }
 
     // DELETE MODULE 
     const handleDelete = async () => {
         try {
-            await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/modules/${modulesData.id}`, {
+            const res = await axios.delete(`https://befinalprojectbinar-production.up.railway.app/api/admin/modules/${modulesData.id}`, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             });
+            setAlert({ type: "success", message: "Modul deleted successfully" });
+            setTimeout(() => setAlert(null), 1000);
+
+            console.log("Data berhasil dihapus:", res.data);
             setShowModalHapus(false)
             getListModules()
         } catch(err) {
+            setAlert({ type: "error", message: `Modul failed to delete: ${err.response.data.message}` });
+            setTimeout(() => setAlert(null), 1000);
             console.log(err)
         }
     }
@@ -253,6 +266,20 @@ const AdminModul = () => {
             </>
         ) : null}
         {/*  ---Modals Hapus Modul---  */}
+
+        <div className="flex items-center justify-center text-sm">
+            {alert && (
+                <div
+                    className={`fixed bottom-4 text-${
+                        alert.type === "success" ? "green" : "red"
+                    }-500 bg-${
+                        alert.type === "success" ? "green" : "red"
+                    }-100 p-2 rounded-xl`}
+                >
+                    {alert.message}
+                </div>
+            )}
+        </div>
         </> 
     )
 }

@@ -14,32 +14,36 @@ const CreateModul = () => {
 
     const [idChapter, setIdChapter] = useState([])
 
-    const [error, setError] = useState(null);
+    const [alert, setAlert] = useState(null);
 
     // CREATE NEW MODULES 
     const handleCreate = async () => {
-        if (!chapter_id  || !name ) {
-            setError("Please complete all fields");
-            setTimeout(() => setError(null), 5000);
+        if (!chapter_id  || !name || !duration) {
+            setAlert({ type: "error", message: "Please complete all fields" });
+            setTimeout(() => setAlert(null), 1000);
             return
         }
         try {
-          const payload = {
-            chapter_id,
-            name,
-            video,
-            duration
-          }
-          await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/modules', payload, {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            const payload = {
+                chapter_id,
+                name,
+                video,
+                duration
             }
-          })
+            const res = await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/modules', payload, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+            setAlert({ type: "success", message: "Module added successfully" });
 
-        setShowModalTambah(false);
-        window.location.reload();    
+            console.log("Data berhasil ditambah:", res.data.data);
+            setShowModalTambah(false);
+            window.location.reload();   
         } catch(err) {
-          console.log(err);
+            setAlert({ type: "error", message: `Modul added failed: ${err.response.data.message}` });
+            setTimeout(() => setAlert(null), 1000);
+            console.log(err);
         } 
     }
 
@@ -149,11 +153,17 @@ const CreateModul = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex items-center justify-center mx-40">
-                    {error && (
-                    <div className="text-red-500 bg-red-100 p-2 text-xs rounded-xl absolute bottom-0 mb-4">
-                        {error}
-                    </div>
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-sm ">
+                    {alert && (
+                        <div
+                            className={`text-${
+                                alert.type === "success" ? "green" : "red"
+                            }-500 bg-${
+                                alert.type === "success" ? "green" : "red"
+                            }-100 p-2 rounded-xl`}
+                        >
+                            {alert.message}
+                        </div>
                     )}
                 </div>
             </div>
@@ -162,6 +172,20 @@ const CreateModul = () => {
         ) : null}
 
         {/*  ---Modals Tambah Modul---  */}
+
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-sm ">
+            {alert && (
+                <div
+                    className={`text-${
+                        alert.type === "success" ? "green" : "red"
+                    }-500 bg-${
+                        alert.type === "success" ? "green" : "red"
+                    }-100 p-2 rounded-xl`}
+                >
+                    {alert.message}
+                </div>
+            )}
+        </div>
     </>
 
   )

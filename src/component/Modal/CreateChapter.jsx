@@ -10,13 +10,16 @@ const CreateChapter = () => {
     const [name, setName] = useState('');
     const [idCourse, setIdCourse] = useState([]);
 
-    const [error, setError] = useState(null);
+    const [alert, setAlert] = useState(null);
 
     // CREATE NEW CHAPTER 
     const handleCreate = async () => {
         if (!course_id  || !name) {
-            setError("Please complete all fields");
-            setTimeout(() => setError(null), 5000);
+            // setError("Please complete all fields");
+            // setTimeout(() => setError(null), 5000);
+            setAlert({ type: "error", message: "Please complete all fields" });
+            setTimeout(() => setAlert(null), 1000);
+
             return
         }
         try {
@@ -24,18 +27,21 @@ const CreateChapter = () => {
                 course_id,
                 name
             }
-            await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/chapters', payload, {
+            const res = await axios.post('https://befinalprojectbinar-production.up.railway.app/api/admin/chapters', payload, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
             })
+            setAlert({ type: "success", message: "Chapter added successfully" });
 
+            console.log("Data berhasil ditambah:", res.data.data);
             setShowModalTambah(false);
             window.location.reload();
         } catch(err) {
+            setAlert({ type: "error", message: `Chapter added failed: ${err.response.data.message}` });
+            setTimeout(() => setAlert(null), 1000);
+
             console.log(err);
-            setError(error.response.data.message)
-            setTimeout(() => setError(null), 5000);
         } 
     }
 
@@ -65,7 +71,7 @@ const CreateChapter = () => {
             onClick={() => setShowModalTambah(true)}
             img={icon_tambah}
         />
-
+        
         {/*  ---Modals Tambah Chapter---  */}
         {showModalTambah ? (
             <>
@@ -123,19 +129,39 @@ const CreateChapter = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex items-center justify-center mx-40">
-                    {error && (
-                    <div className="text-red-500 bg-red-100 p-2 text-xs rounded-xl absolute bottom-0 mb-4">
-                        {error}
-                    </div>
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-sm">
+                    {alert && (
+                        <div
+                            className={`text-${
+                                alert.type === "success" ? "green" : "red"
+                            }-500 bg-${
+                                alert.type === "success" ? "green" : "red"
+                            }-100 p-2 rounded-xl`}
+                        >
+                            {alert.message}
+                        </div>
                     )}
                 </div>
             </div>
-            
+
             <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
             </>
         ) : null}
         {/*  ---Modals Tambah Chapter---  */}
+        
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-sm ">
+            {alert && (
+                <div
+                    className={`text-${
+                        alert.type === "success" ? "green" : "red"
+                    }-500 bg-${
+                        alert.type === "success" ? "green" : "red"
+                    }-100 p-2 rounded-xl`}
+                >
+                    {alert.message}
+                </div>
+            )}
+        </div>
     </>
   )
 };
