@@ -396,7 +396,9 @@ const AdminKelas = () => {
                         alert.type === "success" ? "green" : "red"
                     }-500 bg-${
                         alert.type === "success" ? "green" : "red"
-                    }-100 p-2 rounded-xl`}
+                    }-100 p-2 rounded-lg border border-${
+                        alert.type === "success" ? "green" : "red"
+                    }-500 shadow-md`}
                 >
                     {alert.message}
                 </div>

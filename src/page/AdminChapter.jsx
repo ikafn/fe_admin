@@ -89,6 +89,7 @@ const AdminChapter = () => {
         }
     };
 
+    // SEARCH DATA 
     const capitalizeFirstLetter = (str) => {
         var words = str.split(" ");
         for (var i = 0; i < words.length; i++) {
@@ -96,10 +97,9 @@ const AdminChapter = () => {
         }
         return words.join(" ");
     };
-
     const searchData = async (searchTerm) => {
         try {
-          const response = await axios.get(`https://befinalprojectbinar-production.up.railway.app/api/admin/courses?name=${capitalizeFirstLetter(searchTerm)}`, {
+          const response = await axios.get(`https://befinalprojectbinar-production.up.railway.app/api/admin/chapters?name=${capitalizeFirstLetter(searchTerm)}`, {
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
@@ -271,7 +271,9 @@ const AdminChapter = () => {
                         alert.type === "success" ? "green" : "red"
                     }-500 bg-${
                         alert.type === "success" ? "green" : "red"
-                    }-100 p-2 rounded-xl`}
+                    }-100 p-2 rounded-lg border border-${
+                        alert.type === "success" ? "green" : "red"
+                    }-500 shadow-md`}
                 >
                     {alert.message}
                 </div>

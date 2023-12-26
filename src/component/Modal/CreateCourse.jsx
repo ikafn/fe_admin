@@ -255,7 +255,9 @@ const CreateCourse = () => {
                                 alert.type === "success" ? "green" : "red"
                             }-500 bg-${
                                 alert.type === "success" ? "green" : "red"
-                            }-100 p-2 rounded-xl`}
+                            }-100 p-2 rounded-lg border border-${
+                                alert.type === "success" ? "green" : "red"
+                            }-500 shadow-md`}
                         >
                             {alert.message}
                         </div>
@@ -270,11 +272,18 @@ const CreateCourse = () => {
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-sm">
             {alert && (
                 <div
+                    // className={`text-${
+                    //     alert.type === "success" ? "green" : "red"
+                    // }-500 bg-${
+                    //     alert.type === "success" ? "green" : "red"
+                    // }-100 p-2 rounded-xl`}
                     className={`text-${
                         alert.type === "success" ? "green" : "red"
                     }-500 bg-${
                         alert.type === "success" ? "green" : "red"
-                    }-100 p-2 rounded-xl`}
+                    }-100 p-2 rounded-lg border border-${
+                        alert.type === "success" ? "green" : "red"
+                    }-500 shadow-md`}
                 >
                     {alert.message}
                 </div>

@@ -93,6 +93,28 @@ const AdminModul = () => {
         }
     }
     
+    // SEARCH DATA 
+    const capitalizeFirstLetter = (str) => {
+        var words = str.split(" ");
+        for (var i = 0; i < words.length; i++) {
+          words[i] = words[i].charAt(0).toUpperCase() + words[i].slice(1);
+        }
+        return words.join(" ");
+    };
+    const searchData = async (searchTerm) => {
+        try {
+          const response = await axios.get(`https://befinalprojectbinar-production.up.railway.app/api/admin/modules?name=${capitalizeFirstLetter(searchTerm)}`, {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          });
+          setModules(response.data.data);
+          console.log('Search Results:', response.data);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+    };
+
     useEffect(() => {
         getListModules(),
         getCounts();
@@ -100,7 +122,7 @@ const AdminModul = () => {
 
     return (
         <>
-        <HeaderAdmin />
+        <HeaderAdmin searchData={searchData}/>
         <SidebarAdmin />
         <div className="container mx-auto pl-20 pr-10 flex flex-col">
             {/*  ---Card Count Class and User---  */}
@@ -274,7 +296,9 @@ const AdminModul = () => {
                         alert.type === "success" ? "green" : "red"
                     }-500 bg-${
                         alert.type === "success" ? "green" : "red"
-                    }-100 p-2 rounded-xl`}
+                    }-100 p-2 rounded-lg border border-${
+                        alert.type === "success" ? "green" : "red"
+                    }-500 shadow-md`}
                 >
                     {alert.message}
                 </div>
