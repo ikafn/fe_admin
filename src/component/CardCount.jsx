@@ -1,4 +1,4 @@
-import React, { useEffect, useState }  from "react";
+import { useEffect, useState }  from "react";
 import Card from "./Card";
 import axios from "axios";
 
@@ -25,7 +25,7 @@ const CardCount = () => {
 
     return (
         <>
-        <div className="flex mt-16 justify-between"> 
+        <div className="flex mt-16 justify-between gap-x-1"> 
             <Card
                 totalUser= {counts.total_user}
                 countClassUser= "Active Users"

@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { AdminChapter, AdminDashboard, AdminKelas, AdminLogin, AdminModul } from "./page"
-import Home from "./page/Home"
 
 function App() {
   return (

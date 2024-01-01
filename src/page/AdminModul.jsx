@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ButtonAksi, Card, CreateModul, HeaderAdmin, SidebarAdmin } from "../component";
 import axios from "axios";
 
@@ -29,7 +29,7 @@ const AdminModul = () => {
         } catch(err) {
             console.log(err)
         }
-    }
+    };
 
     // UPDATE MODULE 
     const handleUpdate = async () => {
@@ -56,7 +56,7 @@ const AdminModul = () => {
             setTimeout(() => setAlert(null), 1000);
             console.log(err);
         } 
-    }
+    };
 
     // DELETE MODULE 
     const handleDelete = async () => {
@@ -77,7 +77,7 @@ const AdminModul = () => {
             setTimeout(() => setAlert(null), 1000);
             console.log(err)
         }
-    }
+    };
 
     // GET COUNTS 
     const getCounts = async () => {
@@ -91,7 +91,7 @@ const AdminModul = () => {
         } catch(err) {
             console.log(err)
         }
-    }
+    };
     
     // SEARCH DATA 
     const capitalizeFirstLetter = (str) => {
@@ -117,14 +117,14 @@ const AdminModul = () => {
 
     useEffect(() => {
         getListModules(),
-        getCounts();
-    }, [])
+        getCounts()
+    }, []);
 
     return (
         <>
         <HeaderAdmin searchData={searchData}/>
         <SidebarAdmin />
-        <div className="container mx-auto pl-20 pr-10 flex flex-col">
+        <div className="container mx-auto pl-14 pr-5 lg:pl-20 flex flex-col">
             {/*  ---Card Count Class and User---  */}
             <div className="flex mt-16 justify-between"> 
                 <Card
@@ -147,29 +147,18 @@ const AdminModul = () => {
 
             <div className="flex justify-between py-2">
                 <div className="flex items-center">
-                    <p className="text-[0.625rem] lg:text-sm font-bold">Kelola Modul</p>
+                    <p className="text-[0.563rem] lg:text-sm font-bold">Kelola Modul</p>
                 </div>
 
                 <div className="flex items-center">
                     <CreateModul />
-
-                    {/* <Button
-                        variant='white'
-                        onClick={() => setShowModalFilter(true)}
-                        img={icon_filter}
-                    />
-                    <button 
-                        type="button"
-                        className="flex items-center justify-center p-1 w-5 h-4 lg:w-10 lg:h-7 bg-white font-semibold my-[1.13rem] rounded-3xl">
-                        <img src={icon_search} /> 
-                    </button> */}
                 </div>
             </div>
 
             {/* <TableModul /> */}
             <div className="overflow-x-auto min-w-screen">
                 <table className="table w-full items-center bg-transparent border-collapse ">
-                    <thead className="bg-[#EBF3FC] text-[0.625rem] lg:text-xs  whitespace-nowrap font-semibold text-left">
+                    <thead className="bg-[#EBF3FC] text-[0.5rem] lg:text-xs  whitespace-nowrap font-semibold text-left">
                         <tr >
                             <th className="p-6 py-2">Nama Chapter</th>
                             <th className="p-6 py-2">Nama Modul</th>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState }  from "react";
+import { useEffect, useState }  from "react";
 import { icon_tambah } from "../../assets";
 import axios from "axios";
 import ButtonAksi from "../ButtonAksi";
@@ -17,8 +17,7 @@ const CreateChapter = () => {
         if (!course_id  || !name) {
             setAlert({ type: "error", message: "Please complete all fields" });
             setTimeout(() => setAlert(null), 1000);
-
-            return
+            return;
         }
         try {
             const payload = {
@@ -61,7 +60,6 @@ const CreateChapter = () => {
         getCourseId()
     }, [])
 
-    
     return (
     <>
         <Button
@@ -167,6 +165,5 @@ const CreateChapter = () => {
     </>
   )
 };
-
   
 export default CreateChapter;

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react"
-import { Button, ButtonAksi, Card, CreateCourse, HeaderAdmin, SidebarAdmin } from "../component";
+import { useEffect, useRef, useState } from "react"
+import { ButtonAksi, Card, CreateCourse, HeaderAdmin, SidebarAdmin } from "../component";
 import axios from "axios";
 
 const AdminKelas = () => {
@@ -33,11 +33,10 @@ const AdminKelas = () => {
                 }
             });
             setCourses(data.data.data);
-            // console.log(data.data.data);
         } catch(err) {
             console.log(err)
         }
-    }
+    };
 
     // UPDATE CHAPTER 
     const handleUpdate = async () => {
@@ -72,7 +71,7 @@ const AdminKelas = () => {
             setTimeout(() => setAlert(null), 1000);
             console.log(err);
         } 
-    }
+    };
 
     // DELETE COURSE 
     const handleDelete = async () => {
@@ -94,7 +93,7 @@ const AdminKelas = () => {
             setTimeout(() => setAlert(null), 1000);
             console.log(err)
         }
-    }
+    };
 
     // GET COUNTS 
     const getCounts = async () => {
@@ -142,7 +141,7 @@ const AdminKelas = () => {
         <HeaderAdmin searchData={searchData}/>
         <SidebarAdmin />
 
-        <div className="container mx-auto pl-20 pr-10 flex flex-col">
+        <div className="container mx-auto pl-14 pr-5 lg:pl-20 flex flex-col">
             {/*  ---Card Count Class and User---  */}
             {/* <CardCount /> */}
             <div className="flex mt-16 justify-between"> 
@@ -167,20 +166,17 @@ const AdminKelas = () => {
 
             <div className="flex justify-between p-2">
                 <div className="flex items-center">
-                    <p className="text-[0.625rem] lg:text-sm font-bold">Kelola Kelas</p>
+                    <p className="text-[0.563rem] lg:text-sm font-bold">Kelola Kelas</p>
                 </div>
                 <div className="flex items-center">
                     <CreateCourse />
-                    {/* <FilterCourse /> */}
-                    {/* <Button variant='white' onClick={() => setShowModalFilter(true)} img={icon_filter} /> */}
-
                 </div>
             </div>
 
             {/*  ---Tabel Kelas---  */}
             <div className="overflow-x-auto min-w-screen">
                 <table className="table w-full items-center bg-transparent border-collapse ">
-                    <thead className="bg-[#EBF3FC] lg:py-3 text-[0.625rem] lg:text-xs  whitespace-nowrap font-semibold text-left">
+                    <thead className="bg-[#EBF3FC] lg:py-3 text-[0.5rem] lg:text-xs  whitespace-nowrap font-semibold text-left">
                         <tr>
                             <th className="p-6 py-2">Kode Kelas</th>
                             <th className="p-6 py-2">Kategori</th>
@@ -405,7 +401,6 @@ const AdminKelas = () => {
             )}
         </div>
         </> 
-        
     )
 }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState }  from "react";
+import { useEffect, useState }  from "react";
 import { icon_tambah } from "../../assets";
 import axios from "axios";
 import ButtonAksi from "../ButtonAksi";
@@ -59,7 +59,7 @@ const CreateCourse = () => {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
                 }
-            })
+            });
             setAlert({ type: "success", message: "Course added successfully" });
 
             console.log("Data berhasil ditambah:", res.data.data);
@@ -83,12 +83,12 @@ const CreateCourse = () => {
             });
             setIdCategory(data.data.data);
         } catch(err) {
-            console.log(err)
+            console.log(err);
         }
     }
 
     useEffect(() => {
-        getCategoryId()
+        getCategoryId();
     }, [])
 
     return (
@@ -272,11 +272,6 @@ const CreateCourse = () => {
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-sm">
             {alert && (
                 <div
-                    // className={`text-${
-                    //     alert.type === "success" ? "green" : "red"
-                    // }-500 bg-${
-                    //     alert.type === "success" ? "green" : "red"
-                    // }-100 p-2 rounded-xl`}
                     className={`text-${
                         alert.type === "success" ? "green" : "red"
                     }-500 bg-${

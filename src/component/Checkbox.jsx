@@ -11,7 +11,6 @@ const Checkbox = ({ isChecked, onChange, name }) => {
                 <span className="ml-2 text-[o.625rem] lg:text-xs font-normal text-gray-500">{name}</span>
             </label>
         </div>
-        
     );
 };
 

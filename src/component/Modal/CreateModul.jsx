@@ -1,4 +1,4 @@
-import React, { useEffect, useState }  from "react";
+import { useEffect, useState }  from "react";
 import { icon_tambah } from "../../assets";
 import axios from "axios";
 import ButtonAksi from "../ButtonAksi";
@@ -12,7 +12,7 @@ const CreateModul = () => {
     const [video, setVideo] = useState('');
     const [duration, setDuration] = useState('');
 
-    const [idChapter, setIdChapter] = useState([])
+    const [idChapter, setIdChapter] = useState([]);
 
     const [alert, setAlert] = useState(null);
 
@@ -172,7 +172,6 @@ const CreateModul = () => {
             <div className="opacity-50 fixed inset-0 z-40 bg-black"></div>
             </>
         ) : null}
-
         {/*  ---Modals Tambah Modul---  */}
 
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-sm">

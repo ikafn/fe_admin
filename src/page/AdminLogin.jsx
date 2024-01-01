@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { logo, mainlogo } from "../assets"
+import { useState } from "react"
+import { mainlogo } from "../assets"
 import { useNavigate } from "react-router-dom";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline"
 import axios from "axios";
@@ -67,7 +67,6 @@ const AdminLogin = () => {
                             <div className="mb-6">
                                 <div className="flex justify-between mb-2">
                                     <label htmlFor="password" className="text-sm text-black">Password</label>
-                                    {/* <a href="#!" className="text-sm text-[#6148FF] focus:outline-none focus:text-indigo-500 hover:text-indigo-500">Lupa Kata Sandi?</a> */}
                                 </div>
 
                                 <div className="relative w-full mt-2 rounded-md shadow-sm">  

@@ -1,11 +1,8 @@
-import React  from "react";
-
 const bgColor = {
   darkBlue: '#6148FF',
   red: 'red',
   success: '#73CA5C'
 }
-
 
 const ButtonAksi = ({text, onClick, variant}) => {
   return (

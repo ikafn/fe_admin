@@ -69,14 +69,14 @@ const AdminDashboard = () => {
         <HeaderAdmin />
         <SidebarAdmin />
 
-        <div className="container mx-auto pl-20 pr-10 flex flex-col">
+        <div className="container mx-auto pl-14 pr-5 lg:pl-20 flex flex-col">
             {/*  ---Card Count Class and User---  */}
                 <CardCount />
             {/*  ---Card Count Class and User---  */}
 
             <div className="flex justify-between">
                 <div className="flex items-center">
-                    <p className="text-[0.625rem] lg:text-sm font-bold">Status Pembayaran</p>
+                    <p className="text-[0.563rem] lg:text-sm font-bold">Status Pembayaran</p>
                 </div>
                 <div className="flex items-center p-2">
                     {/* <FilterOrder />  */}
@@ -92,7 +92,7 @@ const AdminDashboard = () => {
             {/*  ---Tabel Orders---  */}
             <div className="overflow-x-auto min-w-screen">
                 <table className="table w-full items-center bg-transparent border-collapse ">
-                    <thead className="bg-[#EBF3FC] lg:py-3 text-[0.625rem] lg:text-xs whitespace-nowrap font-semibold text-left">
+                    <thead className="bg-[#EBF3FC] lg:py-3 text-[0.5rem] lg:text-xs whitespace-nowrap font-semibold text-left">
                         <tr>
                             <th className="p-6 py-2">ID</th>
                             <th className="p-6 py-2">Kategori</th>
