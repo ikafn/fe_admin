@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { mainlogo } from "../assets"
+import { newLogo } from "../assets"
 import { useNavigate } from "react-router-dom";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline"
 import axios from "axios";
@@ -37,11 +38,14 @@ const AdminLogin = () => {
         <>
         <div className="grid grid-cols-1 lg:grid-cols-3 h-screen ">
             {/*  Sidebar  */}
-            <aside className ="hidden lg:flex bg-[#6148FF] items-center justify-center">
-                <div className="flex flex-col items-center w-44">
-                    <img src={mainlogo} alt="logo" />
-                </div>   
-            </aside>
+            <div className="hidden lg:flex bg-[#6148FF] items-center justify-center text-white">
+                <img
+                    src={newLogo}
+                    alt="Logo"
+                    className="text-2xl lg:text-3xl font-semibold"
+                    style={{ width: "400px" }}
+                />
+            </div>
             {/*  Sidebar  */}
 
             {/*  Form Login  */}

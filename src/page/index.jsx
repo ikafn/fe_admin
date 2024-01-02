@@ -9,4 +9,4 @@ export {AdminLogin,
     AdminKelas,
     AdminChapter,
     AdminModul
-}
+};
