@@ -18,7 +18,7 @@ const CreateModul = () => {
 
     // CREATE NEW MODULES 
     const handleCreate = async () => {
-        if (!chapter_id  || !name || !duration) {
+        if (!chapter_id  || !name || !video || !duration) {
             setAlert({ type: "error", message: "Please complete all fields" });
             setTimeout(() => setAlert(null), 1000);
             return
